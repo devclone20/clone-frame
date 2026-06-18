@@ -1,0 +1,264 @@
+<div style="background:#0a0a0a;border-radius:14px;padding:14px;font-family:var(--font-sans)">
+<style>
+#sf{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;--rd:#6e1e1e;--rt:#d05b5b;--gr:#22c55e;--am:#d9a23b;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
+#sf.light{--bg:#f3f4f6;--s1:#e9ebee;--s2:#fff;--bd:#cdd6df;--bl:#9cc2e0;--bt:#1e6fa5;--tx:#1a1a1a;--mut:#7a838c}
+#sf .top{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd)}
+#sf .isl{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bl);border-radius:14px;padding:3px 11px;font-family:var(--font-mono);font-size:11px;color:var(--bt)}
+#sf .dot{width:6px;height:6px;border-radius:50%;background:#2d6fa0}
+#sf .modes{margin-left:auto;display:flex;gap:6px}
+#sf .md{width:11px;height:11px;border-radius:50%;border:1px solid #2d6fa0;cursor:pointer}#sf .md.on{background:var(--bt);border-color:var(--bt)}
+#sf .body{display:flex;height:540px}
+#sf .sb{width:50px;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:8px 7px;gap:3px;transition:width .18s;flex-shrink:0}
+#sf .sb.open{width:172px}
+#sf .row{display:flex;align-items:center;gap:10px;height:34px;border-radius:8px;cursor:pointer;border:1px solid transparent;padding:0 8px;color:var(--mut);white-space:nowrap;overflow:hidden}
+#sf .row:hover{background:var(--s2);color:var(--bt)}
+#sf .row.act{background:#11293c;border-color:var(--bl);color:var(--bt)}
+#sf.light .row.act{background:#dcebf6}
+#sf .ico{min-width:18px;font-size:17px;display:flex;justify-content:center}
+#sf .lab{font-size:12px;font-family:var(--font-mono);letter-spacing:.03em;opacity:0;transition:opacity .15s}
+#sf .sb.open .lab{opacity:1}
+#sf .spacer{flex:1}#sf .sep{height:1px;background:var(--bd);margin:4px 2px}
+#sf .main{flex:1;overflow-y:auto;overflow-x:hidden}
+#sf .main::-webkit-scrollbar{width:9px}#sf .main::-webkit-scrollbar-thumb{background:var(--bl);border-radius:5px;border:2px solid var(--bg)}#sf .main::-webkit-scrollbar-track{background:transparent}
+#sf .view{display:none}#sf .view.on{display:block}
+#sf .pad{padding:16px 20px}
+#sf .ph{font-size:11px;font-family:var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bt);margin-bottom:3px;display:flex;align-items:center;gap:8px}
+#sf .psub{font-size:11px;color:var(--mut);margin-bottom:14px}
+#sf .env{display:grid;grid-template-columns:1fr 44px 1fr;gap:0;align-items:stretch}
+#sf .tbox{background:#060a0f;border:1px solid var(--bd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+#sf .tbh{display:flex;align-items:center;gap:7px;background:var(--s1);border-bottom:1px solid var(--bd);padding:8px 11px;font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bt)}
+#sf .tbh .add{margin-left:auto;color:var(--mut);cursor:pointer;font-size:13px}#sf .tbh .add:hover{color:var(--bt)}
+#sf table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:11px}
+#sf th{text-align:left;color:var(--mut);font-weight:400;padding:7px 11px;border-bottom:1px solid var(--bd);font-size:9px;letter-spacing:.06em;text-transform:uppercase}
+#sf td{padding:0;border-bottom:1px solid #10222e}
+#sf td .cell{padding:7px 11px;color:var(--tx);outline:none;min-height:15px}
+#sf td .cell:focus{background:#0c1923}
+#sf .out td .cell{color:#8fb8d4}
+#sf .runwrap{display:flex;flex-direction:column;align-items:center;justify-content:center}
+#sf .run{width:38px;height:38px;border-radius:50%;background:var(--bl);border:1px solid #2d6fa0;color:var(--bt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+#sf .run:hover{background:#2d6fa0;color:#fff}
+#sf .runl{font-family:var(--font-mono);font-size:8px;color:var(--mut);margin-top:6px;letter-spacing:.1em}
+#sf .estat{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;color:var(--mut);margin-top:10px}
+#sf .grid4{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+#sf .sp{background:#060a0f;border:1px solid var(--bd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+#sf .sph{display:flex;align-items:center;gap:7px;background:var(--s1);border-bottom:1px solid var(--bd);padding:7px 10px;font-family:var(--font-mono);font-size:10px;color:var(--bt)}
+#sf .sph i{font-size:13px}
+#sf .sbar{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--bd)}
+#sf .sin{flex:1;background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:6px 9px;color:var(--tx);font-size:11px;font-family:var(--font-mono);min-width:0}
+#sf .sin:focus{outline:none;border-color:var(--bl)}
+#sf .sgo{background:var(--bl);border:1px solid #2d6fa0;border-radius:6px;color:var(--bt);cursor:pointer;padding:6px 9px;font-size:12px;display:flex}
+#sf .sgo:hover{background:#2d6fa0;color:#fff}
+#sf .res{padding:6px 10px 9px;display:flex;flex-direction:column;gap:5px;min-height:88px;max-height:120px;overflow-y:auto}
+#sf .res::-webkit-scrollbar{width:6px}#sf .res::-webkit-scrollbar-thumb{background:var(--bl);border-radius:4px}
+#sf .ri{display:flex;align-items:center;gap:8px;background:var(--s1);border:1px solid var(--bd);border-radius:6px;padding:6px 9px;cursor:pointer;font-family:var(--font-mono);font-size:10px;color:var(--tx)}
+#sf .ri:hover{border-color:var(--bt);color:var(--bt)}
+#sf .ri.sel{border-color:var(--gr);color:var(--gr)}
+#sf .ri .st{margin-left:auto;color:var(--mut);font-size:9px}
+#sf .ri.sel .st{color:var(--gr)}
+#sf .hint{color:var(--mut);font-family:var(--font-mono);font-size:9.5px;text-align:center;padding:14px 0}
+#sf .genbar{display:flex;align-items:center;gap:10px;margin-top:12px;background:var(--s1);border:1px solid var(--bl);border-radius:9px;padding:10px 12px}
+#sf .gent{font-family:var(--font-mono);font-size:10px;color:var(--mut)}#sf .gent b{color:var(--bt);font-weight:400}
+#sf .genbtn{margin-left:auto;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-family:var(--font-mono);font-size:11px;padding:8px 14px;cursor:pointer;display:flex;align-items:center;gap:7px}
+#sf .genbtn:hover{background:#2d6fa0;color:#fff}
+#sf .wpanel{max-width:400px}
+#sf .wt{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bt);border-bottom:1px solid var(--bl);padding-bottom:7px;margin-bottom:14px}
+#sf .wr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px}
+#sf .wk{color:var(--mut);font-family:var(--font-mono);font-size:11px}
+#sf .wv{font-family:var(--font-mono);font-size:12px}
+#sf .wbtn{width:100%;margin-top:16px;padding:11px;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer}
+#sf .wbtn:hover{background:#2d6fa0;color:#fff}
+#sf .bal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+#sf .bc{background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 10px;text-align:center}
+#sf .bcv{font-family:var(--font-mono);font-size:14px;color:var(--tx)}#sf .bck{font-size:9px;color:var(--mut);font-family:var(--font-mono);margin-top:2px}
+#sf .lo{width:100%;margin-top:9px;padding:10px;background:transparent;border:1px solid var(--rd);border-radius:8px;color:var(--rt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer;display:none}
+#sf .lo:hover{background:var(--rd);color:#fff}
+#sf .set{max-width:520px}
+#sf .sgrp{margin-bottom:20px}
+#sf .sgh{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bt);border-bottom:1px solid var(--bl);padding-bottom:7px;margin-bottom:10px}
+#sf .sgh i{font-size:14px}
+#sf .si2{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);gap:14px}
+#sf .si2:last-child{border-bottom:none}
+#sf .sil{font-size:12px;color:var(--tx)}#sf .sid{font-size:10px;color:var(--mut);font-family:var(--font-mono);margin-top:2px}
+#sf .sel{background:var(--s1);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-size:11px;font-family:var(--font-mono);padding:6px 9px;cursor:pointer}
+#sf .sel:focus{outline:none;border-color:var(--bl)}
+#sf .sw{width:38px;height:21px;border-radius:11px;background:var(--s1);border:1px solid var(--bd);position:relative;cursor:pointer;flex-shrink:0;transition:background .15s,border-color .15s}
+#sf .sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:var(--mut);transition:transform .15s,background .15s}
+#sf .sw.on{background:#11293c;border-color:var(--bl)}#sf .sw.on::after{transform:translateX(17px);background:var(--bt)}
+#sf .danger .sgh{color:var(--rt);border-color:var(--rd)}
+#sf .dgb{background:transparent;border:1px solid var(--rd);border-radius:7px;color:var(--rt);font-size:11px;font-family:var(--font-mono);padding:6px 12px;cursor:pointer}#sf .dgb:hover{background:var(--rd);color:#fff}
+</style>
+<div id="sf">
+  <div class="top">
+    <div class="isl" id="sfisl"><span style="color:#3a6f96">[</span> &gt; clone-frame / skill / studio <span class="dot"></span></div>
+    <div class="modes"><span class="md" onclick="sfTheme(1)"></span><span class="md on" onclick="sfTheme(0)"></span></div>
+  </div>
+  <div class="body">
+    <div class="sb" id="sfsb">
+      <div class="row" onclick="document.getElementById('sfsb').classList.toggle('open')"><span class="ico"><i class="ti ti-menu-2"></i></span><span class="lab">Menu</span></div>
+      <div class="row act" id="r-main" onclick="sfView('main')"><span class="ico"><i class="ti ti-wand"></i></span><span class="lab">SKILL FRAME</span></div>
+      <div class="spacer"></div><div class="sep"></div>
+      <div class="row" id="r-wal" onclick="sfView('wal')"><span class="ico"><i class="ti ti-wallet"></i></span><span class="lab">Wallet</span></div>
+      <div class="row" id="r-set" onclick="sfView('set')"><span class="ico"><i class="ti ti-settings"></i></span><span class="lab">Settings</span></div>
+    </div>
+    <div class="main">
+      <div class="view on" id="v-main">
+      <div class="pad">
+        <div class="ph"><i class="ti ti-flask"></i> Automation environment</div>
+        <div class="psub">Feed inputs, run the skill, read the outputs — test a skill before you ship it.</div>
+        <div class="env">
+          <div class="tbox">
+            <div class="tbh"><i class="ti ti-table"></i> input <span class="add" onclick="sfAdd()" title="add row"><i class="ti ti-plus"></i></span></div>
+            <table><thead><tr><th>key</th><th>value</th></tr></thead><tbody id="sfin"></tbody></table>
+          </div>
+          <div class="runwrap">
+            <div class="run" id="sfrun" onclick="sfRun()"><i class="ti ti-player-play"></i></div>
+            <div class="runl">RUN</div>
+          </div>
+          <div class="tbox">
+            <div class="tbh"><i class="ti ti-table-export"></i> output</div>
+            <table class="out"><thead><tr><th>field</th><th>result</th></tr></thead><tbody id="sfout"></tbody></table>
+          </div>
+        </div>
+        <div class="estat" id="sfstat"><i class="ti ti-circle-dot" style="color:var(--mut)"></i> idle · press run to execute the skill</div>
+
+        <div class="ph" style="margin-top:22px"><i class="ti ti-search"></i> Action discovery</div>
+        <div class="psub">Search four sources for real automation building-blocks, pick the ones you want, generate a new action.</div>
+        <div class="grid4" id="sfsearch"></div>
+        <div class="genbar">
+          <div class="gent"><b id="sfcount">0</b> actions selected · combine into a new skill</div>
+          <button class="genbtn" onclick="sfGen()"><i class="ti ti-sparkles"></i> Generate new action</button>
+        </div>
+      </div>
+      </div>
+      <div class="view" id="v-wal">
+        <div class="pad"><div class="wpanel">
+          <div class="wt">Wallet</div>
+          <div class="wr"><span class="wk">status</span><span class="wv" id="wst" style="color:var(--mut)">not connected</span></div>
+          <div class="wr"><span class="wk">network</span><span class="wv">Base · 8453</span></div>
+          <div class="wr"><span class="wk">address</span><span class="wv" id="wad" style="color:var(--mut)">—</span></div>
+          <div class="bal">
+            <div class="bc"><div class="bcv" id="b-eth">—</div><div class="bck">ETH · agents</div></div>
+            <div class="bc"><div class="bcv" id="b-usdc">—</div><div class="bck">USDC · agents</div></div>
+            <div class="bc"><div class="bcv" id="b-icl">—</div><div class="bck">iCLONE · skills</div></div>
+          </div>
+          <div class="wr" style="margin-top:6px"><span class="wk">my agents (NFTs)</span><span class="wv" id="wnft" style="color:var(--mut)">—</span></div>
+          <button class="wbtn" id="wconn" onclick="sfConnect()"><i class="ti ti-login-2"></i> Login</button>
+          <button class="lo" id="wlogout" onclick="sfLogout()"><i class="ti ti-logout"></i> Sign out</button>
+        </div></div>
+      </div>
+      <div class="view" id="v-set">
+        <div class="pad"><div class="set">
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-user"></i> Profile</div>
+            <div class="si2"><div><div class="sil">Display name</div><div class="sid">shown across the marketplace</div></div><input class="fi" style="width:170px" placeholder="founder.eth"/></div>
+            <div class="si2"><div><div class="sil">Username</div><div class="sid">unique handle · @</div></div><input class="fi" style="width:170px" placeholder="@iclone"/></div>
+            <div class="si2"><div><div class="sil">Email</div><div class="sid">receipts and alerts</div></div><input class="fi" style="width:170px" placeholder="you@mail.com"/></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-palette"></i> Appearance</div>
+            <div class="si2"><div><div class="sil">Theme</div><div class="sid">dark-first interface</div></div><select class="sel" onchange="sfTheme(this.value==='light')"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div>
+            <div class="si2"><div><div class="sil">Language</div><div class="sid">UI language</div></div><select class="sel"><option>English</option><option>Português</option><option>Español</option><option>日本語</option></select></div>
+            <div class="si2"><div><div class="sil">Display currency</div><div class="sid">price reference</div></div><select class="sel"><option>USD</option><option>EUR</option><option>ETH</option></select></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-wallet"></i> Wallet &amp; network</div>
+            <div class="si2"><div><div class="sil">Network</div><div class="sid">settlement chain</div></div><select class="sel"><option>Base · 8453</option><option>Base Sepolia</option></select></div>
+            <div class="si2"><div><div class="sil">Default agent payment</div><div class="sid">currency for NFTs</div></div><select class="sel"><option>ETH</option><option>USDC</option></select></div>
+            <div class="si2"><div><div class="sil">Auto-approve under</div><div class="sid">skip prompt for small spends</div></div><select class="sel"><option>Off</option><option>$5</option><option>$25</option><option>$100</option></select></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-bell"></i> Notifications</div>
+            <div class="si2"><div><div class="sil">Sale &amp; mint alerts</div><div class="sid">when something sells</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">New skill from followed agents</div><div class="sid">activity feed</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Price &amp; floor changes</div><div class="sid">watched collections</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Product updates</div><div class="sid">email digest</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-shield-lock"></i> Security &amp; privacy</div>
+            <div class="si2"><div><div class="sil">Transaction signing confirmation</div><div class="sid">always confirm on-chain actions</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Public profile</div><div class="sid">show your agents &amp; activity</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Active sessions</div><div class="sid">1 device · this browser</div></div><button class="dgb" onclick="sendPrompt('Revogar todas as sessões ativas do CLONE FRAME')">Revoke all</button></div>
+          </div>
+          <div class="sgrp danger">
+            <div class="sgh"><i class="ti ti-alert-triangle"></i> Danger zone</div>
+            <div class="si2"><div><div class="sil">Disconnect wallet</div><div class="sid">end the current session</div></div><button class="dgb" onclick="sfView('wal');sfLogout()">Logout</button></div>
+            <div class="si2"><div><div class="sil">Delete account</div><div class="sid">remove profile · NFTs stay on-chain</div></div><button class="dgb" onclick="sendPrompt('Iniciar o fluxo de eliminação de conta no CLONE FRAME (os NFTs permanecem on-chain)')">Delete</button></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var sf=document.getElementById('sf');
+  var inRows=[['repo_url','github.com/owner/project'],['action','summarize_issues'],['format','markdown']];
+  function drawIn(){document.getElementById('sfin').innerHTML=inRows.map(function(r){return '<tr><td><div class="cell" contenteditable>'+r[0]+'</div></td><td><div class="cell" contenteditable>'+r[1]+'</div></td></tr>';}).join('');}
+  window.sfAdd=function(){inRows.push(['','']);drawIn();};
+  window.sfRun=function(){
+    var st=document.getElementById('sfstat'),o=document.getElementById('sfout'),b=document.getElementById('sfrun');
+    b.innerHTML='<i class="ti ti-loader-2"></i>'; st.innerHTML='<i class="ti ti-loader-2" style="color:var(--am)"></i> running skill in sandbox…';
+    o.innerHTML='';
+    var out=[['status','success'],['items_processed','37'],['summary','12 open · 25 closed · 3 stale'],['artifact','report.md (4.1 KB)'],['runtime','1.84 s'],['cost','0.3 Ⓘ']];
+    var i=0;
+    var t=setInterval(function(){
+      if(i>=out.length){clearInterval(t);b.innerHTML='<i class="ti ti-player-play"></i>';st.innerHTML='<i class="ti ti-circle-check" style="color:var(--gr)"></i> done · skill returned 6 fields · ready to publish';return;}
+      var r=out[i++];o.innerHTML+='<tr><td><div class="cell">'+r[0]+'</div></td><td><div class="cell">'+r[1]+'</div></td></tr>';
+    },260);
+  };
+  var sources=[
+    {t:'GitHub OSS',i:'ti-brand-github',ph:'search repos & actions…',r:[['octokit/rest.js','12k★'],['n8n-io/n8n','48k★'],['simonw/llm','5k★']]},
+    {t:'n8n templates',i:'ti-topology-star-3',ph:'search workflows…',r:[['GitHub → Slack digest','tmpl'],['RSS → summarize → email','tmpl'],['Webhook → enrich → DB','tmpl']]},
+    {t:'Virtuals ACP',i:'ti-robot',ph:'search agent jobs…',r:[['troubleshoot ACP job','offering'],['risk/reward calc','offering'],['robotics repo scan','offering']]},
+    {t:'My library',i:'ti-bookmark',ph:'search my skills…',r:[['email digest','SKL-001'],['word report','SKL-004'],['sql · supabase','SKL-014']]}
+  ];
+  var selected=0;
+  function drawSearch(){
+    document.getElementById('sfsearch').innerHTML=sources.map(function(s,idx){
+      return '<div class="sp"><div class="sph"><i class="ti '+s.i+'"></i> '+s.t+'</div>'+
+        '<div class="sbar"><input class="sin" placeholder="'+s.ph+'" onkeydown="if(event.key===\'Enter\')sfSearch('+idx+')"/><div class="sgo" onclick="sfSearch('+idx+')"><i class="ti ti-search"></i></div></div>'+
+        '<div class="res" id="res'+idx+'">'+s.r.map(function(r){return '<div class="ri" onclick="sfPick(this)"><i class="ti ti-plus"></i> '+r[0]+'<span class="st">'+r[1]+'</span></div>';}).join('')+'</div></div>';
+    }).join('');
+  }
+  window.sfSearch=function(idx){
+    var box=document.getElementById('res'+idx);
+    box.innerHTML='<div class="hint"><i class="ti ti-loader-2"></i> searching…</div>';
+    setTimeout(function(){box.innerHTML=sources[idx].r.map(function(r){return '<div class="ri" onclick="sfPick(this)"><i class="ti ti-plus"></i> '+r[0]+'<span class="st">'+r[1]+'</span></div>';}).join('');},500);
+  };
+  window.sfPick=function(el){el.classList.toggle('sel');selected=sf.querySelectorAll('.ri.sel').length;document.getElementById('sfcount').textContent=selected;};
+  window.sfGen=function(){
+    if(!selected){sendPrompt('Como gerar uma nova ação no SKILL FRAME a partir das ferramentas pesquisadas');return;}
+    sendPrompt('Gerar uma nova skill/ação combinando os '+selected+' blocos selecionados no SKILL FRAME (GitHub OSS + n8n + ACP + biblioteca) e prepará-la para o ambiente de input/output');
+  };
+  window.sfConnect=function(){
+    document.getElementById('wst').textContent='connected'; document.getElementById('wst').style.color='var(--gr)';
+    document.getElementById('wad').textContent='0x44cc…6664'; document.getElementById('wad').style.color='var(--tx)';
+    document.getElementById('b-eth').textContent='0.42'; document.getElementById('b-usdc').textContent='1,250'; document.getElementById('b-icl').textContent='8,400';
+    document.getElementById('wnft').textContent='3 agents'; document.getElementById('wnft').style.color='var(--tx)';
+    var wc=document.getElementById('wconn');
+    wc.innerHTML='<i class="ti ti-circle-check"></i> Online'; wc.style.color='var(--gr)'; wc.style.borderColor='var(--gr)'; wc.style.background='transparent';
+    document.getElementById('wlogout').style.display='block';
+  };
+  window.sfLogout=function(){
+    document.getElementById('wst').textContent='not connected'; document.getElementById('wst').style.color='var(--mut)';
+    document.getElementById('wad').textContent='—'; document.getElementById('wad').style.color='var(--mut)';
+    document.getElementById('b-eth').textContent='—'; document.getElementById('b-usdc').textContent='—'; document.getElementById('b-icl').textContent='—';
+    document.getElementById('wnft').textContent='—'; document.getElementById('wnft').style.color='var(--mut)';
+    var wc=document.getElementById('wconn');
+    wc.innerHTML='<i class="ti ti-login-2"></i> Login'; wc.style.color=''; wc.style.borderColor=''; wc.style.background='';
+    document.getElementById('wlogout').style.display='none';
+  };
+  window.sfView=function(v){
+    sf.querySelectorAll('.view').forEach(function(x){x.classList.remove('on');});
+    document.getElementById('v-'+v).classList.add('on');
+    document.getElementById('r-main').classList.toggle('act',v==='main');
+    document.getElementById('r-wal').classList.toggle('act',v==='wal');
+    document.getElementById('r-set').classList.toggle('act',v==='set');
+    var t={main:'skill / studio',wal:'skill / wallet',set:'skill / settings'}[v];
+    document.getElementById('sfisl').innerHTML='<span style="color:#3a6f96">[</span> &gt; clone-frame / '+t+' <span class="dot"></span>';
+  };
+  window.sfTheme=function(l){sf.classList.toggle('light',!!l);sf.querySelectorAll('.md')[0].classList.toggle('on',!!l);sf.querySelectorAll('.md')[1].classList.toggle('on',!l);};
+  drawIn(); drawSearch();
+})();
+</script>
+</div>

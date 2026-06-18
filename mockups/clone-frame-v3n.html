@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CLONE Frame — beta v1.000.01</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080808;--s1:#0f0f0f;--s2:#141414;--b1:#1e4a6e;--b2:#2d6fa0;--bt:#5ba3d0;--r1:#6e1e1e;--r2:#a02d2d;--rt:#d05b5b;--bdr:#222;--text:#d0d0d0;--muted:#4a4a4a;--dim:#2a2a2a}
+html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);font-family:'Inter',system-ui,sans-serif;font-size:13px;color:var(--text)}
+.lbl{display:none}
+.frame{display:flex;flex-direction:column;width:100vw;height:100vh;border:none;border-radius:0;overflow:hidden;background:var(--bg)}
+/* TOPBAR */
+.topbar{height:42px;background:var(--s1);border-bottom:2px solid var(--b1);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.island{display:flex;align-items:center;background:var(--s2);border:1.5px solid var(--b1);border-radius:20px;overflow:hidden;font-size:10px;font-family:monospace}
+.seg{padding:4px 12px;display:flex;align-items:center;gap:5px;color:var(--muted)}
+.seg.hi{color:var(--bt)}.seg-dot{width:6px;height:6px;border-radius:50%;background:var(--b2)}.seg-dot.r{background:var(--r2)}
+.sdiv{width:1px;height:14px;background:var(--b1)}
+.mtog{display:flex;align-items:center;gap:2px;margin-left:auto;background:var(--s2);border:1.5px solid var(--b1);border-radius:16px;padding:3px 4px}
+.mbtn{width:26px;height:26px;border-radius:50%;cursor:pointer;border:none;background:transparent;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.mbtn.on{background:var(--b1)}
+/* LAYOUT */
+.main{display:flex;flex:1;overflow:hidden}
+/* SIDEBAR */
+.sb{width:52px;background:var(--s1);border-right:2px solid var(--b1);display:flex;flex-direction:column;padding:6px 0;flex-shrink:0;transition:width .2s;overflow:hidden}
+.sb.open{width:190px}
+.sb-hdr{display:flex;justify-content:flex-end;padding:0 8px 6px;border-bottom:1px solid var(--dim);margin-bottom:4px}
+.togbtn{background:var(--s2);border:1.5px solid var(--b1);border-radius:6px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--bt);font-size:11px}
+.togbtn:hover{background:var(--b1)}
+.sbe{display:flex;flex-direction:column;width:100%}
+.sbr{display:flex;align-items:center;cursor:pointer;height:40px;width:100%}
+.sbr:hover .sbi,.sbe.on .sbr .sbi{background:var(--b1);border-color:var(--b2);color:var(--bt)}
+.sbi{width:34px;height:34px;min-width:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--s2);border:1.5px solid var(--dim);margin:0 8px;font-size:15px;color:var(--muted);transition:all .12s}
+.sbl{font-size:11px;color:var(--muted);white-space:nowrap;opacity:0;transition:opacity .15s}
+.sb.open .sbl{opacity:1}.sbe.on .sbl{color:var(--bt)}
+.sbl.im{font-style:italic;font-weight:600;font-size:12px}
+.sbs{display:none;flex-direction:column;padding:2px 0 6px 50px;gap:2px}
+.sb.open .sbe.on .sbs{display:flex}
+.sbs a{font-size:10px;color:var(--muted);padding:3px 0;cursor:pointer;white-space:nowrap;text-decoration:none;display:block}
+.sbs a:hover{color:var(--text)}
+.sep{height:1.5px;width:calc(100% - 16px);background:var(--dim);margin:6px 8px}
+.sb-bot{margin-top:auto}
+/* CONTENT */
+.content{flex:1;overflow:hidden;padding:18px;background:var(--bg);display:flex;flex-direction:column}
+.view{display:none;flex:1;min-height:0}.view.on{display:flex;flex-direction:column}
+#v-hub{display:none}#v-hub.on{display:flex;flex-direction:column;flex:1;min-height:0}
+.subnav{flex-shrink:0}
+.vlbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+/* AGENT CARDS */
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ac{background:var(--s1);border:2px solid var(--b1);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;position:relative}
+.ac:hover{border-color:var(--bt);transform:translateY(-2px)}.ac.r{border-color:var(--r1)}.ac.r:hover{border-color:var(--rt)}
+.ac-img{height:200px;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ac-price{position:absolute;top:8px;right:8px;font-size:8px;font-weight:700;background:rgba(0,0,0,.8);border:1.5px solid var(--b2);border-radius:8px;padding:3px 8px;color:var(--bt);letter-spacing:.04em;backdrop-filter:blur(4px)}
+.ac.r .ac-price{border-color:var(--r2);color:var(--rt)}
+.ac-info{padding:10px 14px;border-top:2px solid var(--b1);background:var(--s2)}
+.ac.r .ac-info{border-top-color:var(--r1)}
+.ac-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.ac-id{font-size:9px;color:var(--muted);font-family:monospace}
+/* NFT GRID */
+.ng{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.nc{background:var(--s1);border:2px solid var(--bdr);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .12s,transform .1s;position:relative}
+.nc:hover{border-color:var(--b2);transform:translateY(-1px)}.nc.r{border-color:#2a1515}.nc.r:hover{border-color:var(--r2)}
+.nt{height:120px;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative}
+.np{position:absolute;top:6px;right:6px;font-size:7px;font-weight:700;background:rgba(0,0,0,.85);border:1px solid var(--b2);border-radius:5px;padding:2px 6px;color:var(--bt)}
+.nc.r .np{border-color:var(--r2);color:var(--rt)}
+.ni{padding:6px 10px;border-top:1.5px solid var(--dim);background:var(--s2)}
+.nn{font-size:10px;font-weight:600;color:var(--text)}.nid{font-size:8px;color:var(--muted);font-family:monospace}
+/* SKILL MARKET */
+.sm{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sc{background:var(--s1);border:2px solid var(--bdr);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .12s,transform .1s;position:relative}
+.sc:hover{border-color:var(--b2);transform:translateY(-1px)}
+.si{height:90px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:32px;position:relative}
+.sp{position:absolute;top:5px;right:5px;font-size:7px;font-weight:700;background:rgba(0,0,0,.85);border:1px solid var(--b2);border-radius:5px;padding:2px 5px;color:var(--bt)}
+.sf{padding:6px 10px;border-top:1.5px solid var(--dim);background:var(--s2)}
+.sn_{font-size:10px;font-weight:600;color:var(--text)}.sid_{font-size:8px;color:var(--muted);font-family:monospace}
+/* DETAIL */
+.dl{display:grid;grid-template-columns:180px 1fr;gap:24px}
+.dp{background:var(--s1);border:2px solid var(--b1);border-radius:8px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bb{width:100%;padding:11px;background:var(--b1);color:var(--bt);border:2px solid var(--b2);border-radius:6px;font-size:12px;cursor:pointer;margin-bottom:16px}.bb:hover{background:var(--b2)}
+.dline{height:8px;background:var(--dim);border-radius:2px;margin-bottom:8px}
+/* HUB */
+.subnav{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
+.snb{font-size:10px;padding:6px 16px;background:var(--s2);border:1.5px solid var(--bdr);border-radius:4px;cursor:pointer;color:var(--muted)}
+.snb:hover,.snb.on{background:var(--b1);color:var(--bt);border-color:var(--b2)}
+.hl{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.skh3{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sr{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--s1);border:1.5px solid var(--bdr);border-radius:5px;margin-bottom:5px}
+.sna{flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sarr{display:flex;gap:4px}
+.aw{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--dim);border:1.5px solid var(--bdr);border-radius:6px;cursor:pointer;font-size:13px;color:var(--muted)}
+.aw.uon{background:#0d3320;border-color:#22c55e;color:#22c55e}.aw.don{background:#3a0d0d;border-color:#ef4444;color:#ef4444}
+.chc{background:var(--s1);border:2px solid var(--b1);border-radius:8px;overflow:hidden}
+.chp{height:150px;background:var(--bg);display:flex;align-items:center;justify-content:center;border-bottom:2px solid var(--b1)}
+.chi{padding:12px}.chn{font-size:11px;font-weight:500;color:var(--bt)}.chid{font-size:9px;font-family:monospace;color:var(--muted);margin:2px 0 8px}.cht{display:flex;flex-wrap:wrap;gap:3px}
+.tag{font-size:9px;background:var(--s2);border:1.5px solid var(--b1);border-radius:2px;padding:2px 6px;color:var(--bt)}
+/* FRAMEWORK */
+.fl{display:grid;grid-template-columns:1fr 52px 1fr;height:420px}
+.fp{background:var(--s1);border:2px solid var(--b1);border-radius:6px;display:flex;flex-direction:column;overflow:hidden}
+.fph{padding:6px 10px;border-bottom:2px solid var(--b1);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--bt);background:var(--s2)}
+.fpb{flex:1;padding:8px;overflow-y:auto}
+.pr{display:flex;align-items:center;gap:5px;background:var(--s2);border:1px solid var(--bdr);border-radius:4px;padding:5px 8px;margin-bottom:4px}
+.pr input{flex:1;background:transparent;border:none;font-size:10px;color:var(--text);outline:none;font-family:monospace}
+.xb{background:none;border:none;color:var(--rt);cursor:pointer;font-size:12px}
+.fmid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 10px}
+.fadd{display:none}
+.frun{width:60px;height:36px;background:transparent;border:1.5px solid #7a2a3a;border-radius:6px;color:#888;font-size:10px;font-weight:700;cursor:pointer;writing-mode:horizontal-tb;display:flex;align-items:center;justify-content:center;letter-spacing:.12em;transition:background .2s,border-color .2s,color .2s}
+.frun:hover{border-color:#a03050;color:#aaa}
+.frun.success{background:#0d3320;border-color:#22c55e;color:#22c55e}
+.frun.error{background:#3a0d0d;border-color:#ef4444;color:#ef4444}
+.fp{position:relative}
+.fp-add{position:absolute;bottom:10px;right:10px;width:28px;height:28px;background:none;border:1.5px solid var(--b2);border-radius:50%;color:var(--bt);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:2}.fp-add:hover{background:var(--b1)}
+.oa{flex:1;padding:8px;font-size:10px;color:var(--muted);font-family:monospace;line-height:1.8;overflow-y:auto}
+/* WORKSPACE */
+#hw{overflow-y:auto;overflow-x:hidden}
+.wg{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;align-content:flex-start}
+.wcard{background:var(--s1);border:2px solid var(--b1);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;width:calc(50% - 5px);height:260px;position:relative;transition:border-color .12s;box-sizing:border-box;flex-shrink:0}
+.wcard:hover{border-color:var(--b2)}
+.wbar{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:2px solid var(--b1);background:var(--s2);flex-shrink:0}
+.wdots{display:flex;gap:4px}.wd{width:7px;height:7px;border-radius:50%;background:var(--dim)}.wd.cls{background:var(--r1)}
+.ws{flex:1;display:flex;align-items:center;gap:5px;background:var(--bg);border:1.5px solid var(--bdr);border-radius:5px;padding:3px 6px}
+.ws:focus-within{border-color:var(--b2)}.ws input{flex:1;background:transparent;border:none;outline:none;font-size:10px;color:var(--text);font-family:monospace}.ws input::placeholder{color:var(--muted)}
+.wsbtn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:12px}.wsbtn:hover{color:var(--bt)}
+.wcls{background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;padding:0 2px}.wcls:hover{color:var(--rt)}
+.wb{flex:1;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wh{font-size:10px;color:var(--muted);font-family:monospace;text-align:center;padding:12px}
+.wr{display:none;flex-direction:column;gap:5px;padding:10px;width:100%;overflow-y:auto}.wr.v{display:flex}
+.wresz{position:absolute;bottom:4px;right:4px;width:18px;height:18px;cursor:se-resize;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;opacity:.45;user-select:none;line-height:1}.wresz:hover{opacity:.9;color:var(--bt)}
+.wres{padding:7px 10px;background:var(--s1);border:1px solid var(--dim);border-radius:4px;cursor:pointer}
+.wrt{font-size:10px;color:var(--bt);margin-bottom:1px}.wru{font-size:8px;color:var(--muted);font-family:monospace}
+.wadd{width:32px;height:32px;background:none;border:1.5px solid var(--b2);border-radius:50%;color:var(--bt);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:flex-end;margin-top:8px}.wadd:hover{background:var(--b1)}
+/* SETTINGS */
+.sw{max-width:480px}.ss{margin-bottom:22px}
+.st{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bt);margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid var(--b1)}
+.sr_{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--dim)}.sr_:last-child{border-bottom:none}
+.sl{font-size:12px;color:var(--text)}.sv{font-size:11px;color:var(--muted)}
+.stog{width:36px;height:20px;background:var(--b1);border-radius:10px;position:relative;cursor:pointer;border:1.5px solid var(--b2)}.stog::after{content:'';position:absolute;width:14px;height:14px;background:var(--bt);border-radius:50%;top:1px;left:1px;transition:left .15s}.stog.on::after{left:17px}
+.socials{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.sbtn{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--s2);border:1.5px solid var(--b1);border-radius:6px;cursor:pointer;font-size:11px;color:var(--muted)}.sbtn:hover{border-color:var(--bt);color:var(--bt)}
+.cp{font-size:10px;color:var(--muted);margin-top:16px;padding-top:10px;border-top:1px solid var(--dim)}
+</style>
+</head>
+<body>
+<div class="lbl">Clone Frame — beta v1.000.01</div>
+<div class="frame" id="frame">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="island">
+      <div class="seg"><div class="seg-dot"></div><span id="isltxt">collections</span></div>
+    </div>
+    <div class="mtog">
+      <button class="mbtn" id="ml" onclick="setMode('light')" title="Claro">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.8" stroke="#888" stroke-width="1.8"/><line x1="10" y1="1" x2="10" y2="4" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="10" y1="16" x2="10" y2="19" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="10" x2="4" y2="10" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="10" x2="19" y2="10" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="3.5" y1="3.5" x2="5.6" y2="5.6" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="14.4" y1="14.4" x2="16.5" y2="16.5" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="16.5" y1="3.5" x2="14.4" y2="5.6" stroke="#888" stroke-width="1.8" stroke-linecap="round"/><line x1="5.6" y1="14.4" x2="3.5" y2="16.5" stroke="#888" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <button class="mbtn on" id="md" onclick="setMode('dark')" title="Escuro">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.8" fill="#5ba3d0"/><line x1="10" y1="1" x2="10" y2="4" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="10" y1="16" x2="10" y2="19" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="10" x2="4" y2="10" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="10" x2="19" y2="10" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="3.5" y1="3.5" x2="5.6" y2="5.6" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="14.4" y1="14.4" x2="16.5" y2="16.5" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="16.5" y1="3.5" x2="14.4" y2="5.6" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/><line x1="5.6" y1="14.4" x2="3.5" y2="16.5" stroke="#5ba3d0" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- MAIN -->
+  <div class="main">
+    <!-- SIDEBAR -->
+    <div class="sb" id="sb">
+      <div class="sb-hdr"><button class="togbtn" id="tog" onclick="toggleSb()">‹</button></div>
+      <div class="sbe on" id="n-col"><div class="sbr" onclick="go('col')"><div class="sbi">⊞</div><span class="sbl im">Menu</span></div></div>
+      <div class="sbe" id="n-plaza"><div class="sbr" onclick="go('plaza')"><div class="sbi">⛩</div><span class="sbl">Plaza Places</span></div><div class="sbs"><a onclick="go('pcol')">└ Collections</a><a onclick="go('pskill')">└ Skills</a></div></div>
+      <div class="sbe" id="n-hub"><div class="sbr" onclick="go('hub')"><div class="sbi">◈</div><span class="sbl">Hub</span></div><div class="sbs"><a onclick="showHub('skills')">└ Skills</a><a onclick="showHub('framework')">└ Framework</a><a onclick="showHub('workspace')">└ Workspace</a></div></div>
+      <div class="sep"></div>
+      <div class="sb-bot">
+        <div class="sbe" id="n-wallet"><div class="sbr" onclick="alert('Wallet — em breve')"><div class="sbi">◎</div><span class="sbl">Wallet</span></div></div>
+        <div class="sbe" id="n-settings"><div class="sbr" onclick="go('settings')"><div class="sbi">⚙</div><span class="sbl">Settings</span></div></div>
+      </div>
+    </div>
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- COLLECTIONS -->
+      <div class="view on" id="v-col">
+        <div class="vlbl">Collections</div>
+        <div class="ag">
+          <div class="ac" onclick="go('pcol')">
+            <div class="ac-img"><svg width="130" height="170" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gb1"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="122" rx="26" ry="6" fill="#1e4a6e" opacity=".3"/><path d="M26 75 Q24 100 22 122 L78 122 Q76 100 74 75Z" fill="#1e4a6e" opacity=".85"/><path d="M26 75 Q18 88 16 100" fill="#2d6fa0" opacity=".5"/><path d="M74 75 Q82 88 84 100" fill="#2d6fa0" opacity=".5"/><path d="M34 78 Q50 86 66 78 L62 100 Q50 108 38 100Z" fill="#2d6fa0" opacity=".35"/><ellipse cx="50" cy="38" rx="22" ry="24" fill="#111"/><path d="M28 34 Q30 12 50 9 Q70 12 72 34 Q65 20 50 18 Q35 20 28 34Z" fill="#1e4a6e"/><path d="M28 34 Q22 44 24 56" fill="#1e4a6e" opacity=".8"/><path d="M72 34 Q78 44 76 56" fill="#1e4a6e" opacity=".8"/><ellipse cx="40" cy="40" rx="5" ry="4" fill="#7ad4ff" filter="url(#gb1)" opacity=".95"/><ellipse cx="60" cy="40" rx="5" ry="4" fill="#7ad4ff" filter="url(#gb1)" opacity=".95"/><ellipse cx="40" cy="40" rx="2.5" ry="2" fill="white"/><ellipse cx="60" cy="40" rx="2.5" ry="2" fill="white"/><path d="M70 56 L95 28 L98 32 L73 60Z" fill="#7ad4ff" filter="url(#gb1)" opacity=".85"/><rect x="64" y="53" width="10" height="5" rx="2" fill="#2d6fa0"/><text x="50" y="68" text-anchor="middle" font-size="8" fill="#5ba3d0" opacity=".6" font-family="monospace">⟨Ψ⟩</text></svg></div>
+            <div class="ac-price">iCLONE</div>
+            <div class="ac-info"><div class="ac-name">iClone</div><div class="ac-id">10 agentes disponíveis</div></div>
+          </div>
+          <div class="ac r" onclick="go('pcol')">
+            <div class="ac-img"><svg width="130" height="170" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gr1"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="122" rx="26" ry="6" fill="#6e1e1e" opacity=".3"/><rect x="34" y="100" width="14" height="22" rx="4" fill="#111"/><rect x="52" y="100" width="14" height="22" rx="4" fill="#111"/><rect x="34" y="113" width="14" height="9" rx="3" fill="#6e1e1e" opacity=".7"/><rect x="52" y="113" width="14" height="9" rx="3" fill="#6e1e1e" opacity=".7"/><rect x="28" y="72" width="44" height="30" rx="7" fill="#1a1a1a"/><rect x="28" y="72" width="44" height="8" rx="4" fill="#6e1e1e"/><text x="36" y="92" font-size="11" fill="white" font-family="monospace" font-weight="bold">✕</text><text x="57" y="88" font-size="8" fill="#d05b5b" font-family="monospace" font-weight="bold">✕</text><rect x="16" y="72" width="14" height="24" rx="6" fill="#1a1a1a"/><rect x="70" y="72" width="14" height="24" rx="6" fill="#1a1a1a"/><ellipse cx="50" cy="48" rx="22" ry="25" fill="#1e1e1e"/><circle cx="32" cy="28" r="10" fill="#181818"/><circle cx="68" cy="28" r="10" fill="#181818"/><circle cx="32" cy="28" r="7" fill="#242424"/><circle cx="68" cy="28" r="7" fill="#242424"/><text x="38" y="45" font-size="9" fill="white" font-family="monospace">○</text><text x="53" y="45" font-size="9" fill="white" font-family="monospace">○</text><text x="62" y="28" font-size="8" fill="#d05b5b" font-family="monospace" font-weight="bold">ℵ</text></svg></div>
+            <div class="ac-price" style="border-color:var(--r2);color:var(--rt)">FRAMES</div>
+            <div class="ac-info"><div class="ac-name">Frames</div><div class="ac-id">10 agentes disponíveis</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAZA -->
+      <div class="view" id="v-plaza">
+        <div class="vlbl">Plaza Places</div>
+        <div class="ag">
+          <div class="ac" onclick="go('pcol')"><div class="ac-img" style="font-size:48px">⊞</div><div class="ac-info"><div class="ac-name">Collections</div><div class="ac-id">iClone · Frames</div></div></div>
+          <div class="ac" onclick="go('pskill')"><div class="ac-img" style="font-size:48px">◈</div><div class="ac-info"><div class="ac-name">Skills</div><div class="ac-id">6 skills disponíveis</div></div></div>
+        </div>
+      </div>
+
+      <!-- PLAZA COLLECTIONS -->
+      <div class="view" id="v-pcol">
+        <div class="vlbl">Plaza Places › Collections</div>
+        <div class="ag">
+          <div class="ac" onclick="openCol('iclone')">
+            <div class="ac-img"><svg width="110" height="145" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gb2"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="122" rx="26" ry="6" fill="#1e4a6e" opacity=".3"/><path d="M26 75 Q24 100 22 122 L78 122 Q76 100 74 75Z" fill="#1e4a6e" opacity=".85"/><path d="M34 78 Q50 86 66 78 L62 100 Q50 108 38 100Z" fill="#2d6fa0" opacity=".35"/><ellipse cx="50" cy="38" rx="22" ry="24" fill="#111"/><path d="M28 34 Q30 12 50 9 Q70 12 72 34 Q65 20 50 18 Q35 20 28 34Z" fill="#1e4a6e"/><path d="M28 34 Q22 44 24 56" fill="#1e4a6e" opacity=".8"/><path d="M72 34 Q78 44 76 56" fill="#1e4a6e" opacity=".8"/><ellipse cx="40" cy="40" rx="5" ry="4" fill="#7ad4ff" filter="url(#gb2)" opacity=".95"/><ellipse cx="60" cy="40" rx="5" ry="4" fill="#7ad4ff" filter="url(#gb2)" opacity=".95"/><ellipse cx="40" cy="40" rx="2.5" ry="2" fill="white"/><ellipse cx="60" cy="40" rx="2.5" ry="2" fill="white"/><path d="M70 56 L92 30 L95 33 L72 59Z" fill="#7ad4ff" filter="url(#gb2)" opacity=".85"/><rect x="64" y="53" width="10" height="5" rx="2" fill="#2d6fa0"/></svg></div>
+            <div class="ac-price">from 0.3 VIRTUAL</div>
+            <div class="ac-info"><div class="ac-name">iClone</div><div class="ac-id">10 agentes</div></div>
+          </div>
+          <div class="ac r" onclick="openCol('frames')">
+            <div class="ac-img"><svg width="110" height="145" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="122" rx="26" ry="6" fill="#6e1e1e" opacity=".3"/><rect x="34" y="100" width="14" height="22" rx="4" fill="#111"/><rect x="52" y="100" width="14" height="22" rx="4" fill="#111"/><rect x="34" y="113" width="14" height="9" rx="3" fill="#6e1e1e" opacity=".7"/><rect x="52" y="113" width="14" height="9" rx="3" fill="#6e1e1e" opacity=".7"/><rect x="28" y="72" width="44" height="30" rx="7" fill="#1a1a1a"/><rect x="16" y="72" width="14" height="24" rx="6" fill="#1a1a1a"/><rect x="70" y="72" width="14" height="24" rx="6" fill="#1a1a1a"/><ellipse cx="50" cy="48" rx="22" ry="25" fill="#1e1e1e"/><circle cx="32" cy="28" r="10" fill="#181818"/><circle cx="68" cy="28" r="10" fill="#181818"/><circle cx="32" cy="28" r="7" fill="#252525"/><circle cx="68" cy="28" r="7" fill="#252525"/><text x="38" y="38" font-size="9" fill="white" font-family="monospace">○</text><text x="53" y="38" font-size="9" fill="white" font-family="monospace">○</text><text x="62" y="21" font-size="8" fill="#d05b5b" font-family="monospace" font-weight="bold">ℵ</text></svg></div>
+            <div class="ac-price" style="border-color:var(--r2);color:var(--rt)">from 0.3 VIRTUAL</div>
+            <div class="ac-info"><div class="ac-name">Frames</div><div class="ac-id">10 agentes</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAZA SKILLS -->
+      <div class="view" id="v-pskill">
+        <div class="vlbl">Plaza Places › Skills</div>
+        <div class="sm" id="skill-mkt"></div>
+      </div>
+
+      <!-- NFT GRID -->
+      <div class="view" id="v-grid">
+        <div class="vlbl" id="glbl">Collections › iClone</div>
+        <div class="ng" id="ng"></div>
+      </div>
+
+      <!-- DETAIL -->
+      <div class="view" id="v-detail">
+        <div class="vlbl" id="dlbl">—</div>
+        <div class="dl">
+          <div><div class="dp" id="dport"></div></div>
+          <div>
+            <div style="font-size:9px;color:var(--muted);font-family:monospace;margin-bottom:3px" id="did">—</div>
+            <div style="font-size:18px;font-weight:600;margin-bottom:4px" id="dname">—</div>
+            <div style="font-size:12px;color:var(--bt);margin-bottom:16px" id="dprice">—</div>
+            <button class="bb" id="dbuy">Adquirir clone</button>
+            <div class="dline" style="width:85%"></div><div class="dline" style="width:68%"></div><div class="dline" style="width:78%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HUB -->
+      <div class="view" id="v-hub">
+        <div class="subnav">
+          <button class="snb on" onclick="showHub('skills')">Skills</button>
+          <button class="snb" onclick="showHub('framework')">Framework</button>
+          <button class="snb" onclick="showHub('workspace')">Workspace</button>
+        </div>
+        <div id="hs">
+          <div class="hl">
+            <div><p class="skh3">Skills activas</p><div id="sl"></div></div>
+            <div><div class="chc"><div class="chp" style="font-size:56px">🥷</div><div class="chi"><div class="chn">Nova Blade</div><div class="chid">ID # 000174</div><div class="cht"><span class="tag">Voice</span><span class="tag">Listen</span><span class="tag">Flow</span></div></div></div></div>
+          </div>
+        </div>
+        <div id="hf" style="display:none">
+          <div class="fl">
+            <div class="fp"><div class="fph">Input</div><div class="fpb"><div id="pl"><div class="pr"><input value="repo = huggingface/lerobot"/><button class="xb" onclick="rP(this)">×</button></div><div class="pr"><input value="format = markdown"/><button class="xb" onclick="rP(this)">×</button></div><div class="pr"><input value="depth = full"/><button class="xb" onclick="rP(this)">×</button></div></div></div><button class="fp-add" onclick="aP()">+</button></div>
+            <div class="fmid"><button class="frun" onclick="runT()">RUN</button></div>
+            <div class="fp"><div class="fph">Output</div><div class="oa" id="oa"><span style="color:var(--muted)">— aguarda execução —</span></div></div>
+          </div>
+        </div>
+        <div id="hw" style="display:none">
+          <div class="wg" id="wg"></div>
+          <button class="wadd" onclick="aW()">+</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="view" id="v-settings">
+        <div class="sw">
+          <div class="ss"><div class="st">Preferências</div><div class="sr_"><span class="sl">Notificações</span><div class="stog on" onclick="this.classList.toggle('on')"></div></div><div class="sr_"><span class="sl">Idioma</span><span class="sv">Português</span></div><div class="sr_"><span class="sl">Tema</span><span class="sv">Dark</span></div></div>
+          <div class="ss"><div class="st">About</div><div style="font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:8px"><b style="color:var(--text)">iCLONE</b> — o teu clone no mundo digital.</div><div class="sr_"><span class="sl">Versão</span><span class="sv">beta v1.000.01</span></div></div>
+          <div class="ss"><div class="st">Redes sociais</div><div class="socials"><div class="sbtn">GitHub</div><div class="sbtn">X</div><div class="sbtn">Discord</div></div></div>
+          <div class="cp">© 2026 iCLONE — devclone20.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const chars=[
+  {id:"000151",name:"Ryuu Kage",   price:"0.8 VIRTUAL",col:"b"},
+  {id:"000056",name:"John Wick",   price:"1.2 VIRTUAL",col:"r"},
+  {id:"000288",name:"Akemi Zero",  price:"0.5 VIRTUAL",col:"b"},
+  {id:"000412",name:"Shin Tsuru",  price:"0.6 VIRTUAL",col:"r"},
+  {id:"000573",name:"Kira Void",   price:"0.9 VIRTUAL",col:"b"},
+  {id:"000174",name:"Nova Blade",  price:"1.4 VIRTUAL",col:"r"},
+  {id:"000339",name:"Yoru Sen",    price:"0.4 VIRTUAL",col:"b"},
+  {id:"000622",name:"Aoi Mugen",   price:"0.7 VIRTUAL",col:"r"},
+  {id:"000801",name:"Kaze Kiri",   price:"2.0 VIRTUAL",col:"b"},
+  {id:"000047",name:"Ren Jaku",    price:"0.3 VIRTUAL",col:"r"},
+];
+
+const svgs=[
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f0"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="24" ry="5" fill="#1e4a6e" opacity=".3"/><path d="M28 72 Q26 95 24 113 L76 113 Q74 95 72 72Z" fill="#1e4a6e" opacity=".88"/><path d="M35 75 Q50 83 65 75 L61 97 Q50 104 39 97Z" fill="#2d6fa0" opacity=".4"/><path d="M28 72 Q20 82 18 96" fill="#2d6fa0" opacity=".55"/><path d="M72 72 Q80 82 82 96" fill="#2d6fa0" opacity=".55"/><ellipse cx="50" cy="36" rx="20" ry="22" fill="#111"/><path d="M30 32 Q32 12 50 10 Q68 12 70 32 Q63 19 50 17 Q37 19 30 32Z" fill="#1e4a6e"/><path d="M30 32 Q24 42 26 54" fill="#1e4a6e" opacity=".8"/><path d="M70 32 Q76 42 74 54" fill="#1e4a6e" opacity=".8"/><ellipse cx="40" cy="38" rx="5" ry="4" fill="#7ad4ff" filter="url(#f0)" opacity=".95"/><ellipse cx="60" cy="38" rx="5" ry="4" fill="#7ad4ff" filter="url(#f0)" opacity=".95"/><ellipse cx="40" cy="38" rx="2.5" ry="2" fill="white"/><ellipse cx="60" cy="38" rx="2.5" ry="2" fill="white"/><path d="M68 54 L90 28 L93 31 L71 57Z" fill="#7ad4ff" filter="url(#f0)" opacity=".85"/><rect x="62" y="51" width="10" height="5" rx="2" fill="#2d6fa0"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="113" rx="24" ry="5" fill="#6e1e1e" opacity=".3"/><rect x="36" y="92" width="12" height="20" rx="3" fill="#111"/><rect x="52" y="92" width="12" height="20" rx="3" fill="#111"/><rect x="36" y="103" width="12" height="9" rx="2" fill="#6e1e1e" opacity=".7"/><rect x="52" y="103" width="12" height="9" rx="2" fill="#6e1e1e" opacity=".7"/><rect x="28" y="64" width="44" height="30" rx="7" fill="#1a1a1a"/><rect x="28" y="64" width="44" height="8" rx="4" fill="#6e1e1e"/><text x="36" y="84" font-size="11" fill="white" font-family="monospace" font-weight="bold">✕</text><text x="57" y="80" font-size="8" fill="#d05b5b" font-family="monospace" font-weight="bold">✕</text><rect x="16" y="64" width="14" height="22" rx="6" fill="#1a1a1a"/><rect x="70" y="64" width="14" height="22" rx="6" fill="#1a1a1a"/><ellipse cx="50" cy="40" rx="22" ry="25" fill="#1e1e1e"/><circle cx="32" cy="22" r="10" fill="#181818"/><circle cx="68" cy="22" r="10" fill="#181818"/><circle cx="32" cy="22" r="7" fill="#252525"/><circle cx="68" cy="22" r="7" fill="#252525"/><text x="38" y="38" font-size="9" fill="white" font-family="monospace">○</text><text x="53" y="38" font-size="9" fill="white" font-family="monospace">○</text><text x="62" y="21" font-size="8" fill="#d05b5b" font-family="monospace" font-weight="bold">ℵ</text></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="22" ry="5" fill="#1e4a6e" opacity=".3"/><rect x="34" y="90" width="13" height="22" rx="3" fill="#2d6fa0"/><rect x="53" y="90" width="13" height="22" rx="3" fill="#2d6fa0"/><path d="M28 56 Q22 72 24 90" stroke="#2d6fa0" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M72 56 Q78 72 76 90" stroke="#2d6fa0" stroke-width="10" stroke-linecap="round" fill="none"/><rect x="29" y="50" width="42" height="42" rx="8" fill="#1e4a6e"/><rect x="36" y="57" width="28" height="20" rx="4" fill="#050a10"/><circle cx="50" cy="67" r="5" fill="#5ba3d0" filter="url(#f2)" opacity=".6"/><circle cx="50" cy="67" r="2" fill="#7ad4ff"/><rect x="28" y="14" width="44" height="38" rx="10" fill="#2d6fa0"/><polygon points="30,22 24,6 40,16" fill="#2d6fa0"/><polygon points="70,22 76,6 60,16" fill="#2d6fa0"/><rect x="28" y="26" width="44" height="14" rx="4" fill="#030810"/><ellipse cx="40" cy="33" rx="6" ry="5" fill="#5ba3d0" filter="url(#f2)" opacity=".9"/><ellipse cx="60" cy="33" rx="6" ry="5" fill="#5ba3d0" filter="url(#f2)" opacity=".9"/><ellipse cx="40" cy="33" rx="3" ry="2.5" fill="#030810"/><ellipse cx="60" cy="33" rx="3" ry="2.5" fill="#030810"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f3"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="22" ry="5" fill="#6e1e1e" opacity=".3"/><path d="M32 62 L36 113 L50 108 L64 113 L68 62Z" fill="#6e1e1e"/><rect x="28" y="48" width="44" height="16" rx="5" fill="#a02d2d"/><rect x="18" y="48" width="14" height="12" rx="4" fill="#a02d2d"/><rect x="68" y="48" width="14" height="12" rx="4" fill="#a02d2d"/><path d="M74 32 L88 10 Q92 5 90 12 L80 34Z" fill="#ff8a8a" filter="url(#f3)" opacity=".8"/><rect x="34" y="30" width="12" height="3" rx="1.5" fill="#ff8a8a" filter="url(#f3)" opacity=".9"/><rect x="54" y="30" width="12" height="3" rx="1.5" fill="#ff8a8a" filter="url(#f3)" opacity=".9"/><ellipse cx="50" cy="28" rx="19" ry="21" fill="#1a1a1a"/><path d="M32 24 Q34 8 50 6 Q66 8 68 24" fill="#a02d2d" opacity=".8"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f4"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="20" ry="5" fill="#1e4a6e" opacity=".3"/><path d="M32 56 Q28 78 26 113 L74 113 Q72 78 68 56Z" fill="#1e4a6e" opacity=".9"/><circle cx="18" cy="48" r="7" fill="#5ba3d0" filter="url(#f4)" opacity=".7"/><circle cx="82" cy="54" r="6" fill="#7ad4ff" filter="url(#f4)" opacity=".6"/><path d="M30 56 Q20 62 18 74" stroke="#2d6fa0" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M70 56 Q80 62 82 74" stroke="#2d6fa0" stroke-width="9" stroke-linecap="round" fill="none"/><ellipse cx="50" cy="32" rx="20" ry="22" fill="#111"/><path d="M30 28 Q32 9 50 7 Q68 9 70 28 Q63 16 50 14 Q37 16 30 28Z" fill="#1e4a6e"/><circle cx="40" cy="34" r="5" fill="#7ad4ff" filter="url(#f4)"/><circle cx="60" cy="34" r="5" fill="#7ad4ff" filter="url(#f4)"/><circle cx="40" cy="34" r="2" fill="white"/><circle cx="60" cy="34" r="2" fill="white"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f5"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="22" ry="5" fill="#6e1e1e" opacity=".3"/><rect x="36" y="84" width="12" height="28" rx="4" fill="#a02d2d"/><rect x="52" y="84" width="12" height="28" rx="4" fill="#a02d2d"/><rect x="28" y="52" width="44" height="34" rx="8" fill="#a02d2d"/><path d="M18 46 L10 20 L14 18 L22 44Z" fill="#ff8a8a" filter="url(#f5)" opacity=".8"/><path d="M82 46 L90 20 L86 18 L78 44Z" fill="#ff8a8a" filter="url(#f5)" opacity=".8"/><rect x="28" y="16" width="44" height="38" rx="10" fill="#a02d2d"/><rect x="28" y="26" width="44" height="14" rx="4" fill="#050505"/><rect x="30" y="28" width="18" height="8" rx="3" fill="#ff8a8a" filter="url(#f5)" opacity=".9"/><rect x="52" y="28" width="18" height="8" rx="3" fill="#ff8a8a" filter="url(#f5)" opacity=".9"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f6"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="20" ry="5" fill="#1e4a6e" opacity=".3"/><path d="M30 54 Q20 70 22 113 L78 113 Q80 70 70 54Z" fill="#0d0d0d"/><path d="M30 54 Q22 66 20 80" fill="#1e4a6e" opacity=".5"/><path d="M70 54 Q78 66 80 80" fill="#1e4a6e" opacity=".5"/><rect x="34" y="66" width="7" height="16" rx="2" fill="#2d6fa0" transform="rotate(-20,38,74)"/><rect x="57" y="66" width="7" height="16" rx="2" fill="#2d6fa0" transform="rotate(20,61,74)"/><text x="18" y="46" font-size="11" fill="#5ba3d0" font-family="monospace" opacity=".7" filter="url(#f6)">✦</text><text x="76" y="55" font-size="9" fill="#7ad4ff" font-family="monospace" opacity=".6">✦</text><ellipse cx="50" cy="32" rx="19" ry="21" fill="#111"/><path d="M31 30 Q33 13 50 11 Q67 13 69 30 Q62 19 50 17 Q38 19 31 30Z" fill="#1e4a6e" opacity=".9"/><rect x="35" y="30" width="10" height="3" rx="1.5" fill="#7ad4ff" filter="url(#f6)" opacity=".9"/><rect x="55" y="30" width="10" height="3" rx="1.5" fill="#7ad4ff" filter="url(#f6)" opacity=".9"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f7"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="22" ry="5" fill="#6e1e1e" opacity=".3"/><path d="M36 78 Q32 95 34 113" stroke="#a02d2d" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M64 78 Q68 95 66 113" stroke="#a02d2d" stroke-width="9" stroke-linecap="round" fill="none"/><ellipse cx="50" cy="68" rx="22" ry="15" fill="#6e1e1e"/><path d="M28 66 Q16 62 14 72 Q18 80 28 76" fill="#6e1e1e" opacity=".7"/><path d="M72 66 Q84 62 86 72 Q82 80 72 76" fill="#6e1e1e" opacity=".7"/><ellipse cx="50" cy="32" rx="20" ry="24" fill="#6e1e1e"/><ellipse cx="38" cy="32" rx="9" ry="7" fill="#ff8a8a" filter="url(#f7)" opacity=".9"/><ellipse cx="62" cy="32" rx="9" ry="7" fill="#ff8a8a" filter="url(#f7)" opacity=".9"/><ellipse cx="38" cy="32" rx="4.5" ry="3.5" fill="#050505"/><ellipse cx="62" cy="32" rx="4.5" ry="3.5" fill="#050505"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f8"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="24" ry="5" fill="#1e4a6e" opacity=".3"/><path d="M30 58 Q26 78 26 113 L74 113 Q74 78 70 58Z" fill="#1e4a6e" opacity=".9"/><rect x="12" y="47" width="12" height="16" rx="2" fill="#2d6fa0" opacity=".7"/><line x1="20" y1="32" x2="20" y2="113" stroke="#2d6fa0" stroke-width="3" stroke-linecap="round"/><ellipse cx="20" cy="29" rx="8" ry="6" fill="#5ba3d0" filter="url(#f8)" opacity=".8"/><ellipse cx="50" cy="30" rx="19" ry="20" fill="#1e1e1e"/><path d="M31 25 Q33 9 50 7 Q67 9 69 25" fill="#2d6fa0" opacity=".8"/><circle cx="50" cy="18" r="5" fill="#7ad4ff" filter="url(#f8)" opacity=".9"/><circle cx="50" cy="18" r="2" fill="white"/><circle cx="42" cy="33" r="1.8" fill="#7ad4ff" filter="url(#f8)"/><circle cx="58" cy="33" r="1.8" fill="#7ad4ff" filter="url(#f8)"/></svg>`,
+  `<svg width="78" height="90" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg"><defs><filter id="f9"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><ellipse cx="50" cy="113" rx="20" ry="5" fill="#6e1e1e" opacity=".25"/><path d="M30 50 Q28 75 26 113 L74 113 Q72 75 70 50 Q60 42 50 40 Q40 42 30 50Z" fill="#a02d2d" opacity=".7"/><text x="20" y="60" font-size="8" fill="#d05b5b" font-family="monospace" opacity=".45">01</text><text x="74" y="68" font-size="8" fill="#d05b5b" font-family="monospace" opacity=".45">10</text><rect x="32" y="48" width="36" height="20" rx="6" fill="#121212"/><ellipse cx="50" cy="30" rx="20" ry="22" fill="#a02d2d" opacity=".85"/><ellipse cx="40" cy="32" rx="6" ry="5" fill="#ff8a8a" filter="url(#f9)" opacity=".8"/><ellipse cx="60" cy="32" rx="6" ry="5" fill="#ff8a8a" filter="url(#f9)" opacity=".8"/><ellipse cx="40" cy="32" rx="3" ry="2.4" fill="#030303"/><ellipse cx="60" cy="32" rx="3" ry="2.4" fill="#030303"/></svg>`
+];
+
+const skillData=[
+  {name:'Email',id:'SKL-001',price:'0.3 VIRTUAL',icon:'✉️'},
+  {name:'Voice',id:'SKL-002',price:'0.5 VIRTUAL',icon:'🎙️'},
+  {name:'Listen & Flow',id:'SKL-003',price:'0.4 VIRTUAL',icon:'〰️'},
+  {name:'Word',id:'SKL-004',price:'0.3 VIRTUAL',icon:'📝'},
+  {name:'Excel',id:'SKL-005',price:'0.4 VIRTUAL',icon:'📊'},
+  {name:'n8n',id:'SKL-006',price:'0.6 VIRTUAL',icon:'⚙️'},
+];
+const skillState={};skillData.forEach(s=>skillState[s.name]=0);
+let wsTabs=[{q:''},{q:''},{q:''},{q:''}];
+let curCol='iclone',curChar=null,sbOpen=false,running=false;
+
+function go(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  const el=document.getElementById('v-'+view);
+  if(el) el.classList.add('on');
+  document.querySelectorAll('.sbe').forEach(b=>b.classList.remove('on'));
+  const map={col:'n-col',plaza:'n-plaza',pcol:'n-plaza',pskill:'n-plaza',hub:'n-hub',settings:'n-settings',grid:'n-plaza',detail:'n-plaza'};
+  const nb=document.getElementById(map[view]||'n-col');
+  if(nb) nb.classList.add('on');
+  const labels={col:'collections',plaza:'plaza-places',pcol:'plaza › collections',pskill:'plaza › skills',hub:'hub',settings:'settings',grid:'plaza › '+(curCol==='iclone'?'iClone':'Frames'),detail:'plaza › '+curChar};
+  document.getElementById('isltxt').textContent=labels[view]||view;
+}
+
+function openCol(col){
+  curCol=col;
+  document.getElementById('glbl').textContent='Plaza › Collections › '+(col==='iclone'?'iClone':'Frames');
+  buildGrid();go('grid');
+}
+
+function buildGrid(){
+  document.getElementById('ng').innerHTML=chars.map((c,i)=>`
+    <div class="nc${c.col==='r'?' r':''}" onclick="openDetail(${i})">
+      <div class="nt">${svgs[i]}</div>
+      <div class="np">${c.price}</div>
+      <div class="ni"><div class="nn">${c.name}</div><div class="nid">ID #${c.id}</div></div>
+    </div>`).join('');
+}
+
+function openDetail(i){
+  const c=chars[i];curChar=c.name.toLowerCase().replace(/ /g,'-');
+  document.getElementById('dlbl').textContent='Plaza › '+(curCol==='iclone'?'iClone':'Frames')+' › '+c.name;
+  document.getElementById('did').textContent='ID # '+c.id;
+  document.getElementById('dname').textContent=c.name;
+  document.getElementById('dprice').textContent=c.price;
+  document.getElementById('dbuy').textContent='Adquirir '+c.name;
+  document.getElementById('dport').innerHTML=`<div style="transform:scale(1.5)">${svgs[i]}</div>`;
+  go('detail');
+}
+
+function buildSkillMkt(){
+  document.getElementById('skill-mkt').innerHTML=skillData.map(s=>`
+    <div class="sc"><div class="si">${s.icon}</div><div class="sp">${s.price}</div>
+    <div class="sf"><div class="sn_">${s.name}</div><div class="sid_">${s.id}</div></div></div>`).join('');
+}
+
+function showHub(tab){
+  document.getElementById('hs').style.display=tab==='skills'?'block':'none';
+  document.getElementById('hf').style.display=tab==='framework'?'block':'none';
+  document.getElementById('hw').style.display=tab==='workspace'?'block':'none';
+  document.querySelectorAll('.snb').forEach((b,i)=>b.classList.toggle('on',['skills','framework','workspace'][i]===tab));
+  if(tab==='workspace') buildWs();
+}
+
+function renderSkills(){
+  document.getElementById('sl').innerHTML=skillData.map(s=>{
+    const st=skillState[s.name];
+    return`<div class="sr"><span class="sna">${s.name}</span><div class="sarr"><button class="aw${st===1?' uon':''}" onclick="toggleArrow('${s.name}','up')">↑</button><button class="aw${st===-1?' don':''}" onclick="toggleArrow('${s.name}','down')">↓</button></div></div>`;
+  }).join('');
+}
+function toggleArrow(skill,dir){const cur=skillState[skill];skillState[skill]=dir==='up'?(cur===1?0:1):(cur===-1?0:-1);renderSkills();}
+
+function buildWs(){
+  const n=wsTabs.length;
+  const g=document.getElementById('wg');
+  g.innerHTML=wsTabs.map((t,i)=>`
+    <div class="wcard" id="wc${i}"><div class="wbar">
+      <div class="wdots"><div class="wd cls"></div><div class="wd"></div><div class="wd"></div></div>
+      <div class="ws"><button class="wsbtn" onclick="doSearch(${i})">🔍</button><input id="wi${i}" placeholder="pesquisar…" value="${t.q}" onkeydown="if(event.key==='Enter')doSearch(${i})" oninput="wsTabs[${i}].q=this.value"/></div>
+      <button class="wcls" onclick="rmWs(${i})">×</button>
+    </div>
+    <div class="wb"><div class="wh" id="wh${i}">${t.q?'':'escreve e prime ⏎'}</div><div class="wr${t.q?' v':''}" id="wr${i}"></div></div>
+    <div class="wresz" onmousedown="startResize(event,${i})">⇲</div>
+    </div>`).join('');
+  wsTabs.forEach((t,i)=>{if(t.q)renderRes(i,t.q);});
+}
+
+function startResize(e,i){
+  e.preventDefault();e.stopPropagation();
+  const card=document.getElementById('wc'+i);
+  const startX=e.clientX,startY=e.clientY;
+  const startW=card.offsetWidth,startH=card.offsetHeight;
+  const onMove=ev=>{
+    const newW=Math.max(200,startW+(ev.clientX-startX));
+    const newH=Math.max(120,startH+(ev.clientY-startY));
+    card.style.width=newW+'px';
+    card.style.height=newH+'px';
+  };
+  const onUp=()=>{
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+  };
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+function doSearch(i){const inp=document.getElementById('wi'+i);if(!inp)return;const q=inp.value.trim();if(!q)return;wsTabs[i].q=q;renderRes(i,q);}
+function renderRes(i,q){const el=document.getElementById('wr'+i);const hint=document.getElementById('wh'+i);if(!el)return;if(hint)hint.style.display='none';el.classList.add('v');el.innerHTML=`<div style="font-size:9px;color:var(--muted);font-family:monospace;margin-bottom:5px">» ${q}</div>`+[{t:'Resultado — iCLONE',u:'iclone.ai/search'},{t:'Docs Hub',u:'docs.iclone.ai/hub'},{t:'Plaza Places',u:'iclone.ai/plaza'}].map(r=>`<div class="wres"><div class="wrt">${r.t}</div><div class="wru">${r.u}</div></div>`).join('');}
+function rmWs(i){wsTabs.splice(i,1);buildWs();}
+function aW(){wsTabs.push({q:''});buildWs();}
+
+function runT(){
+  if(running)return;running=true;
+  const out=document.getElementById('oa');
+  const btn=document.querySelector('.frun');
+  btn.classList.remove('success','error');
+  const lines=['> initializing...','> connecting to agent...','> running: tokenResearchStandard','> params loaded','','✓ response received','✓ format: markdown','✓ latency: 1.2s','','— done —'];
+  out.innerHTML='';let i=0;
+  const iv=setInterval(()=>{
+    if(i>=lines.length){
+      clearInterval(iv);running=false;
+      btn.classList.add('success');
+      return;
+    }
+    out.innerHTML+=`<div>${lines[i]}</div>`;i++;
+  },180);
+}
+function rP(btn){btn.closest('.pr').remove();}
+function aP(){const d=document.createElement('div');d.className='pr';d.innerHTML=`<input placeholder="chave = valor"/><button class="xb" onclick="rP(this)">×</button>`;document.getElementById('pl').appendChild(d);}
+
+function toggleSb(){sbOpen=!sbOpen;document.getElementById('sb').classList.toggle('open',sbOpen);document.getElementById('tog').textContent=sbOpen?'›':'‹';}
+
+function setMode(m){
+  const f=document.getElementById('frame');
+  if(m==='light'){f.style.setProperty('--bg','#f4f4f4');f.style.setProperty('--s1','#e8e8e8');f.style.setProperty('--s2','#ddd');f.style.setProperty('--text','#111');f.style.setProperty('--muted','#999');f.style.setProperty('--dim','#ccc');f.style.setProperty('--bdr','#ccc');document.getElementById('ml').classList.add('on');document.getElementById('md').classList.remove('on');}
+  else{f.style.setProperty('--bg','#080808');f.style.setProperty('--s1','#0f0f0f');f.style.setProperty('--s2','#141414');f.style.setProperty('--text','#d0d0d0');f.style.setProperty('--muted','#4a4a4a');f.style.setProperty('--dim','#2a2a2a');f.style.setProperty('--bdr','#222');document.getElementById('md').classList.add('on');document.getElementById('ml').classList.remove('on');}
+}
+
+buildSkillMkt();
+renderSkills();
+</script>
+</body>
+</html>

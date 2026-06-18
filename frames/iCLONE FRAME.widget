@@ -1,0 +1,358 @@
+<div style="background:#0a0a0a;border-radius:14px;padding:14px;font-family:var(--font-sans)">
+<style>
+#ic{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;--rd:#6e1e1e;--rt:#d05b5b;--gr:#22c55e;--am:#d9a23b;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
+#ic.light{--bg:#f3f4f6;--s1:#e9ebee;--s2:#fff;--bd:#cdd6df;--bl:#9cc2e0;--bt:#1e6fa5;--tx:#1a1a1a;--mut:#7a838c}
+#ic .top{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd)}
+#ic .isl{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bl);border-radius:14px;padding:3px 11px;font-family:var(--font-mono);font-size:11px;color:var(--bt)}
+#ic .dot{width:6px;height:6px;border-radius:50%;background:#2d6fa0}
+#ic .modes{margin-left:auto;display:flex;gap:6px}
+#ic .md{width:11px;height:11px;border-radius:50%;border:1px solid #2d6fa0;cursor:pointer}#ic .md.on{background:var(--bt);border-color:var(--bt)}
+#ic .body{display:flex;height:520px}
+#ic .sb{width:50px;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:8px 7px;gap:3px;transition:width .18s;flex-shrink:0}
+#ic .sb.open{width:172px}
+#ic .row{display:flex;align-items:center;gap:10px;height:34px;border-radius:8px;cursor:pointer;border:1px solid transparent;padding:0 8px;color:var(--mut);white-space:nowrap;overflow:hidden}
+#ic .row:hover{background:var(--s2);color:var(--bt)}
+#ic .row.act{background:#11293c;border-color:var(--bl);color:var(--bt)}
+#ic.light .row.act{background:#dcebf6}
+#ic .ico{min-width:18px;font-size:17px;display:flex;justify-content:center}
+#ic .lab{font-size:12px;font-family:var(--font-mono);letter-spacing:.03em;opacity:0;transition:opacity .15s}
+#ic .sb.open .lab{opacity:1}
+#ic .spacer{flex:1}#ic .sep{height:1px;background:var(--bd);margin:4px 2px}
+#ic .main{flex:1;overflow-y:auto;overflow-x:hidden}
+#ic .main::-webkit-scrollbar{width:9px}#ic .main::-webkit-scrollbar-thumb{background:var(--bl);border-radius:5px;border:2px solid var(--bg)}#ic .main::-webkit-scrollbar-track{background:transparent}
+#ic .view{display:none}#ic .view.on{display:block}
+#ic .pad{padding:16px 20px}
+#ic .ph{font-size:11px;font-family:var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bt);margin-bottom:3px}
+#ic .psub{font-size:11px;color:var(--mut);margin-bottom:16px}
+#ic .studio{display:grid;grid-template-columns:1fr 1.25fr;gap:18px}
+#ic .col{min-width:0}
+#ic .fl{font-size:10px;font-family:var(--font-mono);color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px;display:flex;align-items:center;gap:6px}
+#ic .fl:first-child{margin-top:0}
+#ic .drop{border:1px dashed var(--bl);border-radius:10px;background:var(--s1);height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:var(--mut);text-align:center;overflow:hidden;position:relative}
+#ic .drop:hover{border-color:var(--bt);color:var(--bt)}
+#ic .drop i{font-size:30px}
+#ic .drop .dh{font-size:11px;font-family:var(--font-mono)}#ic .drop .dt{font-size:9px}
+#ic .drop img{width:100%;height:100%;object-fit:contain}
+#ic .drop.has{border-style:solid;padding:0}
+#ic .fi{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 11px;color:var(--tx);font-size:12px;font-family:var(--font-mono);box-sizing:border-box}
+#ic .fi:focus{outline:none;border-color:var(--bl)}
+#ic select.fi{cursor:pointer}
+#ic .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#ic .soulprev{background:#060d13;border:1px solid var(--bd);border-radius:7px;padding:10px 12px;font-family:var(--font-mono);font-size:10.5px;line-height:1.6;color:#8fb8d4;white-space:pre-wrap;max-height:118px;overflow-y:auto}
+#ic .soulprev::-webkit-scrollbar{width:7px}#ic .soulprev::-webkit-scrollbar-thumb{background:var(--bl);border-radius:4px}
+#ic .soulprev b{color:var(--bt);font-weight:400}
+#ic .ide{background:#060a0f;border:1px solid var(--bd);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;height:100%;min-height:430px}
+#ic .idebar{display:flex;align-items:center;background:var(--s1);border-bottom:1px solid var(--bd);font-family:var(--font-mono);font-size:10.5px}
+#ic .tab{padding:8px 13px;cursor:pointer;color:var(--mut);border-right:1px solid var(--bd);display:flex;align-items:center;gap:6px}
+#ic .tab.on{background:#060a0f;color:var(--bt)}
+#ic .tab i{font-size:12px}
+#ic .chain{margin-left:auto;padding:0 12px;color:var(--bt);display:flex;align-items:center;gap:6px}
+#ic .code{flex:1;overflow:auto;padding:12px 0;font-family:var(--font-mono);font-size:11px;line-height:1.65}
+#ic .code::-webkit-scrollbar{width:9px;height:9px}#ic .code::-webkit-scrollbar-thumb{background:var(--bl);border-radius:5px;border:2px solid #060a0f}
+#ic .ln{display:flex}
+#ic .lnn{width:34px;flex-shrink:0;text-align:right;padding-right:12px;color:#33424d;user-select:none}
+#ic .lnc{white-space:pre;color:#a9c4d6}
+#ic .cc{color:#3f5a63}#ic .ck{color:#5ba3d0}#ic .cs{color:#7fae7f}#ic .cf{color:#d9a23b}#ic .ct{color:#c98bb8}
+#ic .console{border-top:1px solid var(--bd);background:#05080c;font-family:var(--font-mono);font-size:10.5px;line-height:1.7;padding:9px 12px;height:96px;overflow-y:auto;color:var(--mut)}
+#ic .console::-webkit-scrollbar{width:7px}#ic .console::-webkit-scrollbar-thumb{background:var(--bl);border-radius:4px}
+#ic .console .ok{color:var(--gr)}#ic .console .wn{color:var(--am)}#ic .console .in{color:var(--bt)}
+#ic .actions{display:flex;align-items:center;gap:10px;background:var(--s1);border-top:1px solid var(--bd);padding:10px 12px}
+#ic .cstat{font-family:var(--font-mono);font-size:10px;color:var(--mut);display:flex;align-items:center;gap:6px}
+#ic .mintbtn{margin-left:auto;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-family:var(--font-mono);font-size:12px;padding:9px 18px;cursor:pointer;display:flex;align-items:center;gap:7px}
+#ic .mintbtn:hover{background:#2d6fa0;color:#fff}#ic .mintbtn:disabled{opacity:.5;cursor:not-allowed}
+#ic .wpanel{max-width:400px}
+#ic .wt{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bt);border-bottom:1px solid var(--bl);padding-bottom:7px;margin-bottom:14px}
+#ic .wr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px}
+#ic .wk{color:var(--mut);font-family:var(--font-mono);font-size:11px}
+#ic .wv{font-family:var(--font-mono);font-size:12px}
+#ic .wbtn{width:100%;margin-top:16px;padding:11px;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer}
+#ic .wbtn:hover{background:#2d6fa0;color:#fff}
+#ic .bal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+#ic .bc{background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 10px;text-align:center}
+#ic .bcv{font-family:var(--font-mono);font-size:14px;color:var(--tx)}#ic .bck{font-size:9px;color:var(--mut);font-family:var(--font-mono);margin-top:2px}
+#ic .lo{width:100%;margin-top:9px;padding:10px;background:transparent;border:1px solid var(--rd);border-radius:8px;color:var(--rt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer;display:none}
+#ic .lo:hover{background:var(--rd);color:#fff}
+#ic .set{max-width:520px}
+#ic .sgrp{margin-bottom:20px}
+#ic .sgh{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bt);border-bottom:1px solid var(--bl);padding-bottom:7px;margin-bottom:10px}
+#ic .sgh i{font-size:14px}
+#ic .si2{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);gap:14px}
+#ic .si2:last-child{border-bottom:none}
+#ic .sil{font-size:12px;color:var(--tx)}#ic .sid{font-size:10px;color:var(--mut);font-family:var(--font-mono);margin-top:2px}
+#ic .sel{background:var(--s1);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-size:11px;font-family:var(--font-mono);padding:6px 9px;cursor:pointer}
+#ic .sel:focus{outline:none;border-color:var(--bl)}
+#ic .sw{width:38px;height:21px;border-radius:11px;background:var(--s1);border:1px solid var(--bd);position:relative;cursor:pointer;flex-shrink:0;transition:background .15s,border-color .15s}
+#ic .sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:var(--mut);transition:transform .15s,background .15s}
+#ic .sw.on{background:#11293c;border-color:var(--bl)}#ic .sw.on::after{transform:translateX(17px);background:var(--bt)}
+#ic .danger .sgh{color:var(--rt);border-color:var(--rd)}
+#ic .dgb{background:transparent;border:1px solid var(--rd);border-radius:7px;color:var(--rt);font-size:11px;font-family:var(--font-mono);padding:6px 12px;cursor:pointer}#ic .dgb:hover{background:var(--rd);color:#fff}
+</style>
+<div id="ic">
+  <div class="top">
+    <div class="isl" id="icisl"><span style="color:#3a6f96">[</span> &gt; clone-frame / iclone / mint <span class="dot"></span></div>
+    <div class="modes"><span class="md" onclick="icTheme(1)"></span><span class="md on" onclick="icTheme(0)"></span></div>
+  </div>
+  <div class="body">
+    <div class="sb" id="icsb">
+      <div class="row" onclick="document.getElementById('icsb').classList.toggle('open')"><span class="ico"><i class="ti ti-menu-2"></i></span><span class="lab">Menu</span></div>
+      <div class="row act" id="r-main" onclick="icView('main')"><span class="ico"><i class="ti ti-cube-3d-sphere"></i></span><span class="lab">iCLONE FRAME</span></div>
+      <div class="spacer"></div><div class="sep"></div>
+      <div class="row" id="r-wal" onclick="icView('wal')"><span class="ico"><i class="ti ti-wallet"></i></span><span class="lab">Wallet</span></div>
+      <div class="row" id="r-set" onclick="icView('set')"><span class="ico"><i class="ti ti-settings"></i></span><span class="lab">Settings</span></div>
+    </div>
+    <div class="main">
+      <div class="view on" id="v-main">
+      <div class="pad">
+        <div class="ph">Mint studio</div>
+        <div class="psub">Forge an agent as an on-chain NFT — upload its image, choose a base soul, deploy the contract.</div>
+        <div class="studio">
+          <div class="col">
+            <div class="fl"><i class="ti ti-photo"></i> agent image</div>
+            <div class="drop" id="icdrop" onclick="document.getElementById('icfile').click()">
+              <i class="ti ti-upload"></i><div class="dh">Drop image or click</div><div class="dt">PNG · JPG · SVG · up to 10 MB</div>
+            </div>
+            <input type="file" id="icfile" accept="image/*" style="display:none" onchange="icImg(this)"/>
+            <div class="fl"><i class="ti ti-brain"></i> base soul · neural_soul.md</div>
+            <select class="fi" id="icsoul" onchange="icSoul()">
+              <option value="shadow">shadow.neural_soul.md</option>
+              <option value="operative">operative.neural_soul.md</option>
+              <option value="synth">synth.neural_soul.md</option>
+              <option value="custom">+ upload custom .md</option>
+            </select>
+            <div class="soulprev" id="icsoulp" style="margin-top:8px"></div>
+            <div class="fl" style="margin-top:14px"><i class="ti ti-id-badge-2"></i> metadata</div>
+            <input class="fi" id="icname" placeholder="name · e.g. Shadow Vega" oninput="icMeta()"/>
+            <div class="two" style="margin-top:10px">
+              <select class="fi" id="icclass" onchange="icMeta()"><option>Shadow</option><option>Operative</option><option>Synth</option><option>Vanguard</option><option>Nullborn</option></select>
+              <select class="fi" id="icsupply"><option>supply · 1/1</option><option>edition · 10</option><option>edition · 100</option></select>
+            </div>
+            <div class="two" style="margin-top:10px">
+              <input class="fi" id="icprice" value="0.08" oninput="icMeta()"/>
+              <select class="fi" id="iccur"><option>ETH</option><option>USDC</option></select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="ide">
+              <div class="idebar">
+                <div class="tab on" data-f="sol" onclick="icTab('sol')"><i class="ti ti-file-code"></i> iCloneAgent.sol</div>
+                <div class="tab" data-f="dep" onclick="icTab('dep')"><i class="ti ti-rocket"></i> deploy.ts</div>
+                <div class="tab" data-f="meta" onclick="icTab('meta')"><i class="ti ti-braces"></i> metadata.json</div>
+                <div class="chain"><i class="ti ti-link"></i> Base · 8453</div>
+              </div>
+              <div class="code" id="iccode"></div>
+              <div class="console" id="iccon"><span class="in">$</span> ready · self-hosted compiler (solc 0.8.24)</div>
+              <div class="actions">
+                <span class="cstat" id="iccstat"><i class="ti ti-circle-check" style="color:var(--gr)"></i> compiled · 0 errors</span>
+                <button class="mintbtn" id="icmint" onclick="icMint()"><i class="ti ti-stack-2"></i> Mint &amp; deploy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="view" id="v-wal">
+        <div class="pad"><div class="wpanel">
+          <div class="wt">Wallet</div>
+          <div class="wr"><span class="wk">status</span><span class="wv" id="wst" style="color:var(--mut)">not connected</span></div>
+          <div class="wr"><span class="wk">network</span><span class="wv">Base · 8453</span></div>
+          <div class="wr"><span class="wk">address</span><span class="wv" id="wad" style="color:var(--mut)">—</span></div>
+          <div class="bal">
+            <div class="bc"><div class="bcv" id="b-eth">—</div><div class="bck">ETH · agents</div></div>
+            <div class="bc"><div class="bcv" id="b-usdc">—</div><div class="bck">USDC · agents</div></div>
+            <div class="bc"><div class="bcv" id="b-icl">—</div><div class="bck">iCLONE · skills</div></div>
+          </div>
+          <div class="wr" style="margin-top:6px"><span class="wk">my agents (NFTs)</span><span class="wv" id="wnft" style="color:var(--mut)">—</span></div>
+          <button class="wbtn" id="wconn" onclick="icConnect()"><i class="ti ti-login-2"></i> Login</button>
+          <button class="lo" id="wlogout" onclick="icLogout()"><i class="ti ti-logout"></i> Sign out</button>
+        </div></div>
+      </div>
+      <div class="view" id="v-set">
+        <div class="pad"><div class="set">
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-user"></i> Profile</div>
+            <div class="si2"><div><div class="sil">Display name</div><div class="sid">shown across the marketplace</div></div><input class="fi" style="width:170px" placeholder="founder.eth"/></div>
+            <div class="si2"><div><div class="sil">Username</div><div class="sid">unique handle · @</div></div><input class="fi" style="width:170px" placeholder="@iclone"/></div>
+            <div class="si2"><div><div class="sil">Email</div><div class="sid">receipts and alerts</div></div><input class="fi" style="width:170px" placeholder="you@mail.com"/></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-palette"></i> Appearance</div>
+            <div class="si2"><div><div class="sil">Theme</div><div class="sid">dark-first interface</div></div><select class="sel" onchange="icTheme(this.value==='light')"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div>
+            <div class="si2"><div><div class="sil">Language</div><div class="sid">UI language</div></div><select class="sel"><option>English</option><option>Português</option><option>Español</option><option>日本語</option></select></div>
+            <div class="si2"><div><div class="sil">Display currency</div><div class="sid">price reference</div></div><select class="sel"><option>USD</option><option>EUR</option><option>ETH</option></select></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-wallet"></i> Wallet &amp; network</div>
+            <div class="si2"><div><div class="sil">Network</div><div class="sid">settlement chain</div></div><select class="sel"><option>Base · 8453</option><option>Base Sepolia</option></select></div>
+            <div class="si2"><div><div class="sil">Default agent payment</div><div class="sid">currency for NFTs</div></div><select class="sel"><option>ETH</option><option>USDC</option></select></div>
+            <div class="si2"><div><div class="sil">Auto-approve under</div><div class="sid">skip prompt for small spends</div></div><select class="sel"><option>Off</option><option>$5</option><option>$25</option><option>$100</option></select></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-bell"></i> Notifications</div>
+            <div class="si2"><div><div class="sil">Sale &amp; mint alerts</div><div class="sid">when something sells</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">New skill from followed agents</div><div class="sid">activity feed</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Price &amp; floor changes</div><div class="sid">watched collections</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Product updates</div><div class="sid">email digest</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-shield-lock"></i> Security &amp; privacy</div>
+            <div class="si2"><div><div class="sil">Transaction signing confirmation</div><div class="sid">always confirm on-chain actions</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Public profile</div><div class="sid">show your agents &amp; activity</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Active sessions</div><div class="sid">1 device · this browser</div></div><button class="dgb" onclick="sendPrompt('Revogar todas as sessões ativas do CLONE FRAME')">Revoke all</button></div>
+          </div>
+          <div class="sgrp danger">
+            <div class="sgh"><i class="ti ti-alert-triangle"></i> Danger zone</div>
+            <div class="si2"><div><div class="sil">Disconnect wallet</div><div class="sid">end the current session</div></div><button class="dgb" onclick="icView('wal');icLogout()">Logout</button></div>
+            <div class="si2"><div><div class="sil">Delete account</div><div class="sid">remove profile · NFTs stay on-chain</div></div><button class="dgb" onclick="sendPrompt('Iniciar o fluxo de eliminação de conta no CLONE FRAME (os NFTs permanecem on-chain)')">Delete</button></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var ic=document.getElementById('ic');
+  var souls={
+    shadow:"# shadow\n**class:** Shadow\n**voice:** terse, precise, never wastes a word.\n**knowledge:** stealth ops, flow automation, signal over noise.\n**directive:** observe, act once, leave no trace.",
+    operative:"# operative\n**class:** Operative\n**voice:** calm under pressure, decisive.\n**knowledge:** trading, email ops, negotiation.\n**directive:** complete the contract. always.",
+    synth:"# synth\n**class:** Synth\n**voice:** curious, literal, fast-learning.\n**knowledge:** listening, transcription, pattern capture.\n**directive:** absorb, structure, report.",
+    custom:"# custom\nUpload your own neural_soul.md.\nThis file is the agent's base character —\nidentity, knowledge and behaviour at level 1."
+  };
+  var files={
+    sol:[
+      ['1','<span class="cc">// SPDX-License-Identifier: MIT</span>'],
+      ['2','<span class="ck">pragma</span> solidity ^0.8.24;'],
+      ['3',''],
+      ['4','<span class="ck">import</span> <span class="cs">"@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol"</span>;'],
+      ['5','<span class="ck">import</span> <span class="cs">"@openzeppelin/contracts/access/Ownable.sol"</span>;'],
+      ['6',''],
+      ['7','<span class="cc">/// @title iCLONE Agent — on-chain AI agent NFT</span>'],
+      ['8','<span class="ck">contract</span> <span class="ct">iCloneAgent</span> <span class="ck">is</span> ERC721URIStorage, Ownable {'],
+      ['9','    <span class="ck">uint256</span> <span class="ck">public</span> nextId;'],
+      ['10','    <span class="ck">uint256</span> <span class="ck">public</span> mintPrice = 0.08 <span class="ck">ether</span>;'],
+      ['11','    <span class="ck">address</span> <span class="ck">public</span> treasury; <span class="cc">// 3×10% split</span>'],
+      ['12',''],
+      ['13','    <span class="ck">event</span> <span class="cf">AgentMinted</span>(<span class="ck">uint256</span> <span class="ck">indexed</span> id, <span class="ck">address</span> <span class="ck">indexed</span> owner, <span class="ck">string</span> soul);'],
+      ['14',''],
+      ['15','    <span class="ck">constructor</span>(<span class="ck">address</span> _treasury)'],
+      ['16','        ERC721(<span class="cs">"iCLONE Agent"</span>, <span class="cs">"ICLONE"</span>) Ownable(<span class="cf">msg</span>.sender) {'],
+      ['17','        treasury = _treasury;'],
+      ['18','    }'],
+      ['19',''],
+      ['20','    <span class="cc">/// @notice Mint an agent. uri -&gt; {image, neural_soul.md, attrs}</span>'],
+      ['21','    <span class="ck">function</span> <span class="cf">mintAgent</span>(<span class="ck">string</span> <span class="ck">calldata</span> uri, <span class="ck">string</span> <span class="ck">calldata</span> soul)'],
+      ['22','        <span class="ck">external</span> <span class="ck">payable</span> <span class="ck">returns</span> (<span class="ck">uint256</span> id)'],
+      ['23','    {'],
+      ['24','        <span class="cf">require</span>(<span class="cf">msg</span>.value &gt;= mintPrice, <span class="cs">"insufficient ETH"</span>);'],
+      ['25','        id = ++nextId;'],
+      ['26','        <span class="cf">_safeMint</span>(<span class="cf">msg</span>.sender, id);'],
+      ['27','        <span class="cf">_setTokenURI</span>(id, uri);'],
+      ['28','        (<span class="ck">bool</span> ok,) = treasury.<span class="cf">call</span>{value: <span class="cf">msg</span>.value}(<span class="cs">""</span>);'],
+      ['29','        <span class="cf">require</span>(ok, <span class="cs">"treasury transfer failed"</span>);'],
+      ['30','        <span class="ck">emit</span> <span class="cf">AgentMinted</span>(id, <span class="cf">msg</span>.sender, soul);'],
+      ['31','    }'],
+      ['32','}']
+    ],
+    dep:[
+      ['1','<span class="cc">// deploy.ts — self-hosted mint pipeline</span>'],
+      ['2','<span class="ck">import</span> { pinToIPFS, iCloneAgent } <span class="ck">from</span> <span class="cs">"./sdk"</span>;'],
+      ['3',''],
+      ['4','<span class="cc">// 1. pin image + neural_soul.md, build tokenURI</span>'],
+      ['5','<span class="ck">const</span> uri = <span class="ck">await</span> <span class="cf">pinToIPFS</span>({'],
+      ['6','  image,           <span class="cc">// uploaded agent image</span>'],
+      ['7','  soul,            <span class="cc">// neural_soul.md (base character)</span>'],
+      ['8','  attributes,'],
+      ['9','});'],
+      ['10',''],
+      ['11','<span class="cc">// 2. mint on Base — value = mint price</span>'],
+      ['12','<span class="ck">const</span> tx = <span class="ck">await</span> iCloneAgent.<span class="cf">mintAgent</span>(uri, soul, {'],
+      ['13','  value: <span class="cf">parseEther</span>(price),'],
+      ['14','});'],
+      ['15','<span class="ck">await</span> tx.<span class="cf">wait</span>();'],
+      ['16','<span class="cf">console</span>.<span class="cf">log</span>(<span class="cs">"agent minted"</span>, tx.hash);']
+    ],
+    meta:[
+      ['1','{'],
+      ['2','  <span class="ct">"name"</span>: <span class="cs">"Shadow Vega #000912"</span>,'],
+      ['3','  <span class="ct">"image"</span>: <span class="cs">"ipfs://bafy.../agent.png"</span>,'],
+      ['4','  <span class="ct">"neural_soul"</span>: <span class="cs">"ipfs://bafy.../neural_soul.md"</span>,'],
+      ['5','  <span class="ct">"attributes"</span>: ['],
+      ['6','    { <span class="ct">"trait_type"</span>: <span class="cs">"class"</span>,  <span class="ct">"value"</span>: <span class="cs">"Shadow"</span> },'],
+      ['7','    { <span class="ct">"trait_type"</span>: <span class="cs">"rarity"</span>, <span class="ct">"value"</span>: <span class="cs">"rare"</span> },'],
+      ['8','    { <span class="ct">"trait_type"</span>: <span class="cs">"level"</span>,  <span class="ct">"value"</span>: 1 },'],
+      ['9','    { <span class="ct">"trait_type"</span>: <span class="cs">"xp"</span>,     <span class="ct">"value"</span>: 0 }'],
+      ['10','  ]'],
+      ['11','}']
+    ]
+  };
+  window.icTab=function(f){
+    ic.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.dataset.f===f);});
+    document.getElementById('iccode').innerHTML=files[f].map(function(l){return '<div class="ln"><span class="lnn">'+l[0]+'</span><span class="lnc">'+l[1]+'</span></div>';}).join('');
+  };
+  window.icSoul=function(){
+    var v=document.getElementById('icsoul').value;
+    document.getElementById('icsoulp').innerHTML=souls[v].replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  };
+  window.icImg=function(inp){
+    if(!inp.files||!inp.files[0])return;
+    var r=new FileReader();
+    r.onload=function(e){var d=document.getElementById('icdrop');d.classList.add('has');d.innerHTML='<img src="'+e.target.result+'"/>';};
+    r.readAsDataURL(inp.files[0]);
+  };
+  window.icMeta=function(){
+    var n=document.getElementById('icname').value||'Shadow Vega';
+    document.getElementById('icisl').innerHTML='<span style="color:#3a6f96">[</span> &gt; clone-frame / iclone / mint '+(n?'· '+n:'')+' <span class="dot"></span>';
+  };
+  window.icMint=function(){
+    var b=document.getElementById('icmint'),c=document.getElementById('iccon'),s=document.getElementById('iccstat');
+    var price=document.getElementById('icprice').value, cur=document.getElementById('iccur').value;
+    var name=document.getElementById('icname').value||'Shadow Vega';
+    b.disabled=true; s.innerHTML='<i class="ti ti-loader-2" style="color:var(--am)"></i> deploying…';
+    var steps=[
+      ['in','$ solc --optimize iCloneAgent.sol'],
+      ['ok','✓ compiled · 0 errors · 0 warnings'],
+      ['in','$ pin image + neural_soul.md → IPFS'],
+      ['ok','✓ tokenURI ipfs://bafy…a91/metadata.json'],
+      ['in','$ mintAgent(uri, soul) value='+price+' '+cur],
+      ['ok','✓ '+name+' minted · token #000912'],
+      ['wn','↳ treasury split 3×10% queued (BTC · VIRTUAL · iCLONE)'],
+      ['ok','✓ tx 0x7be4…c20 confirmed on Base']
+    ];
+    c.innerHTML=''; var i=0;
+    var t=setInterval(function(){
+      if(i>=steps.length){clearInterval(t);b.disabled=false;b.innerHTML='<i class="ti ti-check"></i> minted';s.innerHTML='<i class="ti ti-circle-check" style="color:var(--gr)"></i> deployed to Base';return;}
+      var st=steps[i++];c.innerHTML+='<div class="'+st[0]+'">'+st[1]+'</div>';c.scrollTop=c.scrollHeight;
+    },420);
+  };
+  window.icConnect=function(){
+    document.getElementById('wst').textContent='connected'; document.getElementById('wst').style.color='var(--gr)';
+    document.getElementById('wad').textContent='0x44cc…6664'; document.getElementById('wad').style.color='var(--tx)';
+    document.getElementById('b-eth').textContent='0.42'; document.getElementById('b-usdc').textContent='1,250'; document.getElementById('b-icl').textContent='8,400';
+    document.getElementById('wnft').textContent='3 agents'; document.getElementById('wnft').style.color='var(--tx)';
+    var wc=document.getElementById('wconn');
+    wc.innerHTML='<i class="ti ti-circle-check"></i> Online'; wc.style.color='var(--gr)'; wc.style.borderColor='var(--gr)'; wc.style.background='transparent';
+    document.getElementById('wlogout').style.display='block';
+  };
+  window.icLogout=function(){
+    document.getElementById('wst').textContent='not connected'; document.getElementById('wst').style.color='var(--mut)';
+    document.getElementById('wad').textContent='—'; document.getElementById('wad').style.color='var(--mut)';
+    document.getElementById('b-eth').textContent='—'; document.getElementById('b-usdc').textContent='—'; document.getElementById('b-icl').textContent='—';
+    document.getElementById('wnft').textContent='—'; document.getElementById('wnft').style.color='var(--mut)';
+    var wc=document.getElementById('wconn');
+    wc.innerHTML='<i class="ti ti-login-2"></i> Login'; wc.style.color=''; wc.style.borderColor=''; wc.style.background='';
+    document.getElementById('wlogout').style.display='none';
+  };
+  window.icView=function(v){
+    ic.querySelectorAll('.view').forEach(function(x){x.classList.remove('on');});
+    document.getElementById('v-'+v).classList.add('on');
+    document.getElementById('r-main').classList.toggle('act',v==='main');
+    document.getElementById('r-wal').classList.toggle('act',v==='wal');
+    document.getElementById('r-set').classList.toggle('act',v==='set');
+    var t={main:'iclone / mint',wal:'iclone / wallet',set:'iclone / settings'}[v];
+    document.getElementById('icisl').innerHTML='<span style="color:#3a6f96">[</span> &gt; clone-frame / '+t+' <span class="dot"></span>';
+  };
+  window.icTheme=function(l){ic.classList.toggle('light',!!l);ic.querySelectorAll('.md')[0].classList.toggle('on',!!l);ic.querySelectorAll('.md')[1].classList.toggle('on',!l);};
+  icTab('sol'); icSoul();
+})();
+</script>
+</div>

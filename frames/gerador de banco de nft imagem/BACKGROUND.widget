@@ -1,0 +1,172 @@
+<div style="background:#0a0a0a;border-radius:14px;padding:14px;font-family:var(--font-sans)">
+<style>
+#bgw{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
+#bgw .top{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd)}
+#bgw .isl{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bl);border-radius:14px;padding:3px 11px;font-family:var(--font-mono);font-size:11px;color:var(--bt)}
+#bgw .dot{width:6px;height:6px;border-radius:50%;background:#2d6fa0}
+#bgw .tabs{display:flex;flex-wrap:wrap;gap:10px;padding:14px 18px 8px}
+#bgw .tb{display:flex;align-items:center;gap:7px;background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:9px 15px;cursor:pointer;font-family:var(--font-mono);font-size:11px;color:var(--mut)}
+#bgw .tb i{font-size:14px}#bgw .tb:hover{color:var(--bt)}
+#bgw .tb.on{color:#fff;background:#11202c;border-color:#2d6fa0}
+#bgw .wrap{display:grid;grid-template-columns:250px 1fr;gap:18px;padding:6px 18px 16px}
+#bgw .stage{border:2px solid var(--bl);border-radius:14px;overflow:hidden;height:340px;background:#000;line-height:0}
+#bgw .stage svg{width:100%;height:100%;display:block}
+#bgw .meta{margin-top:9px;font-family:var(--font-mono);font-size:10px;color:var(--mut);text-align:center;line-height:1.7}
+#bgw .meta b{color:var(--bt);font-weight:400}
+#bgw .col{min-width:0}
+#bgw .pane{display:none}#bgw .pane.on{display:block}
+#bgw .fl{font-size:10px;font-family:var(--font-mono);color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:0 0 7px;display:flex;align-items:center;gap:6px}
+#bgw .fl span{margin-left:auto;color:var(--bt)}
+#bgw .pal{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+#bgw .dotc{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+#bgw .dotc.on{border-color:#fff}
+#bgw input[type=range]{width:100%;margin:0 0 14px;accent-color:var(--bt)}
+#bgw .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}
+#bgw .ch{display:flex;align-items:center;gap:6px;background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:7px 11px;cursor:pointer;font-family:var(--font-mono);font-size:10px;color:var(--mut)}
+#bgw .ch i{font-size:13px}#bgw .ch:hover{color:var(--bt)}
+#bgw .ch.on{border-color:#2d6fa0;color:var(--bt);background:#11202c}
+#bgw .ti2{padding:6px 10px;cursor:pointer;color:var(--mut);background:var(--s1);border:1px solid var(--bd);border-radius:7px;font-family:var(--font-mono);font-size:10px}
+#bgw .ti2.on[data-r=rare]{background:#11293c;border-color:#5ba3d0;color:#7ad4ff}
+#bgw .ti2.on[data-r=superrare]{background:#241734;border-color:#b86fd9;color:#d9b8f5}
+#bgw .ti2.on[data-r=iclone]{background:#2e2410;border-color:#d9a23b;color:#ffd98a}
+#bgw .lab{font-size:10px;font-family:var(--font-mono);color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 5px}
+#bgw .note{font-size:10px;font-family:var(--font-mono);color:#46515a;line-height:1.6;margin-top:8px}
+#bgw .fi{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 11px;color:var(--tx);font-size:12px;font-family:var(--font-mono);box-sizing:border-box}
+#bgw .fi:focus{outline:none;border-color:var(--bl)}
+#bgw .soon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:200px;border:1px dashed var(--bd);border-radius:10px;color:#46515a;font-family:var(--font-mono);font-size:11px;text-align:center}
+#bgw .soon i{font-size:26px}
+#bgw .save{width:100%;margin-top:14px;padding:11px;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-size:12px;font-family:var(--font-mono);letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+#bgw .save:hover{background:#2d6fa0;color:#fff}
+</style>
+<div id="bgw">
+  <div class="top"><div class="isl"><span style="color:#3a6f96">[</span> &gt; iclone / nft-image-bank <span class="dot"></span></div></div>
+  <div class="tabs">
+    <div class="tb on" data-t="bg" onclick="tab('bg')"><i class="ti ti-photo"></i> Background</div>
+    <div class="tb" data-t="acc" onclick="tab('acc')"><i class="ti ti-shirt"></i> Accessories</div>
+    <div class="tb" data-t="id" onclick="tab('id')"><i class="ti ti-id-badge-2"></i> ID</div>
+    <div class="tb" data-t="skill" onclick="tab('skill')"><i class="ti ti-wand"></i> Skill</div>
+    <div class="tb" data-t="inft" onclick="tab('inft')"><i class="ti ti-cube"></i> iNFT</div>
+  </div>
+  <div class="wrap">
+    <div>
+      <div class="stage" id="bgstage"></div>
+      <div class="meta" id="bgmeta"></div>
+    </div>
+    <div class="col">
+      <div class="pane on" id="t-bg">
+        <div class="fl">neon &amp; light</div>
+        <div class="pal" id="bgneon"></div>
+        <div class="fl">panel tone</div>
+        <div class="pal" id="bgpanel"></div>
+        <div class="fl">darkness <span id="bgdv">dark</span></div>
+        <input type="range" min="0" max="100" value="80" oninput="bgDark(this.value)"/>
+        <div class="fl">glow <span id="bggv">strong</span></div>
+        <input type="range" min="1" max="12" value="7" oninput="bgGlow(this.value)"/>
+        <div class="chips">
+          <div class="ch on" id="ch-br" onclick="bgTog('brackets')"><i class="ti ti-brackets-angle"></i> Brackets</div>
+          <div class="ch on" id="ch-pt" onclick="bgTog('pattern')"><i class="ti ti-typography"></i> iclone mark</div>
+        </div>
+      </div>
+      <div class="pane" id="t-acc">
+        <div class="soon"><i class="ti ti-shirt"></i> Accessories<br>casaco · sapatos · etc.<br><span style="color:#33424d">próximas imagens entram aqui</span></div>
+      </div>
+      <div class="pane" id="t-id">
+        <div class="lab">name</div><input class="fi" id="id-name" value="iCLONE" oninput="idUp()"/>
+        <div class="lab">serial number</div><input class="fi" id="id-serial" value="#000912" oninput="idUp()"/>
+        <div class="lab">rarity tier</div>
+        <div class="chips" id="id-rar"></div>
+        <div class="lab">class / track</div><input class="fi" id="id-class" value="Market Intelligence" oninput="idUp()"/>
+        <div class="lab">collection</div><input class="fi" id="id-coll" value="iCLONE Agents" oninput="idUp()"/>
+      </div>
+      <div class="pane" id="t-skill">
+        <div class="fl">skills merged into the key <span id="sk-n">0</span></div>
+        <div class="chips" id="sk-list"></div>
+        <div class="note">A NFT é a <b style="color:var(--bt);font-weight:400">chave</b> do agente: as skills selecionadas ficam acessíveis ao detentor da chave dentro da Clone Frame (e em todos os frames).</div>
+      </div>
+      <div class="pane" id="t-inft">
+        <div class="lab">collection name</div><input class="fi" id="in-coll" value="iCLONE Agents"/>
+        <div class="lab">supply · quantity to mint</div><input class="fi" id="in-supply" value="100" oninput="inUp()"/>
+        <div class="lab">publish date</div><input class="fi" id="in-date" type="date" value="2026-06-30" oninput="inUp()"/>
+        <div class="lab">mint price</div><input class="fi" id="in-price" value="0.08 ETH" oninput="inUp()"/>
+        <div class="lab">contract standard</div>
+        <div class="chips" id="in-ct"></div>
+        <div class="note">Base · chainId 8453. <b style="color:var(--bt);font-weight:400">ERC-721A</b> (mint em lote, gás baixo) + <b style="color:var(--bt);font-weight:400">ERC-2981</b> (royalties). Ao comprar, a wallet recebe o NFT (a chave) e o agente — usados em conjunto na Clone Frame.</div>
+      </div>
+      <button class="save" onclick="bgSave()"><i class="ti ti-stack-2"></i> Mint iNFT Collection</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var NEON=['#3b82f6','#22d3ee','#8b5cf6','#ec4899','#22c55e','#f59e0b','#ef4444','#e5e7eb'];
+  var PANEL=['#4a3aa8','#3a2f8f','#283593','#1f2a52','#3b1f52','#143a4a','#2a2f3a','#0c0c14'];
+  var RAR=['rare','superrare','iclone'];
+  var SKILLS=['Email','n8n flow','ACP troubleshoot','Word report','GitHub action','SQL · Supabase','Research','Voice'];
+  var CT=['ERC-721A','ERC-721'];
+  var st={neon:'#3b82f6',panel:'#4a3aa8',dark:80,glow:7,brackets:1,pattern:1,
+          name:'iCLONE',serial:'#000912',rarity:'iclone',cls:'Market Intelligence',coll:'iCLONE Agents',
+          skills:{}, contract:'ERC-721A', supply:'100', date:'2026-06-30', price:'0.08 ETH'};
+  function rgb(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+  function hex(a){return '#'+a.map(function(v){return ('0'+Math.max(0,Math.min(255,Math.round(v))).toString(16)).slice(-2);}).join('');}
+  function mix(a,b,t){var A=rgb(a),B=rgb(b);return hex([A[0]+(B[0]-A[0])*t,A[1]+(B[1]-A[1])*t,A[2]+(B[2]-A[2])*t]);}
+  function build(s){
+    var t=s.dark/100;
+    var light=mix(s.neon,'#ffffff',0.80), deep=mix(s.neon,'#000000',0.94);
+    var bd=mix(light,deep,t), bdc=mix(bd, t>0.5?'#ffffff':'#000000', 0.10);
+    var neonL=mix(s.neon,'#ffffff',0.45);
+    var panelHi=mix(s.panel,'#ffffff',0.14), mark=mix(s.panel,'#ffffff',0.22);
+    var T='<svg viewBox="0 0 280 380" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">';
+    T+='<defs>';
+    T+='<radialGradient id="bd" cx="50%" cy="42%" r="80%"><stop offset="0%" stop-color="'+bdc+'"/><stop offset="100%" stop-color="'+bd+'"/></radialGradient>';
+    T+='<radialGradient id="pn" cx="50%" cy="40%" r="82%"><stop offset="0%" stop-color="'+panelHi+'"/><stop offset="100%" stop-color="'+s.panel+'"/></radialGradient>';
+    T+='<filter id="gl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="'+s.glow+'"/></filter>';
+    T+='<pattern id="pat" width="70" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><text x="0" y="6.9" font-size="6.5" font-family="monospace" fill="'+mark+'" opacity="0.36">icloneicloneiclone</text></pattern>';
+    T+='</defs>';
+    T+='<rect x="-30" y="-30" width="340" height="440" fill="url(#bd)"/>';
+    T+='<rect x="40" y="38" width="200" height="304" rx="22" fill="'+s.neon+'" opacity="0.55" filter="url(#gl)"/>';
+    T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="url(#pn)"/>';
+    if(s.pattern)T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="url(#pat)"/>';
+    T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="none" stroke="'+s.neon+'" stroke-width="3" filter="url(#gl)"/>';
+    T+='<rect x="45.5" y="43.5" width="189" height="293" rx="17" fill="none" stroke="'+neonL+'" stroke-width="1.4"/>';
+    if(s.brackets){
+      T+='<g stroke="'+s.neon+'" stroke-width="2.4" fill="none" stroke-linecap="round" filter="url(#gl)"><path d="M70 30 H52 V48"/><path d="M210 30 H228 V48"/><path d="M70 350 H52 V332"/><path d="M210 350 H228 V332"/></g>';
+      T+='<g stroke="'+neonL+'" stroke-width="1.2" fill="none" stroke-linecap="round"><path d="M70 30 H52 V48"/><path d="M210 30 H228 V48"/><path d="M70 350 H52 V332"/><path d="M210 350 H228 V332"/></g>';
+    }
+    T+='</svg>';
+    return T;
+  }
+  function render(){
+    document.getElementById('bgstage').innerHTML=build(st);
+    document.getElementById('bgdv').textContent=st.dark<25?'light':st.dark<60?'mid':st.dark<88?'dark':'black';
+    document.getElementById('bggv').textContent=st.glow<4?'soft':st.glow<8?'strong':'intense';
+    var sc=0;document.querySelectorAll('#sk-list .ch').forEach(function(b){var on=!!st.skills[b.dataset.k];b.classList.toggle('on',on);if(on)sc++;});
+    document.getElementById('sk-n').textContent=sc;
+    document.getElementById('bgmeta').innerHTML='<b>'+st.name+' '+st.serial+'</b> · '+st.rarity+' · '+sc+' skills<br>'+st.coll+' · supply '+st.supply+' · '+st.contract;
+    document.querySelectorAll('#bgneon .dotc').forEach(function(b){b.classList.toggle('on',st.neon===b.dataset.c);});
+    document.querySelectorAll('#bgpanel .dotc').forEach(function(b){b.classList.toggle('on',st.panel===b.dataset.c);});
+    document.getElementById('ch-br').classList.toggle('on',!!st.brackets);
+    document.getElementById('ch-pt').classList.toggle('on',!!st.pattern);
+    document.querySelectorAll('#id-rar .ti2').forEach(function(b){b.classList.toggle('on',st.rarity===b.dataset.r);});
+    document.querySelectorAll('#in-ct .ch').forEach(function(b){b.classList.toggle('on',st.contract===b.dataset.k);});
+  }
+  window.tab=function(t){document.querySelectorAll('#bgw .tb').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});document.querySelectorAll('#bgw .pane').forEach(function(p){p.classList.toggle('on',p.id==='t-'+t);});};
+  window.bgNeon=function(c){st.neon=c;render();};
+  window.bgPanel=function(c){st.panel=c;render();};
+  window.bgDark=function(v){st.dark=+v;render();};
+  window.bgGlow=function(v){st.glow=+v;render();};
+  window.bgTog=function(k){st[k]=st[k]?0:1;render();};
+  window.idRar=function(r){st.rarity=r;render();};
+  window.idUp=function(){st.name=document.getElementById('id-name').value;st.serial=document.getElementById('id-serial').value;st.cls=document.getElementById('id-class').value;st.coll=document.getElementById('id-coll').value;render();};
+  window.skTog=function(k){st.skills[k]=!st.skills[k];render();};
+  window.ctSet=function(c){st.contract=c;render();};
+  window.inUp=function(){st.coll=document.getElementById('in-coll').value;st.supply=document.getElementById('in-supply').value;st.date=document.getElementById('in-date').value;st.price=document.getElementById('in-price').value;render();};
+  window.bgSave=function(){var sks=Object.keys(st.skills).filter(function(k){return st.skills[k];}).join(', ')||'none';sendPrompt('Guardar no banco NFT — id '+st.name+' '+st.serial+' ('+st.rarity+'); skills: '+sks+'; coleção '+st.coll+', supply '+st.supply+', '+st.contract+' na Base, mint '+st.price+', publish '+st.date+'.');};
+  document.getElementById('bgneon').innerHTML=NEON.map(function(c){return '<div class="dotc" data-c="'+c+'" style="background:'+c+'" onclick="bgNeon(\''+c+'\')"></div>';}).join('');
+  document.getElementById('bgpanel').innerHTML=PANEL.map(function(c){return '<div class="dotc" data-c="'+c+'" style="background:'+c+'" onclick="bgPanel(\''+c+'\')"></div>';}).join('');
+  document.getElementById('id-rar').innerHTML=RAR.map(function(r){return '<div class="ti2" data-r="'+r+'" onclick="idRar(\''+r+'\')">'+r+'</div>';}).join('');
+  document.getElementById('sk-list').innerHTML=SKILLS.map(function(k){return '<div class="ch" data-k="'+k+'" onclick="skTog(\''+k+'\')"><i class="ti ti-plus"></i> '+k+'</div>';}).join('');
+  document.getElementById('in-ct').innerHTML=CT.map(function(c){return '<div class="ch" data-k="'+c+'" onclick="ctSet(\''+c+'\')">'+c+'</div>';}).join('');
+  render();
+})();
+</script>
+</div>

@@ -1,0 +1,273 @@
+<div style="background:#0a0a0a;border-radius:14px;padding:14px;font-family:var(--font-sans)">
+<style>
+#pz{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;--rd:#6e1e1e;--rt:#d05b5b;--gr:#22c55e;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
+#pz.light{--bg:#f3f4f6;--s1:#e9ebee;--s2:#fff;--bd:#cdd6df;--bl:#9cc2e0;--bt:#1e6fa5;--tx:#1a1a1a;--mut:#7a838c}
+#pz .top{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd)}
+#pz .isl{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bl);border-radius:14px;padding:3px 11px;font-family:var(--font-mono);font-size:11px;color:var(--bt)}
+#pz .dot{width:6px;height:6px;border-radius:50%;background:#2d6fa0}
+#pz .modes{margin-left:auto;display:flex;gap:6px}
+#pz .md{width:11px;height:11px;border-radius:50%;border:1px solid #2d6fa0;cursor:pointer}#pz .md.on{background:var(--bt);border-color:var(--bt)}
+#pz .body{display:flex;height:520px}
+#pz .sb{width:50px;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;padding:8px 7px;gap:3px;transition:width .18s}
+#pz .sb.open{width:172px}
+#pz .row{display:flex;align-items:center;gap:10px;height:34px;border-radius:8px;cursor:pointer;border:1px solid transparent;padding:0 8px;color:var(--mut);white-space:nowrap;overflow:hidden}
+#pz .row:hover{background:var(--s2);color:var(--bt)}
+#pz .row.act{background:#11293c;border-color:var(--bl);color:var(--bt)}
+#pz.light .row.act{background:#dcebf6}
+#pz .ico{min-width:18px;font-size:17px;display:flex;justify-content:center}
+#pz .lab{font-size:12px;font-family:var(--font-mono);letter-spacing:.03em;opacity:0;transition:opacity .15s}
+#pz .sb.open .lab{opacity:1}
+#pz .spacer{flex:1}#pz .sep{height:1px;background:var(--bd);margin:4px 2px}
+#pz .main{flex:1;padding:16px 20px;overflow-y:auto;overflow-x:hidden}
+#pz .main::-webkit-scrollbar{width:9px}#pz .main::-webkit-scrollbar-thumb{background:var(--bl);border-radius:5px;border:2px solid var(--bg)}#pz .main::-webkit-scrollbar-track{background:transparent}
+#pz .view{display:none}#pz .view.on{display:block}
+#pz .hd{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+#pz .seg{display:flex;background:var(--s1);border:1px solid var(--bd);border-radius:8px;overflow:hidden;font-family:var(--font-mono);font-size:11px}
+#pz .sgb{padding:6px 14px;cursor:pointer;color:var(--mut)}#pz .sgb.on{background:var(--bl);color:var(--bt)}
+#pz .pub{margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--s1);border:1px solid var(--bl);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--bt);font-family:var(--font-mono);font-size:11px}
+#pz .pub:hover{background:var(--bl)}
+#pz .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+#pz .c{background:var(--s1);border:1px solid var(--bd);border-radius:9px;overflow:hidden;cursor:pointer;transition:border-color .14s,transform .1s;position:relative}
+#pz .c:hover{border-color:var(--bt);transform:translateY(-2px)}
+#pz .nft{position:absolute;top:6px;left:6px;font-size:7px;font-family:var(--font-mono);background:rgba(0,0,0,.7);border:1px solid var(--bl);border-radius:4px;padding:2px 5px;color:var(--bt);letter-spacing:.08em}
+#pz .cimg{height:130px;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative}
+#pz .price{position:absolute;bottom:6px;right:6px;font-size:8px;font-family:var(--font-mono);background:rgba(0,0,0,.65);border:1px solid var(--bl);border-radius:5px;padding:2px 6px;color:var(--bt)}
+#pz .cf2{padding:8px 10px;border-top:1px solid var(--bd);background:var(--s2)}
+#pz .cn{font-size:11px;font-weight:500;color:var(--tx)}#pz .cid{font-size:8px;color:var(--mut);font-family:var(--font-mono)}
+#pz .si{height:130px;display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--bt)}
+#pz .back{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;color:var(--mut);cursor:pointer;margin-bottom:12px}#pz .back:hover{color:var(--bt)}
+#pz .det{display:grid;grid-template-columns:188px 1fr;gap:22px}
+#pz .port{background:var(--s1);border:1px solid var(--bl);border-radius:10px;height:236px;display:flex;align-items:center;justify-content:center}
+#pz .tags{display:flex;gap:6px;align-items:center;margin-bottom:4px}
+#pz .tg2{font-size:8px;font-family:var(--font-mono);padding:2px 7px;border-radius:4px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--bl);color:var(--bt)}
+#pz .did{font-family:var(--font-mono);font-size:10px;color:var(--mut);margin-top:4px}
+#pz .dn{font-size:21px;font-weight:500;color:var(--tx);margin:2px 0 4px}
+#pz .rb{display:inline-block;font-size:9px;font-family:var(--font-mono);padding:3px 9px;border-radius:5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+#pz .attrs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+#pz .at{background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:7px 10px}
+#pz .ak{font-size:9px;color:var(--mut);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em}
+#pz .av{font-size:13px;color:var(--tx);margin-top:2px}
+#pz .buy{display:flex;gap:10px;align-items:center}
+#pz .bb{background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-family:var(--font-mono);font-size:12px;padding:10px 18px;cursor:pointer}#pz .bb:hover{background:#2d6fa0;color:#fff}
+#pz .bp{font-family:var(--font-mono);font-size:14px;color:var(--bt)}
+#pz .pform{max-width:420px}
+#pz .fl{font-size:10px;font-family:var(--font-mono);color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 5px}
+#pz .fi{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 11px;color:var(--tx);font-size:12px;font-family:var(--font-mono)}
+#pz .fi:focus{outline:none;border-color:var(--bl)}
+#pz textarea.fi{min-height:54px;resize:vertical;line-height:1.5}
+#pz .mintbtn{width:100%;margin-top:16px;padding:11px;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer}
+#pz .mintbtn:hover{background:#2d6fa0;color:#fff}
+#pz .wpanel{max-width:400px}
+#pz .wt{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bt);border-bottom:1px solid var(--bl);padding-bottom:7px;margin-bottom:14px}
+#pz .wr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px}
+#pz .wk{color:var(--mut);font-family:var(--font-mono);font-size:11px}
+#pz .wv{font-family:var(--font-mono);font-size:12px}
+#pz .wbtn{width:100%;margin-top:16px;padding:11px;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer}
+#pz .wbtn:hover{background:#2d6fa0;color:#fff}
+#pz .bal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+#pz .bc{background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 10px;text-align:center}
+#pz .bcv{font-family:var(--font-mono);font-size:14px;color:var(--tx)}#pz .bck{font-size:9px;color:var(--mut);font-family:var(--font-mono);margin-top:2px}
+#pz .lo{width:100%;margin-top:9px;padding:10px;background:transparent;border:1px solid var(--rd);border-radius:8px;color:var(--rt);font-size:12px;font-family:var(--font-mono);letter-spacing:.05em;cursor:pointer;display:none}
+#pz .lo:hover{background:var(--rd);color:#fff}
+#pz .set{max-width:520px}
+#pz .sgrp{margin-bottom:20px}
+#pz .sgh{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bt);border-bottom:1px solid var(--bl);padding-bottom:7px;margin-bottom:10px}
+#pz .sgh i{font-size:14px}
+#pz .si2{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);gap:14px}
+#pz .si2:last-child{border-bottom:none}
+#pz .sil{font-size:12px;color:var(--tx)}#pz .sid{font-size:10px;color:var(--mut);font-family:var(--font-mono);margin-top:2px}
+#pz .sel{background:var(--s1);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-size:11px;font-family:var(--font-mono);padding:6px 9px;cursor:pointer}
+#pz .sel:focus{outline:none;border-color:var(--bl)}
+#pz .sw{width:38px;height:21px;border-radius:11px;background:var(--s1);border:1px solid var(--bd);position:relative;cursor:pointer;flex-shrink:0;transition:background .15s,border-color .15s}
+#pz .sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:var(--mut);transition:transform .15s,background .15s}
+#pz .sw.on{background:#11293c;border-color:var(--bl)}#pz .sw.on::after{transform:translateX(17px);background:var(--bt)}
+#pz .danger .sgh{color:var(--rt);border-color:var(--rd)}
+#pz .dgb{background:transparent;border:1px solid var(--rd);border-radius:7px;color:var(--rt);font-size:11px;font-family:var(--font-mono);padding:6px 12px;cursor:pointer}#pz .dgb:hover{background:var(--rd);color:#fff}
+</style>
+<div id="pz">
+  <div class="top">
+    <div class="isl" id="pzisl"><span style="color:#3a6f96">[</span> &gt; clone-frame / plaza <span class="dot"></span></div>
+    <div class="modes"><span class="md" onclick="pzTheme(1)"></span><span class="md on" onclick="pzTheme(0)"></span></div>
+  </div>
+  <div class="body">
+    <div class="sb" id="pzsb">
+      <div class="row" onclick="document.getElementById('pzsb').classList.toggle('open')"><span class="ico"><i class="ti ti-menu-2"></i></span><span class="lab">Menu</span></div>
+      <div class="row act" id="r-mkt" onclick="pzView('mkt')"><span class="ico"><i class="ti ti-building-store"></i></span><span class="lab">PLAZA FRAME</span></div>
+      <div class="row" id="r-pub" onclick="pzView('pub')"><span class="ico"><i class="ti ti-square-rounded-plus"></i></span><span class="lab">Publish</span></div>
+      <div class="spacer"></div><div class="sep"></div>
+      <div class="row" id="r-wal" onclick="pzView('wal')"><span class="ico"><i class="ti ti-wallet"></i></span><span class="lab">Wallet</span></div>
+      <div class="row" id="r-set" onclick="pzView('set')"><span class="ico"><i class="ti ti-settings"></i></span><span class="lab">Settings</span></div>
+    </div>
+    <div class="main">
+      <div class="view on" id="v-mkt">
+        <div class="hd">
+          <div class="seg"><div class="sgb on" id="sg-a" onclick="pzSeg('agents')">iCLONE · agents</div><div class="sgb" id="sg-s" onclick="pzSeg('skills')">skills</div></div>
+          <div class="pub" onclick="pzView('pub')"><i class="ti ti-upload"></i> Publish from wallet</div>
+        </div>
+        <div class="grid" id="pzgrid"></div>
+      </div>
+      <div class="view" id="v-det">
+        <div class="back" onclick="pzView('mkt')"><i class="ti ti-arrow-left"></i> marketplace</div>
+        <div class="det" id="detbox"></div>
+      </div>
+      <div class="view" id="v-pub">
+        <div class="back" onclick="pzView('mkt')"><i class="ti ti-arrow-left"></i> marketplace</div>
+        <div class="hd"><div class="seg"><div class="sgb on" id="pg-a" onclick="pzPub('agent')">Mint agent</div><div class="sgb" id="pg-s" onclick="pzPub('skill')">Publish skill</div></div></div>
+        <div class="pform" id="pubbox"></div>
+      </div>
+      <div class="view" id="v-wal">
+        <div class="wpanel">
+          <div class="wt">Wallet</div>
+          <div class="wr"><span class="wk">status</span><span class="wv" id="wst" style="color:var(--mut)">not connected</span></div>
+          <div class="wr"><span class="wk">network</span><span class="wv">Base · 8453</span></div>
+          <div class="wr"><span class="wk">address</span><span class="wv" id="wad" style="color:var(--mut)">—</span></div>
+          <div class="bal">
+            <div class="bc"><div class="bcv" id="b-eth">—</div><div class="bck">ETH · agents</div></div>
+            <div class="bc"><div class="bcv" id="b-usdc">—</div><div class="bck">USDC · agents</div></div>
+            <div class="bc"><div class="bcv" id="b-icl">—</div><div class="bck">iCLONE · skills</div></div>
+          </div>
+          <div class="wr" style="margin-top:6px"><span class="wk">my agents (NFTs)</span><span class="wv" id="wnft" style="color:var(--mut)">—</span></div>
+          <button class="wbtn" id="wconn" onclick="pzConnect()"><i class="ti ti-login-2"></i> Login</button>
+          <button class="lo" id="wlogout" onclick="pzLogout()"><i class="ti ti-logout"></i> Sign out</button>
+        </div>
+      </div>
+      <div class="view" id="v-set">
+        <div class="set">
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-user"></i> Profile</div>
+            <div class="si2"><div><div class="sil">Display name</div><div class="sid">shown across the marketplace</div></div><input class="fi" style="width:170px" placeholder="founder.eth"/></div>
+            <div class="si2"><div><div class="sil">Username</div><div class="sid">unique handle · @</div></div><input class="fi" style="width:170px" placeholder="@iclone"/></div>
+            <div class="si2"><div><div class="sil">Email</div><div class="sid">receipts and alerts</div></div><input class="fi" style="width:170px" placeholder="you@mail.com"/></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-palette"></i> Appearance</div>
+            <div class="si2"><div><div class="sil">Theme</div><div class="sid">dark-first interface</div></div><select class="sel" onchange="pzTheme(this.value==='light')"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div>
+            <div class="si2"><div><div class="sil">Language</div><div class="sid">UI language</div></div><select class="sel"><option>English</option><option>Português</option><option>Español</option><option>日本語</option></select></div>
+            <div class="si2"><div><div class="sil">Display currency</div><div class="sid">price reference</div></div><select class="sel"><option>USD</option><option>EUR</option><option>ETH</option></select></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-wallet"></i> Wallet &amp; network</div>
+            <div class="si2"><div><div class="sil">Network</div><div class="sid">settlement chain</div></div><select class="sel"><option>Base · 8453</option><option>Base Sepolia</option></select></div>
+            <div class="si2"><div><div class="sil">Default agent payment</div><div class="sid">currency for NFTs</div></div><select class="sel"><option>ETH</option><option>USDC</option></select></div>
+            <div class="si2"><div><div class="sil">Auto-approve under</div><div class="sid">skip prompt for small spends</div></div><select class="sel"><option>Off</option><option>$5</option><option>$25</option><option>$100</option></select></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-bell"></i> Notifications</div>
+            <div class="si2"><div><div class="sil">Sale &amp; mint alerts</div><div class="sid">when something sells</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">New skill from followed agents</div><div class="sid">activity feed</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Price &amp; floor changes</div><div class="sid">watched collections</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Product updates</div><div class="sid">email digest</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+          <div class="sgrp">
+            <div class="sgh"><i class="ti ti-shield-lock"></i> Security &amp; privacy</div>
+            <div class="si2"><div><div class="sil">Transaction signing confirmation</div><div class="sid">always confirm on-chain actions</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Public profile</div><div class="sid">show your agents &amp; activity</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="si2"><div><div class="sil">Active sessions</div><div class="sid">1 device · this browser</div></div><button class="dgb" onclick="sendPrompt('Revogar todas as sessões ativas do CLONE FRAME')">Revoke all</button></div>
+          </div>
+          <div class="sgrp danger">
+            <div class="sgh"><i class="ti ti-alert-triangle"></i> Danger zone</div>
+            <div class="si2"><div><div class="sil">Disconnect wallet</div><div class="sid">end the current session</div></div><button class="dgb" onclick="pzView('wal');pzLogout()">Logout</button></div>
+            <div class="si2"><div><div class="sil">Delete account</div><div class="sid">remove profile · NFTs stay on-chain</div></div><button class="dgb" onclick="sendPrompt('Iniciar o fluxo de eliminação de conta no CLONE FRAME (os NFTs permanecem on-chain)')">Delete</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var pz=document.getElementById('pz');
+  var blue='<svg width="118" height="150" viewBox="0 0 100 120"><ellipse cx="50" cy="113" rx="22" ry="5" fill="#1e4a6e" opacity=".3"/><path d="M28 72 Q26 95 24 113 L76 113 Q74 95 72 72Z" fill="#1e4a6e" opacity=".88"/><path d="M35 75 Q50 83 65 75 L61 97 Q50 104 39 97Z" fill="#2d6fa0" opacity=".4"/><ellipse cx="50" cy="36" rx="20" ry="22" fill="#111"/><path d="M30 32 Q32 12 50 10 Q68 12 70 32 Q63 19 50 17 Q37 19 30 32Z" fill="#1e4a6e"/><ellipse cx="40" cy="38" rx="5" ry="4" fill="#7ad4ff"/><ellipse cx="60" cy="38" rx="5" ry="4" fill="#7ad4ff"/><path d="M68 54 L90 28 L93 31 L71 57Z" fill="#7ad4ff" opacity=".85"/></svg>';
+  var red='<svg width="118" height="150" viewBox="0 0 100 120"><ellipse cx="50" cy="113" rx="22" ry="5" fill="#6e1e1e" opacity=".3"/><rect x="34" y="92" width="13" height="20" rx="3" fill="#111"/><rect x="53" y="92" width="13" height="20" rx="3" fill="#111"/><rect x="28" y="64" width="44" height="30" rx="7" fill="#1a1a1a"/><rect x="28" y="64" width="44" height="8" rx="4" fill="#6e1e1e"/><ellipse cx="50" cy="40" rx="22" ry="24" fill="#1e1e1e"/><circle cx="32" cy="24" r="9" fill="#181818"/><circle cx="68" cy="24" r="9" fill="#181818"/><circle cx="40" cy="40" r="3" fill="#d05b5b"/><circle cx="60" cy="40" r="3" fill="#d05b5b"/></svg>';
+  var teal='<svg width="118" height="150" viewBox="0 0 100 120"><ellipse cx="50" cy="113" rx="22" ry="5" fill="#1e4a6e" opacity=".3"/><rect x="34" y="90" width="13" height="22" rx="3" fill="#2d6fa0"/><rect x="53" y="90" width="13" height="22" rx="3" fill="#2d6fa0"/><rect x="29" y="50" width="42" height="42" rx="8" fill="#1e4a6e"/><rect x="36" y="58" width="28" height="18" rx="4" fill="#050a10"/><circle cx="50" cy="67" r="4" fill="#7ad4ff"/><rect x="28" y="16" width="44" height="36" rx="10" fill="#2d6fa0"/><rect x="28" y="26" width="44" height="13" rx="4" fill="#030810"/><ellipse cx="40" cy="32" rx="5" ry="4" fill="#5ba3d0"/><ellipse cx="60" cy="32" rx="5" ry="4" fill="#5ba3d0"/></svg>';
+  var ag=[
+    {n:'Ryuu Kage',id:'#000151',p:'0.05 ETH',r:'superrare',cls:'Shadow',sk:'Voice · Flow',jobs:'418',sr:'100%',lv:'Lv 12 · 4.1k XP',s:blue},
+    {n:'John Wick',id:'#000056',p:'0.09 ETH',r:'iclone',cls:'Operative',sk:'Trade · Email',jobs:'773',sr:'100%',lv:'Lv 21 · 9.0k XP',s:red},
+    {n:'Akemi Zero',id:'#000288',p:'0.03 ETH',r:'rare',cls:'Synth',sk:'Listen',jobs:'56',sr:'99.2%',lv:'Lv 3 · 560 XP',s:teal},
+    {n:'Kira Void',id:'#000573',p:'0.06 ETH',r:'superrare',cls:'Nullborn',sk:'Research',jobs:'192',sr:'100%',lv:'Lv 9 · 2.3k XP',s:blue},
+    {n:'Nova Blade',id:'#000174',p:'0.10 ETH',r:'iclone',cls:'Vanguard',sk:'n8n · ACP',jobs:'907',sr:'100%',lv:'Lv 24 · 11k XP',s:red},
+    {n:'Kaze Kiri',id:'#000801',p:'0.12 ETH',r:'superrare',cls:'Gale',sk:'GitHub',jobs:'230',sr:'100%',lv:'Lv 10 · 3.0k XP',s:blue}
+  ];
+  var sk=[
+    {n:'Email',id:'SKL-001',p:'0.3 Ⓘ',i:'ti-mail'},{n:'n8n flow',id:'SKL-006',p:'0.6 Ⓘ',i:'ti-topology-star-3'},
+    {n:'ACP troubleshoot',id:'SKL-009',p:'1.0 Ⓘ',i:'ti-bug'},{n:'Word report',id:'SKL-004',p:'0.3 Ⓘ',i:'ti-file-text'},
+    {n:'GitHub action',id:'SKL-011',p:'0.7 Ⓘ',i:'ti-brand-github'},{n:'SQL · Supabase',id:'SKL-014',p:'0.5 Ⓘ',i:'ti-database'}
+  ];
+  var rcol={rare:['#1e4a6e','#5ba3d0'],superrare:['#3a1e6e','#b86fd9'],iclone:['#6e5a1e','#d9a23b']};
+  window.pzSeg=function(t){
+    document.getElementById('sg-a').classList.toggle('on',t==='agents');
+    document.getElementById('sg-s').classList.toggle('on',t==='skills');
+    var g=document.getElementById('pzgrid');
+    if(t==='agents'){g.innerHTML=ag.map(function(a,i){return '<div class="c" onclick="pzOpen('+i+')"><div class="cimg"><span class="nft">NFT</span>'+a.s+'<span class="price">'+a.p+'</span></div><div class="cf2"><div class="cn">'+a.n+'</div><div class="cid">'+a.id+'</div></div></div>';}).join('');}
+    else{g.innerHTML=sk.map(function(s){return '<div class="c" onclick="sendPrompt(\'Detalhe da skill '+s.n+'\')"><div class="cimg"><div class="si"><i class="ti '+s.i+'"></i></div><span class="price">'+s.p+'</span></div><div class="cf2"><div class="cn">'+s.n+'</div><div class="cid">'+s.id+'</div></div></div>';}).join('');}
+  };
+  window.pzOpen=function(i){
+    var a=ag[i],rc=rcol[a.r];
+    document.getElementById('detbox').innerHTML=
+      '<div class="port">'+a.s.replace('width="118" height="150"','width="150" height="190"')+'</div>'+
+      '<div><div class="tags"><span class="tg2">NFT · ERC-721</span><span class="tg2">Base</span></div>'+
+      '<div class="did">token '+a.id+' · iCLONE collection</div><div class="dn">'+a.n+'</div>'+
+      '<span class="rb" style="background:'+rc[0]+'33;color:'+rc[1]+';border:1px solid '+rc[0]+'">'+a.r+'</span>'+
+      '<div class="attrs">'+
+        '<div class="at"><div class="ak">class</div><div class="av">'+a.cls+'</div></div>'+
+        '<div class="at"><div class="ak">level / XP</div><div class="av">'+a.lv+'</div></div>'+
+        '<div class="at"><div class="ak">skills</div><div class="av">'+a.sk+'</div></div>'+
+        '<div class="at"><div class="ak">jobs done</div><div class="av">'+a.jobs+'</div></div>'+
+        '<div class="at"><div class="ak">success rate</div><div class="av" style="color:var(--gr)">'+a.sr+'</div></div>'+
+        '<div class="at"><div class="ak">utility</div><div class="av">gating · access</div></div>'+
+      '</div>'+
+      '<div class="buy"><button class="bb" onclick="sendPrompt(\'Adquirir o agente NFT '+a.n+'\')">Acquire NFT</button><span class="bp">'+a.p+'</span></div></div>';
+    pzView('det');
+    document.getElementById('pzisl').innerHTML='<span style="color:#3a6f96">[</span> &gt; clone-frame / plaza / '+a.n+' <span class="dot"></span>';
+  };
+  window.pzPub=function(t){
+    document.getElementById('pg-a').classList.toggle('on',t==='agent');
+    document.getElementById('pg-s').classList.toggle('on',t==='skill');
+    var b=document.getElementById('pubbox');
+    if(t==='agent'){
+      b.innerHTML='<div class="fl">agent image (generated)</div><div class="port" style="height:120px;width:120px">'+blue.replace(/width="118" height="150"/,"width=\"80\" height=\"100\"")+'</div>'+
+        '<div class="fl">name</div><input class="fi" placeholder="e.g. Shadow Vega"/>'+
+        '<div class="fl">neural_soul.md (base character)</div><textarea class="fi" placeholder="identity, knowledge, base behavior of the agent…"></textarea>'+
+        '<div class="fl">price (mint · ETH/USDC on Base)</div><input class="fi" placeholder="0.08 ETH"/>'+
+        '<button class="mintbtn" onclick="sendPrompt(\'Desenhar o fluxo de mint do agente NFT (imagem + neural_soul.md) em ETH/USDC no iCLONE Frame\')"><i class="ti ti-stack-2"></i> Mint NFT (ETH/USDC)</button>';
+    }else{
+      b.innerHTML='<div class="fl">skill</div><input class="fi" placeholder="e.g. ACP troubleshoot"/>'+
+        '<div class="fl">description</div><textarea class="fi" placeholder="what the skill automates…"></textarea>'+
+        '<div class="fl">price (iCLONE token · USD-fixed)</div><input class="fi" placeholder="1.0 Ⓘ"/>'+
+        '<button class="mintbtn" onclick="sendPrompt(\'Desenhar o fluxo de publicar skill em iCLONE token a partir da wallet\')"><i class="ti ti-upload"></i> Publish skill (iCLONE)</button>';
+    }
+  };
+  window.pzConnect=function(){
+    document.getElementById('wst').textContent='connected'; document.getElementById('wst').style.color='var(--gr)';
+    document.getElementById('wad').textContent='0x44cc…6664'; document.getElementById('wad').style.color='var(--tx)';
+    document.getElementById('b-eth').textContent='0.42'; document.getElementById('b-usdc').textContent='1,250'; document.getElementById('b-icl').textContent='8,400';
+    document.getElementById('wnft').textContent='3 agents'; document.getElementById('wnft').style.color='var(--tx)';
+    var wc=document.getElementById('wconn');
+    wc.innerHTML='<i class="ti ti-circle-check"></i> Online'; wc.style.color='var(--gr)'; wc.style.borderColor='var(--gr)'; wc.style.background='transparent';
+    document.getElementById('wlogout').style.display='block';
+  };
+  window.pzLogout=function(){
+    document.getElementById('wst').textContent='not connected'; document.getElementById('wst').style.color='var(--mut)';
+    document.getElementById('wad').textContent='—'; document.getElementById('wad').style.color='var(--mut)';
+    document.getElementById('b-eth').textContent='—'; document.getElementById('b-usdc').textContent='—'; document.getElementById('b-icl').textContent='—';
+    document.getElementById('wnft').textContent='—'; document.getElementById('wnft').style.color='var(--mut)';
+    var wc=document.getElementById('wconn');
+    wc.innerHTML='<i class="ti ti-login-2"></i> Login'; wc.style.color=''; wc.style.borderColor=''; wc.style.background='';
+    document.getElementById('wlogout').style.display='none';
+  };
+  window.pzView=function(v){
+    pz.querySelectorAll('.view').forEach(function(x){x.classList.remove('on');});
+    document.getElementById('v-'+v).classList.add('on');
+    document.getElementById('r-mkt').classList.toggle('act',v==='mkt'||v==='det');
+    document.getElementById('r-pub').classList.toggle('act',v==='pub');
+    document.getElementById('r-wal').classList.toggle('act',v==='wal');
+    document.getElementById('r-set').classList.toggle('act',v==='set');
+    var t={mkt:'plaza',det:'plaza',pub:'plaza / publish',wal:'plaza / wallet',set:'plaza / settings'}[v];
+    document.getElementById('pzisl').innerHTML='<span style="color:#3a6f96">[</span> &gt; clone-frame / '+t+' <span class="dot"></span>';
+    if(v==='pub') pzPub('agent');
+  };
+  window.pzTheme=function(l){pz.classList.toggle('light',!!l);pz.querySelectorAll('.md')[0].classList.toggle('on',!!l);pz.querySelectorAll('.md')[1].classList.toggle('on',!l);};
+  pzSeg('agents');
+})();
+</script>
+</div>

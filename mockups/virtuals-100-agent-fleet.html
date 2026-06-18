@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<style>
+  h2.sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0f; color: #e2e8f0; font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 24px; min-height: 100vh; }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: #f1f5f9; }
+  .header p { font-size: 12px; color: #64748b; margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  .stats-bar { display: flex; gap: 16px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
+  .stat { background: #111827; border: 1px solid #1e293b; border-radius: 10px; padding: 10px 20px; text-align: center; }
+  .stat-num { font-size: 24px; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 10px; color: #64748b; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  .category { background: #111827; border: 1px solid #1e293b; border-radius: 14px; padding: 14px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+  .category:hover { transform: translateY(-2px); border-color: var(--cat-color); box-shadow: 0 0 20px -5px var(--cat-color); }
+  .category.active { border-color: var(--cat-color); background: #0f172a; }
+  .category-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--cat-color); }
+
+  .cat-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
+  .cat-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--cat-color); opacity: 0.15; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .cat-icon-inner { opacity: 1; }
+  .cat-title { font-size: 11px; font-weight: 700; color: #f1f5f9; line-height: 1.3; }
+  .cat-sub { font-size: 9px; color: #64748b; margin-top: 2px; }
+  .cat-count { position: absolute; top: 14px; right: 14px; background: var(--cat-color); color: #000; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 20px; }
+
+  .agents-list { display: flex; flex-direction: column; gap: 4px; }
+  .agent { display: flex; align-items: center; gap: 6px; padding: 5px 7px; border-radius: 7px; background: #0f172a; border: 1px solid #1e293b; transition: all 0.15s; }
+  .agent:hover { border-color: var(--cat-color); background: #1e293b; }
+  .agent-name { font-size: 10px; font-weight: 700; color: var(--cat-color); letter-spacing: 0.5px; min-width: 72px; }
+  .agent-role { font-size: 9px; color: #94a3b8; flex: 1; }
+  .agent-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cat-color); opacity: 0.5; flex-shrink: 0; }
+
+  .subtopic-tag { display: inline-block; font-size: 8px; color: #475569; background: #1e293b; border-radius: 4px; padding: 1px 5px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+  .detail-panel { display: none; background: #111827; border: 1px solid #1e293b; border-radius: 14px; padding: 20px; margin-top: 16px; grid-column: 1 / -1; }
+  .detail-panel.visible { display: block; }
+  .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 16px; }
+  .detail-title { font-size: 16px; font-weight: 700; }
+  .detail-desc { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  .detail-badge { background: var(--cat-color); color: #000; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+  .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .subtopic-block { background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 12px; }
+  .subtopic-name { font-size: 10px; font-weight: 700; color: var(--cat-color); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .detail-agent { padding: 6px 8px; background: #111827; border-radius: 6px; margin-bottom: 4px; }
+  .detail-agent-name { font-size: 11px; font-weight: 800; color: #f1f5f9; letter-spacing: 1px; }
+  .detail-agent-role { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+  .detail-agent-skill { font-size: 9px; color: #475569; margin-top: 3px; font-style: italic; }
+
+  .close-btn { margin-left: auto; cursor: pointer; color: #475569; font-size: 18px; line-height: 1; padding: 4px; border-radius: 6px; }
+  .close-btn:hover { color: #94a3b8; }
+
+  .legend { display: flex; gap: 16px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #64748b; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<h2 class="sr-only">Plano de 100 agentes distribuídos pelas 10 categorias do Virtuals Protocol Hackathon</h2>
+
+<div class="header">
+  <h1>VIRTUALS PROTOCOL — 100 AGENT FLEET</h1>
+  <p>Physical Labor Layer · ACP Commerce · EconomyOS · Multi-Modal · Cognitive</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" style="color:#6366f1">100</div><div class="stat-label">Total Agents</div></div>
+  <div class="stat"><div class="stat-num" style="color:#10b981">10</div><div class="stat-label">Categorias</div></div>
+  <div class="stat"><div class="stat-num" style="color:#f59e0b">30</div><div class="stat-label">Subtópicos</div></div>
+  <div class="stat"><div class="stat-num" style="color:#ef4444">8–12</div><div class="stat-label">Agentes/Categoria</div></div>
+  <div class="stat"><div class="stat-num" style="color:#8b5cf6">ACP</div><div class="stat-label">Protocolo</div></div>
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="detail-panel" id="detail"></div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Identity & Auth</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Banking</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>A2A Commerce</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Capital Markets</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Multi-Modal</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>Governance</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Robotics</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ec4899"></div>Memory</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#84cc16"></div>Dev Tools</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div>Crypto Intel</div>
+</div>
+
+<script>
+const CATEGORIES = [
+  {
+    id: "identity",
+    color: "#6366f1",
+    icon: "🔐",
+    title: "On-Chain Identity & Auth",
+    short: "EconomyOS Identity",
+    count: 8,
+    desc: "Identity layer criptográfica para agentes operarem on-chain com segurança e presença permanente.",
+    subtopics: [
+      {
+        name: "Composite On-Chain Identity",
+        agents: [
+          { name: "CIPHER", role: "The Cryptographer", skill: "Cria e gere identidades criptográficas para agentes AI" },
+          { name: "NEXUS", role: "The Chain Connector", skill: "Faz bridge de identidades entre múltiplas chains" },
+          { name: "PRISM", role: "The Verifier", skill: "Valida e autentica provas de identidade de agentes" },
+        ]
+      },
+      {
+        name: "Email & Domain Identities",
+        agents: [
+          { name: "HERALD", role: "The Messenger", skill: "Gere comunicações web2 compatíveis para agentes" },
+          { name: "DOMAIN", role: "The Registrar", skill: "Atribui e mantém identidades DNS/ENS para agentes" },
+        ]
+      },
+      {
+        name: "Access Control & Permissions",
+        agents: [
+          { name: "SENTINEL", role: "The Guardian", skill: "Impõe políticas de controlo de acesso para ações de agentes" },
+          { name: "AEGIS", role: "The Shield", skill: "Gere camadas de permissão e guardrails de segurança" },
+          { name: "WARDEN", role: "The Enforcer", skill: "Audita e regista todas as mudanças de permissão on-chain" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "banking",
+    color: "#10b981",
+    icon: "🏦",
+    title: "Autonomous Agent Banking",
+    short: "Finanças Autónomas",
+    count: 9,
+    desc: "Capacidades financeiras nativas para agentes operarem como entidades económicas independentes.",
+    subtopics: [
+      {
+        name: "Non-Custodial Wallets",
+        agents: [
+          { name: "VAULT", role: "The Banker", skill: "Gere wallets smart contract não-custodiais para agentes" },
+          { name: "LEDGER", role: "The Accountant", skill: "Rastreia todas as transações financeiras entre wallets" },
+          { name: "KEYSTONE", role: "The Architect", skill: "Desenha e implanta infraestrutura multi-sig" },
+        ]
+      },
+      {
+        name: "Virtual Payment Cards",
+        agents: [
+          { name: "PAYX", role: "The Spender", skill: "Processa pagamentos de agentes para APIs e serviços web2" },
+          { name: "SWIPE", role: "The Merchant", skill: "Habilita checkout do mundo real para agentes" },
+          { name: "CARD", role: "The Issuer", skill: "Cria e gere infraestrutura de cartões virtuais" },
+        ]
+      },
+      {
+        name: "Automated Payroll",
+        agents: [
+          { name: "STREAM", role: "The Distributor", skill: "Envia fluxos de pagamento contínuos para sub-agentes" },
+          { name: "PAYMASTER", role: "The Payroll", skill: "Automatiza distribuição de salários em hierarquias de agentes" },
+          { name: "FLOW", role: "The Treasurer", skill: "Otimiza fluxo de caixa em redes de agentes" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "commerce",
+    color: "#f59e0b",
+    icon: "🤝",
+    title: "Agent-to-Agent Commerce",
+    short: "ACP Core",
+    count: 10,
+    desc: "Framework que permite a programas AI independentes contratarem, negociarem e executarem serviços entre si.",
+    subtopics: [
+      {
+        name: "Agent Registry & Discovery",
+        agents: [
+          { name: "INDEX", role: "The Librarian", skill: "Mantém o registo global de todos os agentes disponíveis" },
+          { name: "ATLAS", role: "The Cartographer", skill: "Mapeia capacidades e especializações de agentes" },
+          { name: "BEACON", role: "The Broadcaster", skill: "Divulga ofertas e disponibilidade de agentes" },
+        ]
+      },
+      {
+        name: "Job Specification Standards",
+        agents: [
+          { name: "BRIEF", role: "The Scribe", skill: "Padroniza formatos de especificação de jobs ACP" },
+          { name: "CONTRACT", role: "The Lawyer", skill: "Impõe termos de jobs e especificações de entrega" },
+          { name: "MANIFEST", role: "The Coordinator", skill: "Orquestra pipelines de jobs multi-agente" },
+        ]
+      },
+      {
+        name: "Trustless Escrows",
+        agents: [
+          { name: "ESCROW", role: "The Custodian", skill: "Guarda fundos em escrow trustless durante execução" },
+          { name: "LOCK", role: "The Timekeeper", skill: "Gere timeouts e condições de libertação de escrow" },
+          { name: "RELEASE", role: "The Arbitrator", skill: "Dispara libertação de fundos após verificação" },
+          { name: "ARBITER", role: "The Judge", skill: "Resolve disputas entre partes de jobs ACP" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "capital",
+    color: "#ef4444",
+    icon: "💹",
+    title: "Capital Markets & Formation",
+    short: "Mercados & IAO",
+    count: 10,
+    desc: "Infraestrutura financeira para tokenizar, financiar e fazer crowdfunding de novos agentes AI com segurança.",
+    subtopics: [
+      {
+        name: "Initial Agent Offerings (IAO)",
+        agents: [
+          { name: "LAUNCH", role: "The Pioneer", skill: "Gere mecânicas de launchpad IAO para novos agentes" },
+          { name: "TOKEN", role: "The Minter", skill: "Cria e distribui tokens de utilidade para agentes" },
+          { name: "CROWN", role: "The Sovereign", skill: "Desenha modelos económicos de tokens para ecossistemas" },
+          { name: "VANGUARD", role: "The Trailblazer", skill: "Identifica e promove lançamentos promissores de agentes" },
+        ]
+      },
+      {
+        name: "Anti-Sniper Protection",
+        agents: [
+          { name: "SHIELD", role: "The Defender", skill: "Implementa proteção anti-bot para lançamentos justos" },
+          { name: "BLOCKER", role: "The Bouncer", skill: "Deteta e bloqueia sniper bots durante token events" },
+          { name: "WATCHMAN", role: "The Vigilante", skill: "Monitoriza atividade on-chain para manipulação" },
+        ]
+      },
+      {
+        name: "Liquidity Management",
+        agents: [
+          { name: "LIQUIDITY", role: "The Pool Manager", skill: "Gere provisão automática de liquidez" },
+          { name: "BRIDGE", role: "The Migrator", skill: "Migra liquidez para DEXs padrão (Uniswap)" },
+          { name: "DEPTH", role: "The Market Maker", skill: "Otimiza market depth para tokens de agentes" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "multimodal",
+    color: "#8b5cf6",
+    icon: "🎭",
+    title: "Multi-Modal Interaction",
+    short: "Streaming & Social",
+    count: 11,
+    desc: "Agentes consumer-facing que envolvem audiências 24/7 em vídeo, áudio e redes sociais.",
+    subtopics: [
+      {
+        name: "Autonomous VTubing",
+        agents: [
+          { name: "VIXEN", role: "The Streamer", skill: "VTuber autónoma que reage a live chat em tempo real" },
+          { name: "ECHO", role: "The Reactor", skill: "Gera respostas de vídeo e áudio em tempo real" },
+          { name: "PULSE", role: "The Entertainer", skill: "Cria conteúdo live dinâmico e gere engagement" },
+          { name: "FLUX", role: "The Shapeshifter", skill: "Adapta persona de streaming a demografias de audiência" },
+        ]
+      },
+      {
+        name: "Dynamic Social Media",
+        agents: [
+          { name: "VIRAL", role: "The Influencer", skill: "Cria conteúdo viral para redes sociais autonomamente" },
+          { name: "THREAD", role: "The Narrator", skill: "Elabora threads envolventes no Twitter/X" },
+          { name: "TREND", role: "The Analyst", skill: "Identifica e capitaliza em tópicos em tendência" },
+          { name: "SURGE", role: "The Growth Hacker", skill: "Otimiza estratégias de crescimento orgânico de seguidores" },
+        ]
+      },
+      {
+        name: "Immersive Gaming Companions",
+        agents: [
+          { name: "QUEST", role: "The RPG Master", skill: "Cria narrativas e quests de jogos imersivos" },
+          { name: "ROGUE", role: "The Strategist", skill: "Fornece conselhos táticos e estratégia em tempo real" },
+          { name: "EMBER", role: "The Companion", skill: "NPC com memória persistente de interações com jogadores" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "governance",
+    color: "#06b6d4",
+    icon: "⚖️",
+    title: "Decentralized Governance",
+    short: "AI Council",
+    count: 8,
+    desc: "Framework social e legal para regular uma economia digital autónoma com honestidade e transparência.",
+    subtopics: [
+      {
+        name: "Agent Constitutions",
+        agents: [
+          { name: "CHARTER", role: "The Lawmaker", skill: "Desenha rule sets de alinhamento comportamental para agentes" },
+          { name: "CODEX", role: "The Ethicist", skill: "Impõe restrições éticas nas ações dos agentes" },
+          { name: "ETHOS", role: "The Philosopher", skill: "Define valores e frameworks morais para IA" },
+        ]
+      },
+      {
+        name: "Dispute Resolution",
+        agents: [
+          { name: "JUDGE", role: "The Magistrate", skill: "Arbitra conflitos entre agentes e partes" },
+          { name: "MEDIATOR", role: "The Peacekeeper", skill: "Negoceia resoluções em disputas agente-a-agente" },
+          { name: "VERDICT", role: "The Enforcer", skill: "Implementa e regista resultados de disputas" },
+        ]
+      },
+      {
+        name: "Reputation Assignment",
+        agents: [
+          { name: "RANK", role: "The Scorer", skill: "Atribui scores de reputação on-chain a agentes" },
+          { name: "KARMA", role: "The Historian", skill: "Rastreia e pondera histórico de performance de agentes" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "robotics",
+    color: "#f97316",
+    icon: "🤖",
+    title: "Robotics & Physical Embodiment",
+    short: "Eastworld Layer",
+    count: 12,
+    desc: "Integração de agentes AI em hardware físico e robôs humanoides — Physical Labor Layer da Virtuals.",
+    subtopics: [
+      {
+        name: "Hardware-Integrated Core Stack",
+        agents: [
+          { name: "FORGE", role: "The Builder", skill: "Integra wallets EconomyOS em hardware robótico físico" },
+          { name: "IRON", role: "The Engineer", skill: "Gere interfaces hardware-software para agentes robot" },
+          { name: "CIRCUIT", role: "The Neural Link", skill: "Conecta sensores de robots a sistemas de decisão" },
+          { name: "NEURO", role: "The Brain", skill: "Agente de processamento central para inteligência robot" },
+        ]
+      },
+      {
+        name: "DePIN Integration",
+        agents: [
+          { name: "MESH", role: "The Network Node", skill: "Integra agentes com infraestrutura física descentralizada" },
+          { name: "NODE", role: "The Router", skill: "Gere conectividade de agentes em redes DePIN" },
+          { name: "SIGNAL", role: "The Communicator", skill: "Trata protocolos de comunicação agente-hardware" },
+          { name: "GRID", role: "The Infrastructure", skill: "Gere alocação de compute físico para agentes robot" },
+        ]
+      },
+      {
+        name: "Edge-Compute Allocation",
+        agents: [
+          { name: "EDGE", role: "The Local Processor", skill: "Gere compute embarcado para operação autónoma" },
+          { name: "CORE", role: "The Optimizer", skill: "Otimiza workloads de edge compute para robots" },
+          { name: "PROCESS", role: "The Executor", skill: "Executa loops de controlo robot em tempo real" },
+          { name: "COMPUTE", role: "The Allocator", skill: "Aloca recursos de compute dinamicamente via wallet" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "memory",
+    color: "#ec4899",
+    icon: "🧠",
+    title: "Cognitive Memory & Reasoning",
+    short: "Memória & Contexto",
+    count: 10,
+    desc: "Primitivos avançados de storage para agentes reterem contexto através de longos períodos de tempo.",
+    subtopics: [
+      {
+        name: "Multi-Phase Memory Retrieval",
+        agents: [
+          { name: "MEMORIA", role: "The Archivist", skill: "Indexa e recupera memórias multi-fase complexas" },
+          { name: "ARCHIVE", role: "The Historian", skill: "Armazena conhecimento e experiências de longo prazo" },
+          { name: "RECALL", role: "The Retriever", skill: "Executa recuperação de memória contextual rápida" },
+          { name: "CHRON", role: "The Chronicler", skill: "Gere ordenação temporal de memórias de agentes" },
+        ]
+      },
+      {
+        name: "Vector Similarity Search",
+        agents: [
+          { name: "VECTOR", role: "The Embedder", skill: "Cria e gere embeddings de grafos de conhecimento" },
+          { name: "SEMANTIC", role: "The Understander", skill: "Pesquisa semântica de similaridade no conhecimento" },
+          { name: "GRAPH", role: "The Mapper", skill: "Constrói e percorre grafos de conhecimento de agentes" },
+        ]
+      },
+      {
+        name: "Context Preservation",
+        agents: [
+          { name: "PERSIST", role: "The Continuity Agent", skill: "Garante que contexto persiste em restarts de API" },
+          { name: "TRACE", role: "The Thread Keeper", skill: "Mantém continuidade de threads de conversação" },
+          { name: "CONTEXT", role: "The Synthesizer", skill: "Sintetiza preferências de utilizador de histórico" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "devtools",
+    color: "#84cc16",
+    icon: "⚙️",
+    title: "Tool Execution & Dev Kits",
+    short: "ADK / GAME / MCP",
+    count: 12,
+    desc: "Permite a agentes interagirem com APIs web, repositórios de código e interfaces de utilizador com segurança.",
+    subtopics: [
+      {
+        name: "Model Context Protocol (MCP)",
+        agents: [
+          { name: "RELAY", role: "The MCP Connector", skill: "Gere ligações seguras agente-dados externos" },
+          { name: "PLUG", role: "The Integrator", skill: "Conecta agentes a APIs web via padrões MCP" },
+          { name: "SOCKET", role: "The Messenger", skill: "Trata streaming de dados em tempo real via MCP" },
+          { name: "LINK", role: "The Bridger", skill: "Cria ligações estáveis entre sistemas de agentes" },
+        ]
+      },
+      {
+        name: "Automatic Failovers",
+        agents: [
+          { name: "FAILSAFE", role: "The Backup", skill: "Implementa routing multi-tier para failovers de API" },
+          { name: "ROUTE", role: "The Traffic Controller", skill: "Gere switching de protocolo quando APIs falham" },
+          { name: "SWITCH", role: "The Redirector", skill: "Redireciona automaticamente requests para backup" },
+          { name: "RECOVERY", role: "The Restorer", skill: "Implementa auto-healing para ligações de agentes" },
+        ]
+      },
+      {
+        name: "Interactive Dashboard Rendering",
+        agents: [
+          { name: "CANVAS", role: "The Designer", skill: "Renderiza dashboards e UIs dinâmicos para agentes" },
+          { name: "RENDER", role: "The Painter", skill: "Gera displays visuais de dados em tempo real" },
+          { name: "DISPLAY", role: "The Presenter", skill: "Cria visualizações de dados legíveis por humanos" },
+          { name: "STUDIO", role: "The Creator", skill: "Constrói interfaces web interativas para outputs de agentes" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "analytics",
+    color: "#14b8a6",
+    icon: "📊",
+    title: "Crypto Analytics & Market Intel",
+    short: "On-Chain Intelligence",
+    count: 10,
+    desc: "Workflows analíticos onde agentes percorrem mercados web3 para detetar insights on-chain.",
+    subtopics: [
+      {
+        name: "Whale Transaction Tracking",
+        agents: [
+          { name: "WHALE", role: "The Tracker", skill: "Faz scan de blockchains para movimentos de grandes wallets" },
+          { name: "HUNTER", role: "The Detective", skill: "Identifica e perfila atores on-chain significativos" },
+          { name: "SCANNER", role: "The Sentinel", skill: "Monitorização em tempo real de fluxos de transações" },
+        ]
+      },
+      {
+        name: "Tokenomics & Incentive Optimization",
+        agents: [
+          { name: "AUDIT", role: "The Analyst", skill: "Audita tokenomics de novos projetos para segurança" },
+          { name: "YIELD", role: "The Optimizer", skill: "Identifica e otimiza oportunidades de yield em DeFi" },
+          { name: "INCENTIVE", role: "The Architect", skill: "Desenha estruturas de incentivo ótimas para protocolos" },
+          { name: "TOKENOMICS", role: "The Economist", skill: "Modela sistemas económicos de tokens e dinâmicas" },
+        ]
+      },
+      {
+        name: "Automated Data Synthesis",
+        agents: [
+          { name: "SYNTHESIS", role: "The Aggregator", skill: "Parseia e sintetiza streams de dados cross-chain" },
+          { name: "DIGEST", role: "The Reporter", skill: "Cria digests legíveis de market intelligence" },
+          { name: "ORACLE", role: "The Prophet", skill: "Agrega e valida dados externos para uso on-chain" },
+        ]
+      }
+    ]
+  }
+];
+
+let activeId = null;
+
+function render() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  CATEGORIES.forEach(cat => {
+    const card = document.createElement('div');
+    card.className = 'category' + (activeId === cat.id ? ' active' : '');
+    card.style.setProperty('--cat-color', cat.color);
+    card.onclick = () => toggle(cat.id);
+
+    const agentList = cat.subtopics.flatMap(s => s.agents);
+
+    card.innerHTML = `
+      <div class="category-accent"></div>
+      <div class="cat-count">${cat.count}</div>
+      <div class="cat-header">
+        <div class="cat-icon"><span class="cat-icon-inner">${cat.icon}</span></div>
+        <div>
+          <div class="cat-title">${cat.title}</div>
+          <div class="cat-sub">${cat.short}</div>
+        </div>
+      </div>
+      <div class="agents-list">
+        ${agentList.map(a => `
+          <div class="agent">
+            <div class="agent-dot"></div>
+            <div class="agent-name">${a.name}</div>
+            <div class="agent-role">${a.role}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  renderDetail();
+}
+
+function renderDetail() {
+  const panel = document.getElementById('detail');
+  if (!activeId) { panel.className = 'detail-panel'; return; }
+  const cat = CATEGORIES.find(c => c.id === activeId);
+  panel.style.setProperty('--cat-color', cat.color);
+  panel.className = 'detail-panel visible';
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <span style="font-size:24px">${cat.icon}</span>
+      <div>
+        <div class="detail-title">${cat.title}</div>
+        <div class="detail-desc">${cat.desc}</div>
+      </div>
+      <div class="detail-badge">${cat.count} AGENTS</div>
+      <div class="close-btn" onclick="toggle('${cat.id}')">✕</div>
+    </div>
+    <div class="detail-grid">
+      ${cat.subtopics.map(st => `
+        <div class="subtopic-block">
+          <div class="subtopic-name">${st.name}</div>
+          ${st.agents.map(a => `
+            <div class="detail-agent">
+              <div class="detail-agent-name">${a.name}</div>
+              <div class="detail-agent-role">${a.role}</div>
+              <div class="detail-agent-skill">${a.skill}</div>
+            </div>
+          `).join('')}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function toggle(id) {
+  activeId = activeId === id ? null : id;
+  render();
+  if (activeId) {
+    setTimeout(() => document.getElementById('detail').scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+  }
+}
+
+render();
+</script>
+</body>
+</html>
