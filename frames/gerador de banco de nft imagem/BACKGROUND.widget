@@ -1,6 +1,6 @@
 <div style="background:#0a0a0a;border-radius:14px;padding:14px;font-family:var(--font-sans)">
 <style>
-#bgw{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
+#bgw{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;--gr:#22c55e;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
 #bgw .top{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd)}
 #bgw .isl{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bl);border-radius:14px;padding:3px 11px;font-family:var(--font-mono);font-size:11px;color:var(--bt)}
 #bgw .dot{width:6px;height:6px;border-radius:50%;background:#2d6fa0}
@@ -33,8 +33,19 @@
 #bgw .note{font-size:10px;font-family:var(--font-mono);color:#46515a;line-height:1.6;margin-top:8px}
 #bgw .fi{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:7px;padding:9px 11px;color:var(--tx);font-size:12px;font-family:var(--font-mono);box-sizing:border-box}
 #bgw .fi:focus{outline:none;border-color:var(--bl)}
-#bgw .soon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:200px;border:1px dashed var(--bd);border-radius:10px;color:#46515a;font-family:var(--font-mono);font-size:11px;text-align:center}
-#bgw .soon i{font-size:26px}
+#bgw .gallery{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:24px}
+#bgw .thumb{width:52px;height:68px;border-radius:7px;overflow:hidden;border:2px solid var(--bd);cursor:pointer;background:#0b0f14;position:relative}
+#bgw .thumb.on{border-color:var(--bt)}
+#bgw .thumb img{width:100%;height:100%;object-fit:cover}
+#bgw .thumb .x{position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;background:rgba(0,0,0,.7);color:#d05b5b;font-size:10px;display:flex;align-items:center;justify-content:center;line-height:1}
+#bgw .ghint{font-family:var(--font-mono);font-size:10px;color:#46515a}
+#bgw .add{width:100%;padding:11px;background:#11202c;border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:7px}
+#bgw .add:hover{background:var(--bl)}
+#bgw .row2{display:flex;gap:8px;margin-bottom:6px}
+#bgw .rm{flex:1;padding:9px;background:transparent;border:1px solid var(--bd);border-radius:7px;color:var(--mut);font-family:var(--font-mono);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+#bgw .rm:hover{border-color:#6e1e1e;color:#d05b5b}
+#bgw .savec{flex:1;padding:9px;background:transparent;border:1px solid #1d6e4a;border-radius:7px;color:var(--gr);font-family:var(--font-mono);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+#bgw .savec:hover{background:#0e2419}
 #bgw .save{width:100%;margin-top:14px;padding:11px;background:var(--bl);border:1px solid #2d6fa0;border-radius:8px;color:var(--bt);font-size:12px;font-family:var(--font-mono);letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
 #bgw .save:hover{background:#2d6fa0;color:#fff}
 </style>
@@ -42,7 +53,7 @@
   <div class="top"><div class="isl"><span style="color:#3a6f96">[</span> &gt; iclone / nft-image-bank <span class="dot"></span></div></div>
   <div class="tabs">
     <div class="tb on" data-t="bg" onclick="tab('bg')"><i class="ti ti-photo"></i> Background</div>
-    <div class="tb" data-t="acc" onclick="tab('acc')"><i class="ti ti-shirt"></i> Accessories</div>
+    <div class="tb" data-t="acc" onclick="tab('acc')"><i class="ti ti-photo-up"></i> Image</div>
     <div class="tb" data-t="id" onclick="tab('id')"><i class="ti ti-id-badge-2"></i> ID</div>
     <div class="tb" data-t="skill" onclick="tab('skill')"><i class="ti ti-wand"></i> Skill</div>
     <div class="tb" data-t="inft" onclick="tab('inft')"><i class="ti ti-cube"></i> iNFT</div>
@@ -68,7 +79,15 @@
         </div>
       </div>
       <div class="pane" id="t-acc">
-        <div class="soon"><i class="ti ti-shirt"></i> Accessories<br>casaco · sapatos · etc.<br><span style="color:#33424d">próximas imagens entram aqui</span></div>
+        <div class="fl">agent images <span id="im-n">0</span></div>
+        <div class="gallery" id="im-gal"><span class="ghint">sem imagens — adiciona abaixo</span></div>
+        <button class="add" onclick="document.getElementById('imgf').click()"><i class="ti ti-photo-plus"></i> + iNFT images +</button>
+        <input type="file" id="imgf" accept="image/*" multiple style="display:none" onchange="imgAdd(this)"/>
+        <div class="row2">
+          <button class="rm" onclick="imgDel()"><i class="ti ti-trash"></i> remove selected</button>
+          <button class="savec" onclick="saveChanges()"><i class="ti ti-check"></i> Save Changes</button>
+        </div>
+        <div class="note">Adiciona quantas imagens quiseres para a coleção. Clica numa miniatura para a ver no card e editar o Background; "Save Changes" guarda a edição da imagem selecionada.</div>
       </div>
       <div class="pane" id="t-id">
         <div class="lab">name</div><input class="fi" id="id-name" value="iCLONE" oninput="idUp()"/>
@@ -81,7 +100,7 @@
       <div class="pane" id="t-skill">
         <div class="fl">skills merged into the key <span id="sk-n">0</span></div>
         <div class="chips" id="sk-list"></div>
-        <div class="note">A NFT é a <b style="color:var(--bt);font-weight:400">chave</b> do agente: as skills selecionadas ficam acessíveis ao detentor da chave dentro da Clone Frame (e em todos os frames).</div>
+        <div class="note">A NFT é a <b style="color:var(--bt);font-weight:400">chave</b> do agente.</div>
       </div>
       <div class="pane" id="t-inft">
         <div class="lab">collection name</div><input class="fi" id="in-coll" value="iCLONE Agents"/>
@@ -90,9 +109,9 @@
         <div class="lab">mint price</div><input class="fi" id="in-price" value="0.08 ETH" oninput="inUp()"/>
         <div class="lab">contract standard</div>
         <div class="chips" id="in-ct"></div>
-        <div class="note">Base · chainId 8453. <b style="color:var(--bt);font-weight:400">ERC-721A</b> (mint em lote, gás baixo) + <b style="color:var(--bt);font-weight:400">ERC-2981</b> (royalties). Ao comprar, a wallet recebe o NFT (a chave) e o agente — usados em conjunto na Clone Frame.</div>
+        <div class="note">Base · 8453. <b style="color:var(--bt);font-weight:400">ERC-721A</b> + <b style="color:var(--bt);font-weight:400">ERC-2981</b> + <b style="color:var(--bt);font-weight:400">ERC-6551</b>. Token: <b style="color:var(--bt);font-weight:400">Virtuals-native (1B)</b>.</div>
+        <button class="save" onclick="bgSave()"><i class="ti ti-stack-2"></i> Mint iNFT Collection</button>
       </div>
-      <button class="save" onclick="bgSave()"><i class="ti ti-stack-2"></i> Mint iNFT Collection</button>
     </div>
   </div>
 </div>
@@ -105,27 +124,35 @@
   var CT=['ERC-721A','ERC-721'];
   var st={neon:'#3b82f6',panel:'#4a3aa8',dark:80,glow:7,brackets:1,pattern:1,
           name:'iCLONE',serial:'#000912',rarity:'iclone',cls:'Market Intelligence',coll:'iCLONE Agents',
-          skills:{}, contract:'ERC-721A', supply:'100', date:'2026-06-30', price:'0.08 ETH'};
+          skills:{}, contract:'ERC-721A', supply:'100', date:'2026-06-30', price:'0.08 ETH', imgs:[], sel:-1};
   function rgb(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
   function hex(a){return '#'+a.map(function(v){return ('0'+Math.max(0,Math.min(255,Math.round(v))).toString(16)).slice(-2);}).join('');}
   function mix(a,b,t){var A=rgb(a),B=rgb(b);return hex([A[0]+(B[0]-A[0])*t,A[1]+(B[1]-A[1])*t,A[2]+(B[2]-A[2])*t]);}
+  function curImg(){return (st.sel>=0&&st.imgs[st.sel])?st.imgs[st.sel]:null;}
   function build(s){
     var t=s.dark/100;
     var light=mix(s.neon,'#ffffff',0.80), deep=mix(s.neon,'#000000',0.94);
     var bd=mix(light,deep,t), bdc=mix(bd, t>0.5?'#ffffff':'#000000', 0.10);
     var neonL=mix(s.neon,'#ffffff',0.45);
-    var panelHi=mix(s.panel,'#ffffff',0.14), mark=mix(s.panel,'#ffffff',0.22);
-    var T='<svg viewBox="0 0 280 380" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">';
+    var panelHi=mix(s.panel,'#ffffff',0.14), mark=mix(s.panel,'#ffffff',0.22), ph=mix(s.panel,'#ffffff',0.4);
+    var img=curImg();
+    var T='<svg viewBox="0 0 280 380" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
     T+='<defs>';
     T+='<radialGradient id="bd" cx="50%" cy="42%" r="80%"><stop offset="0%" stop-color="'+bdc+'"/><stop offset="100%" stop-color="'+bd+'"/></radialGradient>';
     T+='<radialGradient id="pn" cx="50%" cy="40%" r="82%"><stop offset="0%" stop-color="'+panelHi+'"/><stop offset="100%" stop-color="'+s.panel+'"/></radialGradient>';
     T+='<filter id="gl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="'+s.glow+'"/></filter>';
     T+='<pattern id="pat" width="70" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><text x="0" y="6.9" font-size="6.5" font-family="monospace" fill="'+mark+'" opacity="0.36">icloneicloneiclone</text></pattern>';
+    T+='<clipPath id="pc"><rect x="44" y="42" width="192" height="296" rx="18"/></clipPath>';
     T+='</defs>';
     T+='<rect x="-30" y="-30" width="340" height="440" fill="url(#bd)"/>';
     T+='<rect x="40" y="38" width="200" height="304" rx="22" fill="'+s.neon+'" opacity="0.55" filter="url(#gl)"/>';
     T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="url(#pn)"/>';
-    if(s.pattern)T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="url(#pat)"/>';
+    if(s.pattern&&!img)T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="url(#pat)"/>';
+    if(img){
+      T+='<image href="'+img+'" xlink:href="'+img+'" x="44" y="42" width="192" height="296" preserveAspectRatio="xMidYMid slice" clip-path="url(#pc)"/>';
+    } else {
+      T+='<g clip-path="url(#pc)"><circle cx="140" cy="178" r="20" fill="none" stroke="'+ph+'" stroke-width="1.5"/><path d="M132 178 L140 170 L148 178 M140 170 L140 192" stroke="'+ph+'" stroke-width="1.5" fill="none" stroke-linecap="round"/><text x="140" y="214" text-anchor="middle" font-family="monospace" font-size="9" fill="'+ph+'">agent image</text></g>';
+    }
     T+='<rect x="44" y="42" width="192" height="296" rx="18" fill="none" stroke="'+s.neon+'" stroke-width="3" filter="url(#gl)"/>';
     T+='<rect x="45.5" y="43.5" width="189" height="293" rx="17" fill="none" stroke="'+neonL+'" stroke-width="1.4"/>';
     if(s.brackets){
@@ -139,9 +166,13 @@
     document.getElementById('bgstage').innerHTML=build(st);
     document.getElementById('bgdv').textContent=st.dark<25?'light':st.dark<60?'mid':st.dark<88?'dark':'black';
     document.getElementById('bggv').textContent=st.glow<4?'soft':st.glow<8?'strong':'intense';
+    document.getElementById('im-n').textContent=st.imgs.length;
+    var g=document.getElementById('im-gal');
+    if(st.imgs.length===0){g.innerHTML='<span class="ghint">sem imagens — adiciona abaixo</span>';}
+    else{g.innerHTML=st.imgs.map(function(src,i){return '<div class="thumb'+(i===st.sel?' on':'')+'" onclick="imgSel('+i+')"><img src="'+src+'"/><span class="x" onclick="event.stopPropagation();imgDelI('+i+')">×</span></div>';}).join('');}
     var sc=0;document.querySelectorAll('#sk-list .ch').forEach(function(b){var on=!!st.skills[b.dataset.k];b.classList.toggle('on',on);if(on)sc++;});
     document.getElementById('sk-n').textContent=sc;
-    document.getElementById('bgmeta').innerHTML='<b>'+st.name+' '+st.serial+'</b> · '+st.rarity+' · '+sc+' skills<br>'+st.coll+' · supply '+st.supply+' · '+st.contract;
+    document.getElementById('bgmeta').innerHTML='<b>'+st.name+' '+st.serial+'</b> · '+st.rarity+' · '+st.imgs.length+' images<br>'+st.coll+' · supply '+st.supply+' · '+st.contract;
     document.querySelectorAll('#bgneon .dotc').forEach(function(b){b.classList.toggle('on',st.neon===b.dataset.c);});
     document.querySelectorAll('#bgpanel .dotc').forEach(function(b){b.classList.toggle('on',st.panel===b.dataset.c);});
     document.getElementById('ch-br').classList.toggle('on',!!st.brackets);
@@ -155,18 +186,26 @@
   window.bgDark=function(v){st.dark=+v;render();};
   window.bgGlow=function(v){st.glow=+v;render();};
   window.bgTog=function(k){st[k]=st[k]?0:1;render();};
+  window.imgAdd=function(inp){var fs=inp.files; if(!fs||!fs.length)return; for(var i=0;i<fs.length;i++){(function(f){var r=new FileReader();r.onload=function(e){st.imgs.push(e.target.result);st.sel=st.imgs.length-1;render();};r.readAsDataURL(f);})(fs[i]);} inp.value='';};
+  window.imgSel=function(i){st.sel=i;render();};
+  window.imgDelI=function(i){st.imgs.splice(i,1);if(st.sel>=st.imgs.length)st.sel=st.imgs.length-1;render();};
+  window.imgDel=function(){if(st.sel>=0)imgDelI(st.sel);};
+  window.saveChanges=function(){if(st.sel<0){sendPrompt('Adiciona pelo menos uma imagem antes de guardar.');return;}sendPrompt('Save Changes — imagem '+(st.sel+1)+'/'+st.imgs.length+' do card '+st.name+' '+st.serial+' (neon '+st.neon+', panel '+st.panel+', darkness '+st.dark+'%, glow '+st.glow+', brackets '+(st.brackets?'on':'off')+', mark '+(st.pattern?'on':'off')+').');};
   window.idRar=function(r){st.rarity=r;render();};
   window.idUp=function(){st.name=document.getElementById('id-name').value;st.serial=document.getElementById('id-serial').value;st.cls=document.getElementById('id-class').value;st.coll=document.getElementById('id-coll').value;render();};
   window.skTog=function(k){st.skills[k]=!st.skills[k];render();};
   window.ctSet=function(c){st.contract=c;render();};
   window.inUp=function(){st.coll=document.getElementById('in-coll').value;st.supply=document.getElementById('in-supply').value;st.date=document.getElementById('in-date').value;st.price=document.getElementById('in-price').value;render();};
-  window.bgSave=function(){var sks=Object.keys(st.skills).filter(function(k){return st.skills[k];}).join(', ')||'none';sendPrompt('Guardar no banco NFT — id '+st.name+' '+st.serial+' ('+st.rarity+'); skills: '+sks+'; coleção '+st.coll+', supply '+st.supply+', '+st.contract+' na Base, mint '+st.price+', publish '+st.date+'.');};
+  window.bgSave=function(){sendPrompt('Mint iNFT Collection — '+st.name+' ('+st.coll+'), '+st.imgs.length+' imagens, supply '+st.supply+', '+st.contract+' na Base.');};
   document.getElementById('bgneon').innerHTML=NEON.map(function(c){return '<div class="dotc" data-c="'+c+'" style="background:'+c+'" onclick="bgNeon(\''+c+'\')"></div>';}).join('');
   document.getElementById('bgpanel').innerHTML=PANEL.map(function(c){return '<div class="dotc" data-c="'+c+'" style="background:'+c+'" onclick="bgPanel(\''+c+'\')"></div>';}).join('');
   document.getElementById('id-rar').innerHTML=RAR.map(function(r){return '<div class="ti2" data-r="'+r+'" onclick="idRar(\''+r+'\')">'+r+'</div>';}).join('');
   document.getElementById('sk-list').innerHTML=SKILLS.map(function(k){return '<div class="ch" data-k="'+k+'" onclick="skTog(\''+k+'\')"><i class="ti ti-plus"></i> '+k+'</div>';}).join('');
   document.getElementById('in-ct').innerHTML=CT.map(function(c){return '<div class="ch" data-k="'+c+'" onclick="ctSet(\''+c+'\')">'+c+'</div>';}).join('');
   render();
+  requestAnimationFrame(function(){render();requestAnimationFrame(render);});
+  setTimeout(render,120);
+  window.addEventListener('resize',render);
 })();
 </script>
 </div>
