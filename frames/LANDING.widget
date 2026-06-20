@@ -10,6 +10,8 @@
 #cf .nav{display:flex;align-items:center;gap:10px;padding:11px 22px;border-bottom:1px solid var(--bd)}
 #cf .brand{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;color:var(--tx)}
 #cf .brand b{color:var(--bt);font-weight:400}
+#cf .tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;color:var(--mut);border:1px solid var(--bd);border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:5px}
+#cf .tag i{width:5px;height:5px;border-radius:50%;background:#5a9e6f;display:inline-block}
 #cf .nlinks{margin-left:auto;display:flex;gap:4px}
 #cf .nl{font-family:var(--font-mono);font-size:11px;color:var(--mut);padding:6px 11px;border-radius:7px;cursor:pointer;border:1px solid transparent}
 #cf .nl:hover{color:var(--tx);background:var(--s1)}
@@ -40,21 +42,21 @@
 #cf .sec{padding:30px 22px;border-top:1px solid var(--bd)}
 #cf .sh{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
 #cf .st{font-size:20px;font-weight:500;color:var(--tx);letter-spacing:-.01em;margin:0 0 4px}
-#cf .ss{font-size:12px;color:var(--mut);max-width:470px;line-height:1.6;margin:0 0 20px}
+#cf .ss{font-size:12px;color:var(--mut);max-width:480px;line-height:1.6;margin:0 0 20px}
 #cf .what{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
 #cf .wc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:16px 14px}
 #cf .wc:hover{border-color:var(--bl)}
 #cf .wi{font-size:21px;color:var(--bt);margin-bottom:10px}
 #cf .wn{font-size:13px;color:var(--tx);font-weight:500;margin-bottom:4px}
 #cf .wd{font-size:11px;color:var(--mut);line-height:1.55}
-#cf .frames{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-#cf .frc{background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:17px 17px 15px;cursor:pointer;transition:border-color .14s,transform .1s;position:relative;overflow:hidden}
+#cf .frames{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+#cf .frc{background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:16px 15px 14px;cursor:pointer;transition:border-color .14s,transform .1s;position:relative;overflow:hidden}
 #cf .frc:hover{border-color:var(--bt);transform:translateY(-2px)}
-#cf .frbadge{position:absolute;top:13px;right:14px;font-family:var(--font-mono);font-size:8px;letter-spacing:.1em;color:var(--mut);border:1px solid var(--bd);border-radius:5px;padding:2px 7px}
-#cf .fri{font-size:22px;color:var(--bt);margin-bottom:12px}
-#cf .frn{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;color:var(--tx);margin-bottom:5px}
-#cf .frd{font-size:11px;color:var(--mut);line-height:1.55;max-width:250px}
-#cf .frgo{margin-top:12px;font-family:var(--font-mono);font-size:10px;color:var(--bt);display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .15s}
+#cf .frbadge{position:absolute;top:12px;right:12px;font-family:var(--font-mono);font-size:7.5px;letter-spacing:.08em;color:var(--mut);border:1px solid var(--bd);border-radius:5px;padding:2px 6px}
+#cf .fri{font-size:21px;color:var(--bt);margin-bottom:11px}
+#cf .frn{font-family:var(--font-mono);font-size:12px;letter-spacing:.05em;color:var(--tx);margin-bottom:5px}
+#cf .frd{font-size:10.5px;color:var(--mut);line-height:1.5}
+#cf .frgo{margin-top:11px;font-family:var(--font-mono);font-size:9.5px;color:var(--bt);display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .15s}
 #cf .frc:hover .frgo{opacity:1}
 #cf .alloc{display:flex;border-radius:9px;overflow:hidden;border:1px solid var(--bd);margin-bottom:14px;height:46px}
 #cf .sp{display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-mono);border-right:1px solid var(--bg)}
@@ -85,6 +87,7 @@
   </div>
   <div class="nav">
     <div class="brand"><i class="ti ti-cube-3d-sphere" style="color:var(--bt);font-size:16px"></i> CLONE <b>FRAME</b></div>
+    <div class="tag"><i></i> building in public</div>
     <div class="nlinks">
       <div class="nl" onclick="cfGo('frames')">Frames</div>
       <div class="nl" onclick="cfGo('econ')">Economy</div>
@@ -98,12 +101,12 @@
         <p class="lead">Automate, tokenise and sell your <b>iNFT</b> clone.</p>
         <div class="cta">
           <div class="btn pri" onclick="sendPrompt('Entrar nos Frames do CLONE FRAME — abrir o PLAZA FRAME (marketplace de agentes)')"><i class="ti ti-arrow-right"></i> Enter the Frames</div>
-          <div class="btn gho" onclick="sendPrompt('Mostrar como criar e mintar um agente iCLONE como iNFT')"><i class="ti ti-stack-2"></i> Mint an agent</div>
+          <div class="btn gho" onclick="sendPrompt('Mostrar como criar um agente iCLONE com NFT integrado')"><i class="ti ti-robot"></i> Create an agent</div>
         </div>
         <div class="meta">
-          <div><b>iNFT</b>agent + NFT, one token</div>
+          <div><b>iNFT</b>agent with built-in NFT</div>
+          <div><b>iCLONE</b>a category of iNFT</div>
           <div><b>Base</b>chain 8453</div>
-          <div><b>ERC-721A</b>+ 2981 + 6551</div>
         </div>
       </div>
       <div class="stage">
@@ -114,30 +117,29 @@
           <div class="slothint"><i class="ti ti-photo-plus" style="font-size:9px"></i> click to set your image</div>
         </div>
         <input type="file" id="cffile" accept="image/*" style="display:none" onchange="cfImg(this)"/>
-        <div class="keytag"><i class="ti ti-cube-3d-sphere" style="font-size:9px"></i> one iNFT · token #000912</div>
+        <div class="keytag"><i class="ti ti-robot" style="font-size:9px"></i> iCLONE · iNFT #000912</div>
       </div>
     </div>
 
     <div class="sec" id="sec-what">
       <div class="sh">// what it is</div>
-      <h2 class="st">An AI automation agent, tokenised</h2>
-      <p class="ss">Three things, fused into one token. You hold it, it works for you, and it lives on-chain.</p>
+      <h2 class="st">An AI agent, with an NFT built in</h2>
+      <p class="ss">An iNFT is an AI automation agent with an integrated NFT — the NFT gives it identity and ownership. iCLONE is one category of iNFT: your automation clone.</p>
       <div class="what">
-        <div class="wc"><div class="wi"><i class="ti ti-robot"></i></div><div class="wn">It automates</div><div class="wd">An AI agent that runs your tasks — flows, tools, jobs, on its own.</div></div>
-        <div class="wc"><div class="wi"><i class="ti ti-cube-3d-sphere"></i></div><div class="wn">It's one iNFT</div><div class="wd">The agent and the NFT are a single token. Inseparable — never two parts.</div></div>
-        <div class="wc"><div class="wi"><i class="ti ti-coin"></i></div><div class="wn">It's tokenised</div><div class="wd">Owned, held and traded on-chain on Base. You control the agent by holding it.</div></div>
+        <div class="wc"><div class="wi"><i class="ti ti-robot"></i></div><div class="wn">It automates</div><div class="wd">An AI agent that runs your tasks — flows, tools and jobs, on its own.</div></div>
+        <div class="wc"><div class="wi"><i class="ti ti-id-badge-2"></i></div><div class="wn">NFT built in</div><div class="wd">The agent carries an integrated NFT — its on-chain identity and ownership.</div></div>
+        <div class="wc"><div class="wi"><i class="ti ti-arrows-exchange"></i></div><div class="wn">Yours to trade</div><div class="wd">Held and traded on Base. Own it, automate with it, sell it.</div></div>
       </div>
     </div>
 
     <div class="sec" id="sec-frames">
-      <div class="sh">// the frames</div>
-      <h2 class="st">Four Frames</h2>
-      <p class="ss">Each surface is a Frame — same terminal, your wallet across all of them.</p>
+      <div class="sh">// the surfaces</div>
+      <h2 class="st">Clone Frames</h2>
+      <p class="ss">Each surface is a Frame — same terminal, one wallet across all of them.</p>
       <div class="frames">
-        <div class="frc" onclick="sendPrompt('Abrir o PLAZA FRAME — marketplace de agentes e skills do CLONE FRAME')"><span class="frbadge">marketplace</span><div class="fri"><i class="ti ti-building-store"></i></div><div class="frn">PLAZA FRAME</div><div class="frd">Discover, acquire and trade agent iNFTs and skills. Rarity tiers: rare · superrare · iclone.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
-        <div class="frc" onclick="sendPrompt('Abrir o iCLONE FRAME — mint studio para criar um agente como iNFT on-chain')"><span class="frbadge">mint studio</span><div class="fri"><i class="ti ti-stack-2"></i></div><div class="frn">iCLONE FRAME</div><div class="frd">Create an agent and mint it as an iNFT — image, base soul, contract. Deploy to Base.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
-        <div class="frc" onclick="sendPrompt('Abrir o SKILL FRAME — publicar e adquirir skills em iCLONE token')"><span class="frbadge">skills</span><div class="fri"><i class="ti ti-bolt"></i></div><div class="frn">SKILL FRAME</div><div class="frd">Add skills to an agent — automation, flows, tools. Published from your wallet.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
-        <div class="frc" onclick="sendPrompt('Abrir o iNFT Configuration do CLONE FRAME (construtor de iNFT)')"><span class="frbadge">generator</span><div class="fri"><i class="ti ti-adjustments-cog"></i></div><div class="frn">iNFT Configuration</div><div class="frd">The iNFT builder — background, image slots, identity, skills and the collection mint.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
+        <div class="frc" onclick="sendPrompt('Abrir o PLAZA FRAME — marketplace de agentes iCLONE e skills')"><span class="frbadge">marketplace</span><div class="fri"><i class="ti ti-building-store"></i></div><div class="frn">PLAZA FRAME</div><div class="frd">Discover, acquire and trade iCLONE agents and skills. Tiers: rare · superrare · iclone.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
+        <div class="frc" onclick="sendPrompt('Abrir o iCLONE FRAME — criar um agente com NFT integrado (inclui o iNFT Configuration)')"><span class="frbadge">create</span><div class="fri"><i class="ti ti-robot"></i></div><div class="frn">iCLONE FRAME</div><div class="frd">Create your agent and give it a built-in NFT. Includes the iNFT Configuration — image, identity, skills, collection.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
+        <div class="frc" onclick="sendPrompt('Abrir o SKILL FRAME — publicar e adquirir skills em iCLONE token')"><span class="frbadge">skills</span><div class="fri"><i class="ti ti-bolt"></i></div><div class="frn">SKILL FRAME</div><div class="frd">Add skills to an agent — automation, flows and tools. Published from your wallet.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
       </div>
     </div>
 
@@ -148,7 +150,7 @@
       <div class="econ">
         <div class="ec"><div class="ecv">5%</div><div class="ecl">Perpetual royalty</div><div class="ecd">on every iNFT resale (2981)</div></div>
         <div class="ec"><div class="ecv">1%</div><div class="ecl">First skill sale</div><div class="ecd">once, never again</div></div>
-        <div class="ec"><div class="ecv">$0</div><div class="ecl">Tools</div><div class="ecd">free to build &amp; mint</div></div>
+        <div class="ec"><div class="ecv">$0</div><div class="ecl">Tools</div><div class="ecd">free to build &amp; create</div></div>
       </div>
       <div style="height:26px"></div>
       <div class="sh">// revenue allocation · on-chain</div>
@@ -165,6 +167,7 @@
         <span><i style="background:#6b7178"></i> VIRTUALS — reserve staking</span>
         <span><i style="background:#8a52c4"></i> iCLONE — buyback &amp; burn</span>
       </div>
+      <div style="height:24px"></div>
       <div class="stake">
         <i class="ti ti-lock-bolt"></i>
         <div><div class="sk">Stake <b>10k iCLONE</b> to publish your own collections — lock 6m, cooldown 1m.</div><div class="skd">ready-made collections need no stake · token launched on the Virtuals launchpad (1B supply)</div></div>
@@ -179,7 +182,7 @@
         <div class="btn pri" onclick="sendPrompt('Gerar uma gota (drop) do CLONE FRAME que dá acesso aos tools da CLONE FRAME dentro da Venice (builtinvenice.ai)')"><i class="ti ti-gift"></i> Generate a drop</div>
         <div class="btn gho" onclick="sendPrompt('Entrar nos Frames do CLONE FRAME')"><i class="ti ti-arrow-right"></i> Enter the Frames</div>
       </div>
-      <div class="fbar"><span>clone-frame · iclone agent interface</span><span>Base · 8453 · iNFT</span></div>
+      <div class="fbar"><span>clone-frame · building in public</span><span>Base · 8453 · iNFT</span></div>
     </div>
   </div>
 </div>
