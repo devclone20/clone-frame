@@ -32,11 +32,19 @@ mockups/                        mockups HTML da plataforma
 - **Token do agente:** lançado **nativamente na Virtuals** (supply 1B, regras da Virtuals).
 - Arte 100% on-chain (SVG determinístico). Rarity tiers: `rare` · `superrare` · `iclone`.
 
-## Receita
+## Receita (como a CLONE FRAME ganha)
 
 - **iNFT:** 5% perpétuo sobre todas as vendas (on-chain).
 - **Skills:** 1% na 1ª venda.
 - **Ferramentas:** grátis.
+
+## Economia do projeto (alocação de receita, on-chain)
+
+De **toda a receita** que a CLONE FRAME ganha, **30%** compõe três reservas on-chain — o restante financia o desenvolvimento. Economia segura por desenho, auditável e reportada periodicamente.
+
+- **10% → BTC:** compra + reserva em staking (fundo de garantia do token e do projeto).
+- **10% → VIRTUALS:** reserva em staking (liquidez e tesouraria).
+- **10% → iCLONE:** buyback & burn (queima).
 
 ## Token utility (iCLONE)
 

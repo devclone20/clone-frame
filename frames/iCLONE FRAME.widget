@@ -230,7 +230,7 @@
       ['8','<span class="ck">contract</span> <span class="ct">iCloneAgent</span> <span class="ck">is</span> ERC721URIStorage, Ownable {'],
       ['9','    <span class="ck">uint256</span> <span class="ck">public</span> nextId;'],
       ['10','    <span class="ck">uint256</span> <span class="ck">public</span> mintPrice = 0.08 <span class="ck">ether</span>;'],
-      ['11','    <span class="ck">address</span> <span class="ck">public</span> treasury; <span class="cc">// 3×10% split</span>'],
+      ['11','    <span class="ck">address</span> <span class="ck">public</span> treasury; <span class="cc">// 30% of revenue → reserves</span>'],
       ['12',''],
       ['13','    <span class="ck">event</span> <span class="cf">AgentMinted</span>(<span class="ck">uint256</span> <span class="ck">indexed</span> id, <span class="ck">address</span> <span class="ck">indexed</span> owner, <span class="ck">string</span> soul);'],
       ['14',''],
@@ -315,7 +315,7 @@
       ['ok','✓ tokenURI ipfs://bafy…a91/metadata.json'],
       ['in','$ mintAgent(uri, soul) value='+price+' '+cur],
       ['ok','✓ '+name+' minted · token #000912'],
-      ['wn','↳ treasury split 3×10% queued (BTC · VIRTUAL · iCLONE)'],
+      ['wn','↳ treasury 30% → reserves queued (BTC · VIRTUAL · iCLONE)'],
       ['ok','✓ tx 0x7be4…c20 confirmed on Base']
     ];
     c.innerHTML=''; var i=0;
