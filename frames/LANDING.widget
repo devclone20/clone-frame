@@ -27,6 +27,7 @@
 #cf .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;padding:11px 18px;border-radius:9px;cursor:pointer;border:1px solid var(--bl)}
 #cf .btn.pri{background:var(--bt);color:#fff;border-color:var(--bt)}#cf .btn.pri:hover{background:#363b41}
 #cf .btn.gho{background:transparent;color:var(--mut);border-color:var(--bd)}#cf .btn.gho:hover{color:var(--tx);border-color:var(--bl)}
+#cf .ctahint{margin-top:12px;font-family:var(--font-mono);font-size:10px;color:var(--mut);display:flex;align-items:center;gap:6px}
 #cf .meta{margin-top:20px;display:flex;gap:22px;font-family:var(--font-mono);font-size:10px;color:var(--mut)}
 #cf .meta b{color:var(--tx);font-weight:500;font-size:15px;display:block;margin-bottom:2px}
 #cf .stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:260px}
@@ -100,12 +101,13 @@
         <h1 class="h1">Automate any tasks with your iCLONE.</h1>
         <p class="lead">Automate, tokenise and sell your <b>iNFT</b> clone.</p>
         <div class="cta">
-          <div class="btn pri" onclick="sendPrompt('Entrar nos Frames do CLONE FRAME — abrir o PLAZA FRAME (marketplace de agentes)')"><i class="ti ti-arrow-right"></i> Enter the Frames</div>
+          <div class="btn pri" onclick="sendPrompt('Gerar uma gota (drop) do CLONE FRAME para aceder a todos os Frames e tools (gated, dentro da Venice)')"><i class="ti ti-gift"></i> Generate a drop</div>
           <div class="btn gho" onclick="sendPrompt('Mostrar como criar um agente iCLONE com NFT integrado')"><i class="ti ti-robot"></i> Create an agent</div>
         </div>
+        <div class="ctahint"><i class="ti ti-key" style="font-size:11px"></i> Generate a drop to access the frames.</div>
         <div class="meta">
           <div><b>iNFT</b>agent with built-in NFT</div>
-          <div><b>iCLONE</b>a category of iNFT</div>
+          <div><b>iCLONE</b>works for you</div>
           <div><b>Base</b>chain 8453</div>
         </div>
       </div>
@@ -124,7 +126,7 @@
     <div class="sec" id="sec-what">
       <div class="sh">// what it is</div>
       <h2 class="st">An AI agent, with an NFT built in</h2>
-      <p class="ss">An iNFT is an AI automation agent with an integrated NFT — the NFT gives it identity and ownership. iCLONE is one category of iNFT: your automation clone.</p>
+      <p class="ss">An iNFT is an AI automation agent with an integrated NFT — the NFT gives it identity and ownership. iCLONE is your agent: it works for you.</p>
       <div class="what">
         <div class="wc"><div class="wi"><i class="ti ti-robot"></i></div><div class="wn">It automates</div><div class="wd">An AI agent that runs your tasks — flows, tools and jobs, on its own.</div></div>
         <div class="wc"><div class="wi"><i class="ti ti-id-badge-2"></i></div><div class="wn">NFT built in</div><div class="wd">The agent carries an integrated NFT — its on-chain identity and ownership.</div></div>
