@@ -99,7 +99,7 @@
       <div class="hcol">
         <div class="kick"><span class="ln"></span> iCLONE · Base 8453</div>
         <h1 class="h1">Automate any tasks with your iCLONE.</h1>
-        <p class="lead">Automate, tokenise and sell your <b>iNFT</b> clone.</p>
+        <p class="lead">Automate, tokenize and sell your <b>iNFT</b> clone.</p>
         <div class="cta">
           <div class="btn pri" onclick="sendPrompt('Gerar uma gota (drop) do CLONE FRAME para aceder a todos os Frames e tools (gated, dentro da Venice)')"><i class="ti ti-gift"></i> Generate a drop</div>
           <div class="btn gho" onclick="sendPrompt('Mostrar como criar um agente iCLONE com NFT integrado')"><i class="ti ti-robot"></i> Create an agent</div>
