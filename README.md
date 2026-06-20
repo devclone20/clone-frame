@@ -40,7 +40,7 @@ mockups/                        mockups HTML da plataforma
 
 ## Token utility (iCLONE)
 
-- Staking de **100k iCLONE** (lock 6 meses, cooldown 1 mês) para publicar coleções.
+- Staking de **10k iCLONE** (lock 6 meses, cooldown 1 mês) para publicar coleções.
 - Coleções prontas vendidas pela plataforma dispensam staking.
 
 ---
