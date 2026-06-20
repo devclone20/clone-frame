@@ -50,7 +50,7 @@
 #bgw .save:hover{background:#2d6fa0;color:#fff}
 </style>
 <div id="bgw">
-  <div class="top"><div class="isl"><span style="color:#3a6f96">[</span> &gt; iclone / nft-image-bank <span class="dot"></span></div></div>
+  <div class="top"><div class="isl"><span style="color:#3a6f96">[</span> &gt; iclone / inft-config <span class="dot"></span></div></div>
   <div class="tabs">
     <div class="tb on" data-t="bg" onclick="tab('bg')"><i class="ti ti-photo"></i> Background</div>
     <div class="tb" data-t="acc" onclick="tab('acc')"><i class="ti ti-photo-up"></i> Image</div>

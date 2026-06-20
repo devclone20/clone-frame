@@ -16,13 +16,15 @@ Base partilhada em todos: menu retrátil, Wallet (Login/Online/Sign out), Settin
 ## Estrutura
 
 ```
-frames/                         widgets .widget dos frames (rascunhos de UI)
-  PLAZA FRAME.widget
-  SKILL FRAME.widget
-  iCLONE FRAME.widget
-  gerador de banco de nft imagem/
-    BACKGROUND.widget           construtor de NFT (Background/Accessories/ID/Skill/iNFT)
-    SILUETAS.widget
+frames/                         pasta isolada — só os frames (rascunhos de UI .widget)
+  LANDING.widget                página de apresentação do projeto
+  PLAZA FRAME.widget            marketplace
+  SKILL FRAME.widget            skills
+  iCLONE FRAME/                 criar agente com NFT integrado
+    iCLONE FRAME.widget
+    iNFT Configuration/         (dentro do iCLONE FRAME)
+      BACKGROUND.widget         construtor de iNFT (Background/Image/ID/Skill/iNFT)
+      SILUETAS.widget
 mockups/                        mockups HTML da plataforma
 ```
 
@@ -32,15 +34,23 @@ mockups/                        mockups HTML da plataforma
 - **Token do agente:** lançado **nativamente na Virtuals** (supply 1B, regras da Virtuals).
 - Arte 100% on-chain (SVG determinístico). Rarity tiers: `rare` · `superrare` · `iclone`.
 
-## Receita
+## Receita (como a CLONE FRAME ganha)
 
 - **iNFT:** 5% perpétuo sobre todas as vendas (on-chain).
 - **Skills:** 1% na 1ª venda.
 - **Ferramentas:** grátis.
 
+## Economia do projeto (alocação de receita, on-chain)
+
+De **toda a receita** que a CLONE FRAME ganha, **30%** compõe três reservas on-chain — o restante financia o desenvolvimento. Economia segura por desenho, auditável e reportada periodicamente.
+
+- **10% → BTC:** compra + reserva em staking (fundo de garantia do token e do projeto).
+- **10% → VIRTUALS:** reserva em staking (liquidez e tesouraria).
+- **10% → iCLONE:** buyback & burn (queima).
+
 ## Token utility (iCLONE)
 
-- Staking de **100k iCLONE** (lock 6 meses, cooldown 1 mês) para publicar coleções.
+- Staking de **10k iCLONE** (lock 6 meses, cooldown 1 mês) para publicar coleções.
 - Coleções prontas vendidas pela plataforma dispensam staking.
 
 ---
