@@ -94,8 +94,8 @@
     <div class="hero">
       <div class="hcol">
         <div class="kick"><span class="ln"></span> iCLONE · Base 8453</div>
-        <h1 class="h1">Automate any tasks with your agent iCLONE.</h1>
-        <p class="lead">CLONE FRAME is where you create an iCLONE agent and mint it as an <b>iNFT</b>. Customisable skills, and fully tokenisable.</p>
+        <h1 class="h1">Automate any tasks with your iCLONE.</h1>
+        <p class="lead">Automate, tokenise and sell your <b>iNFT</b> clone.</p>
         <div class="cta">
           <div class="btn pri" onclick="sendPrompt('Entrar nos Frames do CLONE FRAME — abrir o PLAZA FRAME (marketplace de agentes)')"><i class="ti ti-arrow-right"></i> Enter the Frames</div>
           <div class="btn gho" onclick="sendPrompt('Mostrar como criar e mintar um agente iCLONE como iNFT')"><i class="ti ti-stack-2"></i> Mint an agent</div>
