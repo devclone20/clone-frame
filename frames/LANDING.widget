@@ -1,39 +1,36 @@
 <div style="background:#ffffff;border-radius:14px;padding:14px;font-family:var(--font-sans)">
 <style>
-#cf{--bg:#ffffff;--s1:#f4f6f8;--s2:#ffffff;--bd:#e3e7ec;--bl:#bcd3e6;--bt:#1e6fa5;--tx:#15181c;--mut:#737b85;--gr:#1f9d57;--am:#b8841f;--pp:#8a52c4;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
-#cf.dark{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#163a57;--bl:#1e4a6e;--bt:#5ba3d0;--tx:#cfcfcf;--mut:#5a6670;--am:#d9a23b;--pp:#b86fd9}
+#cf{--bg:#ffffff;--s1:#f4f6f8;--s2:#ffffff;--bd:#e3e7ec;--bl:#cfd4da;--bt:#4f565e;--tx:#15181c;--mut:#737b85;--am:#b8841f;--pp:#8a52c4;background:var(--bg);border:1px solid var(--bd);border-radius:11px;overflow:hidden;color:var(--tx)}
+#cf.dark{--bg:#080808;--s1:#0e0e0e;--s2:#121212;--bd:#2a2e33;--bl:#3a3f45;--bt:#aab2bb;--tx:#cfcfcf;--mut:#777f88;--am:#d9a23b;--pp:#b86fd9}
 #cf .top{height:38px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--s1);border-bottom:1px solid var(--bd)}
 #cf .isl{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--bl);border-radius:14px;padding:3px 11px;font-family:var(--font-mono);font-size:11px;color:var(--bt)}
-#cf .dot{width:6px;height:6px;border-radius:50%;background:#2d6fa0}
+#cf .dot{width:6px;height:6px;border-radius:50%;background:#aeb4bb}
 #cf .modes{margin-left:auto;display:flex;gap:6px}
-#cf .md{width:11px;height:11px;border-radius:50%;border:1px solid #2d6fa0;cursor:pointer}#cf .md.on{background:var(--bt);border-color:var(--bt)}
+#cf .md{width:11px;height:11px;border-radius:50%;border:1px solid #aeb4bb;cursor:pointer}#cf .md.on{background:var(--bt);border-color:var(--bt)}
 #cf .nav{display:flex;align-items:center;gap:10px;padding:11px 22px;border-bottom:1px solid var(--bd)}
 #cf .brand{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;color:var(--tx)}
 #cf .brand b{color:var(--bt);font-weight:400}
 #cf .nlinks{margin-left:auto;display:flex;gap:4px}
 #cf .nl{font-family:var(--font-mono);font-size:11px;color:var(--mut);padding:6px 11px;border-radius:7px;cursor:pointer;border:1px solid transparent}
-#cf .nl:hover{color:var(--bt);background:var(--s1)}
-#cf .login{display:flex;align-items:center;gap:6px;background:var(--s1);border:1px solid var(--bl);border-radius:8px;padding:6px 13px;cursor:pointer;color:var(--bt);font-family:var(--font-mono);font-size:11px;margin-left:6px}
-#cf .login:hover{background:var(--bl);color:#fff}
+#cf .nl:hover{color:var(--tx);background:var(--s1)}
 #cf .page{height:560px;overflow-y:auto;overflow-x:hidden}
 #cf .page::-webkit-scrollbar{width:9px}#cf .page::-webkit-scrollbar-thumb{background:var(--bd);border-radius:5px;border:2px solid var(--bg)}#cf .page::-webkit-scrollbar-track{background:transparent}
 #cf .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;padding:38px 22px 30px;align-items:center}
 #cf .kick{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 #cf .kick .ln{width:26px;height:1px;background:var(--bd)}
 #cf .h1{font-size:32px;line-height:1.12;font-weight:500;letter-spacing:-.02em;color:var(--tx);margin:0 0 16px}
-#cf .h1 .em{color:var(--bt)}
 #cf .lead{font-size:14px;line-height:1.65;color:var(--mut);max-width:440px;margin:0 0 22px}
 #cf .lead b{color:var(--tx);font-weight:500}
 #cf .cta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 #cf .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;padding:11px 18px;border-radius:9px;cursor:pointer;border:1px solid var(--bl)}
-#cf .btn.pri{background:var(--bt);color:#fff;border-color:var(--bt)}#cf .btn.pri:hover{background:#155684}
-#cf .btn.gho{background:transparent;color:var(--mut);border-color:var(--bd)}#cf .btn.gho:hover{color:var(--bt);border-color:var(--bl)}
+#cf .btn.pri{background:var(--bt);color:#fff;border-color:var(--bt)}#cf .btn.pri:hover{background:#363b41}
+#cf .btn.gho{background:transparent;color:var(--mut);border-color:var(--bd)}#cf .btn.gho:hover{color:var(--tx);border-color:var(--bl)}
 #cf .meta{margin-top:20px;display:flex;gap:22px;font-family:var(--font-mono);font-size:10px;color:var(--mut)}
 #cf .meta b{color:var(--tx);font-weight:500;font-size:15px;display:block;margin-bottom:2px}
 #cf .stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:260px}
 #cf .ring{position:absolute;border:1px solid var(--bd);border-radius:50%;opacity:.7}
 #cf .r1{width:210px;height:210px}#cf .r2{width:160px;height:160px}
-#cf .glow{position:absolute;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(30,111,165,.10),transparent 68%)}
+#cf .glow{position:absolute;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(70,78,86,.10),transparent 68%)}
 #cf .slot{position:relative;z-index:2;width:140px;height:170px;border-radius:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px dashed var(--bl);background:var(--s2)}
 #cf .slot:hover{border-color:var(--bt)}
 #cf .slot.has{border-style:solid}
@@ -83,7 +80,7 @@
 </style>
 <div id="cf">
   <div class="top">
-    <div class="isl"><span style="color:#3a6f96">[</span> &gt; clone-frame / home <span class="dot"></span></div>
+    <div class="isl"><span style="color:#9aa0a8">[</span> &gt; clone-frame / home <span class="dot"></span></div>
     <div class="modes"><span class="md on" onclick="cfTheme(0)"></span><span class="md" onclick="cfTheme(1)"></span></div>
   </div>
   <div class="nav">
@@ -92,13 +89,12 @@
       <div class="nl" onclick="cfGo('frames')">Frames</div>
       <div class="nl" onclick="cfGo('econ')">Economy</div>
     </div>
-    <div class="login" onclick="sendPrompt('Abrir o fluxo de Login / conectar wallet do CLONE FRAME (Base 8453)')"><i class="ti ti-login-2"></i> Login</div>
   </div>
   <div class="page" id="cfpage">
     <div class="hero">
       <div class="hcol">
         <div class="kick"><span class="ln"></span> iCLONE · Base 8453</div>
-        <h1 class="h1">An AI agent that automates your tasks — <span class="em">minted as one iNFT.</span></h1>
+        <h1 class="h1">Automate any tasks with your agent iCLONE.</h1>
         <p class="lead">CLONE FRAME is where you create an iCLONE agent and mint it as an <b>iNFT</b>. Customisable skills, and fully tokenisable.</p>
         <div class="cta">
           <div class="btn pri" onclick="sendPrompt('Entrar nos Frames do CLONE FRAME — abrir o PLAZA FRAME (marketplace de agentes)')"><i class="ti ti-arrow-right"></i> Enter the Frames</div>
@@ -114,7 +110,7 @@
         <div class="glow"></div>
         <div class="ring r1"></div><div class="ring r2"></div>
         <div class="slot" id="cfslot" onclick="document.getElementById('cffile').click()">
-          <svg id="cfsil" width="120" height="150" viewBox="0 0 100 120"><ellipse cx="50" cy="113" rx="22" ry="5" fill="#1e6fa5" opacity=".18"/><path d="M28 72 Q26 95 24 113 L76 113 Q74 95 72 72Z" fill="#3a7bb0" opacity=".55"/><path d="M35 75 Q50 83 65 75 L61 97 Q50 104 39 97Z" fill="#5b95c4" opacity=".4"/><ellipse cx="50" cy="36" rx="20" ry="22" fill="#2b3340"/><path d="M30 32 Q32 12 50 10 Q68 12 70 32 Q63 19 50 17 Q37 19 30 32Z" fill="#3a7bb0"/><ellipse cx="40" cy="38" rx="5" ry="4" fill="#7ad4ff"/><ellipse cx="60" cy="38" rx="5" ry="4" fill="#7ad4ff"/><path d="M68 54 L90 28 L93 31 L71 57Z" fill="#1e6fa5" opacity=".85"/></svg>
+          <svg id="cfsil" width="120" height="150" viewBox="0 0 100 120"><ellipse cx="50" cy="113" rx="22" ry="5" fill="#5b626a" opacity=".18"/><path d="M28 72 Q26 95 24 113 L76 113 Q74 95 72 72Z" fill="#7b828a" opacity=".55"/><path d="M35 75 Q50 83 65 75 L61 97 Q50 104 39 97Z" fill="#9aa0a7" opacity=".4"/><ellipse cx="50" cy="36" rx="20" ry="22" fill="#3a3f46"/><path d="M30 32 Q32 12 50 10 Q68 12 70 32 Q63 19 50 17 Q37 19 30 32Z" fill="#6b727a"/><ellipse cx="40" cy="38" rx="5" ry="4" fill="#d4d8dd"/><ellipse cx="60" cy="38" rx="5" ry="4" fill="#d4d8dd"/><path d="M68 54 L90 28 L93 31 L71 57Z" fill="#5b626a" opacity=".85"/></svg>
           <div class="slothint"><i class="ti ti-photo-plus" style="font-size:9px"></i> click to set your image</div>
         </div>
         <input type="file" id="cffile" accept="image/*" style="display:none" onchange="cfImg(this)"/>
@@ -141,7 +137,7 @@
         <div class="frc" onclick="sendPrompt('Abrir o PLAZA FRAME — marketplace de agentes e skills do CLONE FRAME')"><span class="frbadge">marketplace</span><div class="fri"><i class="ti ti-building-store"></i></div><div class="frn">PLAZA FRAME</div><div class="frd">Discover, acquire and trade agent iNFTs and skills. Rarity tiers: rare · superrare · iclone.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
         <div class="frc" onclick="sendPrompt('Abrir o iCLONE FRAME — mint studio para criar um agente como iNFT on-chain')"><span class="frbadge">mint studio</span><div class="fri"><i class="ti ti-stack-2"></i></div><div class="frn">iCLONE FRAME</div><div class="frd">Create an agent and mint it as an iNFT — image, base soul, contract. Deploy to Base.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
         <div class="frc" onclick="sendPrompt('Abrir o SKILL FRAME — publicar e adquirir skills em iCLONE token')"><span class="frbadge">skills</span><div class="fri"><i class="ti ti-bolt"></i></div><div class="frn">SKILL FRAME</div><div class="frd">Add skills to an agent — automation, flows, tools. Published from your wallet.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
-        <div class="frc" onclick="sendPrompt('Abrir o gerador de banco de imagem NFT do CLONE FRAME (construtor de iNFT)')"><span class="frbadge">generator</span><div class="fri"><i class="ti ti-photo-hexagon"></i></div><div class="frn">IMAGE BANK</div><div class="frd">The iNFT builder — background, image slots, identity, skills and the collection mint.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
+        <div class="frc" onclick="sendPrompt('Abrir o iNFT Configuration do CLONE FRAME (construtor de iNFT)')"><span class="frbadge">generator</span><div class="fri"><i class="ti ti-adjustments-cog"></i></div><div class="frn">iNFT Configuration</div><div class="frd">The iNFT builder — background, image slots, identity, skills and the collection mint.</div><div class="frgo">open frame <i class="ti ti-arrow-right"></i></div></div>
       </div>
     </div>
 
@@ -150,14 +146,14 @@
       <h2 class="st">The 3×10% split</h2>
       <p class="ss">Each mint routes a transparent split through the treasury contract. The creator keeps the majority; the rest compounds in three reserves.</p>
       <div class="split">
-        <div class="sp" style="flex:7;background:#dbe7f2"><span class="pc" style="color:#155684">70%</span><span class="pl" style="color:#5b7891">creator / owner</span></div>
+        <div class="sp" style="flex:7;background:#e3e6ea"><span class="pc" style="color:#4a4f56">70%</span><span class="pl" style="color:#818790">creator / owner</span></div>
         <div class="sp" style="flex:1;background:#f6e6c9"><span class="pc" style="color:#8a5e12">10%</span><span class="pl" style="color:#8a5e12">BTC</span></div>
-        <div class="sp" style="flex:1;background:#dce6f5"><span class="pc" style="color:#3a6190">10%</span><span class="pl" style="color:#3a6190">VIRT</span></div>
+        <div class="sp" style="flex:1;background:#d8dce1"><span class="pc" style="color:#565c64">10%</span><span class="pl" style="color:#565c64">VIRT</span></div>
         <div class="sp" style="flex:1;background:#ecdff5"><span class="pc" style="color:#6b3ca0">10%</span><span class="pl" style="color:#6b3ca0">iCLONE</span></div>
       </div>
       <div class="splleg">
         <span><i style="background:#b8841f"></i> BTC reserve</span>
-        <span><i style="background:#3a6190"></i> VIRTUALS treasury</span>
+        <span><i style="background:#6b7178"></i> VIRTUALS treasury</span>
         <span><i style="background:#8a52c4"></i> iCLONE buyback &amp; burn</span>
       </div>
       <div style="height:24px"></div>

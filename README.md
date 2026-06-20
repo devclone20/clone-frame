@@ -20,8 +20,8 @@ frames/                         widgets .widget dos frames (rascunhos de UI)
   PLAZA FRAME.widget
   SKILL FRAME.widget
   iCLONE FRAME.widget
-  gerador de banco de nft imagem/
-    BACKGROUND.widget           construtor de NFT (Background/Accessories/ID/Skill/iNFT)
+  gerador de banco de nft imagem/   (iNFT Configuration)
+    BACKGROUND.widget           iNFT Configuration (Background/Accessories/ID/Skill/iNFT)
     SILUETAS.widget
 mockups/                        mockups HTML da plataforma
 ```
