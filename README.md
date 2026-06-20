@@ -16,13 +16,15 @@ Base partilhada em todos: menu retrátil, Wallet (Login/Online/Sign out), Settin
 ## Estrutura
 
 ```
-frames/                         widgets .widget dos frames (rascunhos de UI)
-  PLAZA FRAME.widget
-  SKILL FRAME.widget
-  iCLONE FRAME.widget
-  gerador de banco de nft imagem/   (iNFT Configuration)
-    BACKGROUND.widget           iNFT Configuration (Background/Accessories/ID/Skill/iNFT)
-    SILUETAS.widget
+frames/                         pasta isolada — só os frames (rascunhos de UI .widget)
+  LANDING.widget                página de apresentação do projeto
+  PLAZA FRAME.widget            marketplace
+  SKILL FRAME.widget            skills
+  iCLONE FRAME/                 criar agente com NFT integrado
+    iCLONE FRAME.widget
+    iNFT Configuration/         (dentro do iCLONE FRAME)
+      BACKGROUND.widget         construtor de iNFT (Background/Image/ID/Skill/iNFT)
+      SILUETAS.widget
 mockups/                        mockups HTML da plataforma
 ```
 
