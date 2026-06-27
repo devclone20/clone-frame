@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 680 392" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" role="img">
+<title>CLONE FRAME — mapa do sistema</title>
+<desc>O CLONE FRAME (plataforma hospedada) contém Plaza Place e HUB. LAYER FRAME e iIrys FRAME são ferramentas abertas. Tudo assenta na infraestrutura partilhada: Base 8453, Irys, Virtuals e Supabase.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#57606e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="0.5" y="0.5" width="679" height="391" rx="14" fill="#0b0e14" stroke="#1b2230"/>
+<circle cx="44" cy="29" r="4" fill="#2bb88a"/>
+<text x="56" y="33" fill="#eaf0f7" font-size="14" font-weight="600">CLONE FRAME — system map</text>
+<rect x="56" y="44" width="11" height="11" rx="3" fill="#112e27" stroke="#1f7d5e"/><text x="73" y="53" fill="#8b95a7" font-size="12">Hosted</text>
+<rect x="140" y="44" width="11" height="11" rx="3" fill="#1e1b37" stroke="#6a5fd0"/><text x="157" y="53" fill="#8b95a7" font-size="12">Open tools</text>
+<rect x="252" y="44" width="11" height="11" rx="3" fill="#161b24" stroke="#38414f"/><text x="269" y="53" fill="#8b95a7" font-size="12">Infra</text>
+<rect x="40" y="70" width="600" height="130" rx="14" fill="none" stroke="#1f7d5e" stroke-width="1" stroke-dasharray="5 4" opacity="0.8"/>
+<text x="56" y="92" fill="#eaf0f7" font-size="14" font-weight="600">CLONE FRAME</text>
+<text x="56" y="108" fill="#8b95a7" font-size="12">hosted · Plaza + HUB</text>
+<rect x="60" y="124" width="268" height="56" rx="10" fill="#112e27" stroke="#1f7d5e"/>
+<text x="194" y="146" text-anchor="middle" dominant-baseline="central" fill="#b8ecd8" font-size="14" font-weight="600">Plaza Place</text>
+<text x="194" y="164" text-anchor="middle" dominant-baseline="central" fill="#6fb89f" font-size="12">marketplace · iNFT + skills</text>
+<rect x="352" y="124" width="268" height="56" rx="10" fill="#112e27" stroke="#1f7d5e"/>
+<text x="486" y="146" text-anchor="middle" dominant-baseline="central" fill="#b8ecd8" font-size="14" font-weight="600">HUB</text>
+<text x="486" y="164" text-anchor="middle" dominant-baseline="central" fill="#6fb89f" font-size="12">train · deploy · own</text>
+<rect x="60" y="230" width="268" height="56" rx="10" fill="#1e1b37" stroke="#6a5fd0"/>
+<text x="194" y="252" text-anchor="middle" dominant-baseline="central" fill="#cfc8ff" font-size="14" font-weight="600">LAYER FRAME</text>
+<text x="194" y="270" text-anchor="middle" dominant-baseline="central" fill="#9890c8" font-size="12">image-layer builder</text>
+<rect x="352" y="230" width="268" height="56" rx="10" fill="#1e1b37" stroke="#6a5fd0"/>
+<text x="486" y="252" text-anchor="middle" dominant-baseline="central" fill="#cfc8ff" font-size="14" font-weight="600">iIrys FRAME</text>
+<text x="486" y="270" text-anchor="middle" dominant-baseline="central" fill="#9890c8" font-size="12">soul + art → Irys</text>
+<rect x="60" y="316" width="560" height="56" rx="10" fill="#161b24" stroke="#38414f"/>
+<text x="340" y="338" text-anchor="middle" dominant-baseline="central" fill="#d3dae4" font-size="14" font-weight="600">Shared infrastructure</text>
+<text x="340" y="356" text-anchor="middle" dominant-baseline="central" fill="#8a94a6" font-size="12">Base 8453 · Irys · Virtuals · Supabase</text>
+<line x1="340" y1="200" x2="340" y2="310" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/>
+<line x1="194" y1="286" x2="194" y2="310" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/>
+<line x1="486" y1="286" x2="486" y2="310" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/>
+</svg>

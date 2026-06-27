@@ -4,6 +4,8 @@
 
 CLONE FRAME é a plataforma de interface da iCLONE: usar, cunhar, vender e operar **iNFTs** — agentes de IA com NFT integrado — e as suas **skills**.
 
+![CLONE FRAME — mapa do sistema](docs/diagrams/01-overview.svg)
+
 ## Modelo de produto
 
 O ecossistema tem dois níveis: **Frames** (produtos) e, dentro do CLONE FRAME, **superfícies**.
@@ -26,12 +28,38 @@ Base partilhada em todas as superfícies: menu retrátil, Wallet (Login/Online/S
 
 Diagramas (camadas + fluxo ponta-a-ponta) em **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
+### Ciclo de vida
+
+Do login ao publish — criar → selar → cunhar → publicar.
+
+![Ciclo de vida do iNFT](docs/diagrams/02-lifecycle.svg)
+
+### Os frames em detalhe
+
+**Plaza Place** — o marketplace (iNFT collections + Skills).
+
+![Plaza Place](docs/diagrams/03-plaza-place.svg)
+
+**HUB** — a workstation: deploy de skills ao agente e operação.
+
+![HUB](docs/diagrams/04-hub.svg)
+
+**LAYER FRAME** — pipeline de layering da imagem.
+
+![LAYER FRAME](docs/diagrams/05-layer-frame.svg)
+
+**iIrys FRAME** — alma + metadata + selar na Irys.
+
+![iIrys FRAME](docs/diagrams/06-iirys-frame.svg)
+
 ### iNFT
 
 - **iNFT = agente de IA + NFT integrado.** Dá identidade e posse on-chain ao agente; **self-custody** (fica na carteira do utilizador).
 - Contrato **ICloneAgent** na Base (8453): `ERC-721A` + `ERC-2981` (royalty 5%) + `ERC-6551` (token-bound account).
 - `tokenURI` aponta para a **Irys** (arte + metadata permanentes); a alma é injetada em `metadata.ai_soul`.
 - Rarity tiers: `rare` · `superrare` · `iclone`.
+
+![iNFT — anatomia do token](docs/diagrams/07-inft.svg)
 
 ### Mint & publicação
 
