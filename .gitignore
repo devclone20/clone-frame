@@ -6,3 +6,7 @@
 node_modules/
 .venv*/
 venv*/
+
+# training (generated in CI, uploaded as artifact)
+training_reports/
+__pycache__/

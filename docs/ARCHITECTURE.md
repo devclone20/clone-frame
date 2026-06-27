@@ -86,5 +86,5 @@ O marketplace tem duas secções:
 | Frame | Repo | Estado |
 |-------|------|--------|
 | **LAYER FRAME** | [devclone20/ilayerframe](https://github.com/devclone20/ilayerframe) | aberto (MIT) |
-| **iIrys Frame** | — | em breve |
+| **iIrys Frame** | [devclone20/iIrysframe](https://github.com/devclone20/iIrysframe) | aberto (MIT) |
 | **CLONE FRAME** | [devclone20/clone-frame](https://github.com/devclone20/clone-frame) | este repo |
