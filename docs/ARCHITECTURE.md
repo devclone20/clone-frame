@@ -80,3 +80,11 @@ O marketplace tem duas secções:
 | **Irys** | Datachain permanente — arte, metadata e `tokenURI`. |
 | **Virtuals Protocol** | Ecossistema de agentes (ACP); construímos **dentro** dele. |
 | **Supabase** | Dados de aplicação (ex.: drops gated). |
+
+## 6. Repos (ferramentas abertas)
+
+| Frame | Repo | Estado |
+|-------|------|--------|
+| **LAYER FRAME** | [devclone20/ilayerframe](https://github.com/devclone20/ilayerframe) | aberto (MIT) |
+| **iIrys Frame** | — | em breve |
+| **CLONE FRAME** | [devclone20/clone-frame](https://github.com/devclone20/clone-frame) | este repo |

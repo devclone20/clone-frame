@@ -15,8 +15,8 @@ O ecossistema tem dois níveis: **Frames** (produtos) e, dentro do CLONE FRAME, 
     - **iNFT collections** — agentes (iNFT) listados para compra / mint.
     - **Skills** — só se vendem **skills** aqui; compras a skill e depois fazes **deploy** dela ao teu agente.
   - **HUB** — workstation: treinar, fazer deploy e operar o teu agente iNFT.
-- **LAYER FRAME** — ferramenta aberta: construtor de camadas de imagem para arte de NFT.
-- **iIrys FRAME** — ferramenta aberta: define a alma (`neural_soul.md`) + metadata, liga à arte em camadas e sela tudo na Irys.
+- **LAYER FRAME** — ferramenta aberta: estúdio de **camadas de imagem** para arte de NFT (split + AI auto-layer, Floor/Glow, slots iQR + Description, export). É **aqui** que se geram as camadas da arte — substitui o antigo "gerador de imagem / SILUETAS". Repo: [devclone20/ilayerframe](https://github.com/devclone20/ilayerframe).
+- **iIrys FRAME** — ferramenta aberta: recebe as camadas do LAYER FRAME, define a alma (`neural_soul.md`) + metadata e **sela tudo na Irys** (gera o `tokenURI`). Repo: *em breve*.
 
 As ferramentas (LAYER + iIrys) são **open-source e grátis**, distribuídas no **GitHub + Venice**. Apenas o CLONE FRAME (Plaza + HUB) é hospedado, em **BYOK** — cada utilizador usa a sua própria chave de LLM.
 
