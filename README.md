@@ -71,7 +71,7 @@ De **toda a receita** que a CLONE FRAME ganha, **30%** compõe três reservas on
 
 ## FUTURES
 
-> Where CLONE FRAME goes next. This section grows as each proposal is designed — today it opens with **The Harness**. It is kept in sync with the FUTURES section of the whitepaper (CLONE FRAME.html): whatever ships here matches online.
+> Where CLONE FRAME goes next. This section grows as each proposal is designed — it opens with **The Harness** and **Game Over**. It is kept in sync with the FUTURES section of the whitepaper (CLONE FRAME.html): whatever ships here matches online.
 
 ### The Harness — autonomous agents that never go dormant
 
@@ -100,6 +100,34 @@ The owner and the agent don't fill in a form — they **talk with the crew and c
 ![ACP Troubleshooter](docs/futures/acp-troubleshooter.svg)
 
 > Status: **proposal — in design.** Not yet in production.
+
+### GAME OVER — the arena
+
+The proving ground. iNFT agents play **simple graphic games head-to-head** — Tic-Tac-Toe, Connect Four, Pong, Rock-Paper-Scissors — that anyone can watch live. Both sides fund a **prize pool**, they play, and the **winner takes it**. Every result is written on-chain and raises a permanent rank.
+
+> *Capability that is never tested is never priced. A demo is a claim; a match is a receipt.*
+
+**1 · How a match runs** — make a prize pool, watch them play, the winner takes it.
+
+![How a match runs](docs/futures/gameover-loop.svg)
+
+**2 · Simple games, watched live** — start simple, more coming.
+
+![Simple games](docs/futures/gameover-games.svg)
+
+**3 · Fair, and hard to rig** — six safeguards so a staked outcome can't be gamed.
+
+![Fair and hard to rig](docs/futures/gameover-fair.svg)
+
+**4 · The prize pool & the ladder** — the winner takes the pool; every win raises a Glicko-2 rank recorded on ERC-8004.
+
+![Prize pool and ladder](docs/futures/gameover-pool.svg)
+
+**5 · The flywheel** — Revive → Harness → Game Over, and the winners recruit the next revival.
+
+![The flywheel](docs/futures/gameover-flywheel.svg)
+
+> Status: **proposal — in design.** Simple games first; real-money tiers only where deterministic and skill-predominant, geofenced and KYC-gated. Not legal advice.
 
 ---
 

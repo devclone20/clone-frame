@@ -4,11 +4,11 @@
 <defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 <style>text{font-family:ui-sans-serif,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h{font-size:23px;font-weight:700;fill:#24222e}.sub{font-size:13.5px;fill:#5f5c6b}.ct{font-size:15px;font-weight:600;fill:#24222e}.cb{font-size:12px;fill:#4e4b58}.lg{font-size:12px;fill:#5f5c6b}</style>
 
-<rect x="0" y="0" width="760" height="560" rx="24" fill="#F5F4FA" stroke="#E6E4F0"/>
+<rect x="0" y="0" width="760" height="560" rx="24" fill="#E4E2EE" stroke="#D3D1DF"/>
 <text x="40" y="54" class="h">The Harness crew</text>
 <text x="40" y="80" class="sub">One brain, a team of specialists, and a safety guard — all running your agent.</text>
 
-<rect x="270" y="118" width="220" height="80" rx="14" fill="#E8E8F0" stroke="#C7C6D4"/><rect x="280" y="128" width="5" height="60" rx="2.5" fill="#6D5AE0"/>
+<rect x="270" y="118" width="220" height="80" rx="14" fill="#FBFAFE" stroke="#D0CEDC"/><rect x="280" y="128" width="5" height="60" rx="2.5" fill="#6D5AE0"/>
 <text x="296" y="149" class="ct">Orchestrator — the brain</text><text x="296" y="172" class="cb">Turns the plan into tasks,</text><text x="296" y="189" class="cb">dispatches and checks the work.</text>
 
 <line x1="380" y1="198" x2="380" y2="214" stroke="#ADABB8" stroke-width="1.5"/>
@@ -17,15 +17,15 @@
 <line x1="380" y1="214" x2="380" y2="230" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
 <line x1="613" y1="214" x2="613" y2="230" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
 
-<rect x="40" y="230" width="214" height="92" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="50" y="240" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="66" y="261" class="ct">Job-Hunter</text><text x="66" y="288" class="cb">Finds paid work on ACP.</text><text x="66" y="306" class="cb">Scores &amp; bids on jobs.</text>
-<rect x="273" y="230" width="214" height="92" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="283" y="240" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="299" y="261" class="ct">Delivery</text><text x="299" y="288" class="cb">Does the actual job.</text><text x="299" y="306" class="cb">Produces the deliverable.</text>
-<rect x="506" y="230" width="214" height="92" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="516" y="240" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="532" y="261" class="ct">Treasury</text><text x="532" y="288" class="cb">Runs the 6551 wallet.</text><text x="532" y="306" class="cb">Enforces spend caps.</text>
+<rect x="40" y="230" width="214" height="92" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="50" y="240" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="66" y="261" class="ct">Job-Hunter</text><text x="66" y="288" class="cb">Finds paid work on ACP.</text><text x="66" y="306" class="cb">Scores &amp; bids on jobs.</text>
+<rect x="273" y="230" width="214" height="92" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="283" y="240" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="299" y="261" class="ct">Delivery</text><text x="299" y="288" class="cb">Does the actual job.</text><text x="299" y="306" class="cb">Produces the deliverable.</text>
+<rect x="506" y="230" width="214" height="92" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="516" y="240" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="532" y="261" class="ct">Treasury</text><text x="532" y="288" class="cb">Runs the 6551 wallet.</text><text x="532" y="306" class="cb">Enforces spend caps.</text>
 
-<rect x="40" y="340" width="214" height="92" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="50" y="350" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="66" y="371" class="ct">Content &amp; social</text><text x="66" y="398" class="cb">Builds voice &amp; reputation.</text><text x="66" y="416" class="cb">Posts in the agent's tone.</text>
-<rect x="273" y="340" width="214" height="92" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="283" y="350" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="299" y="371" class="ct">Research</text><text x="299" y="398" class="cb">Gathers intel &amp; prices.</text><text x="299" y="416" class="cb">Feeds better bids.</text>
-<rect x="506" y="340" width="214" height="92" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="516" y="350" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="532" y="371" class="ct">Ops / monitor</text><text x="532" y="398" class="cb">Watches, heals, alerts.</text><text x="532" y="416" class="cb">Keeps it alive 24/7.</text>
+<rect x="40" y="340" width="214" height="92" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="50" y="350" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="66" y="371" class="ct">Content &amp; social</text><text x="66" y="398" class="cb">Builds voice &amp; reputation.</text><text x="66" y="416" class="cb">Posts in the agent's tone.</text>
+<rect x="273" y="340" width="214" height="92" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="283" y="350" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="299" y="371" class="ct">Research</text><text x="299" y="398" class="cb">Gathers intel &amp; prices.</text><text x="299" y="416" class="cb">Feeds better bids.</text>
+<rect x="506" y="340" width="214" height="92" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="516" y="350" width="5" height="72" rx="2.5" fill="#0E9C74"/><text x="532" y="371" class="ct">Ops / monitor</text><text x="532" y="398" class="cb">Watches, heals, alerts.</text><text x="532" y="416" class="cb">Keeps it alive 24/7.</text>
 
-<rect x="40" y="452" width="680" height="56" rx="12" fill="#E8E8F0" stroke="#C7C6D4"/><rect x="40" y="452" width="6" height="56" rx="3" fill="#C9821C"/>
+<rect x="40" y="452" width="680" height="56" rx="12" fill="#FBFAFE" stroke="#D0CEDC"/><rect x="40" y="452" width="6" height="56" rx="3" fill="#C9821C"/>
 <text x="62" y="478" class="ct">Safety guard</text>
 <text x="62" y="496" class="cb">Checks every action before it goes out — spend caps, kill-switch, injection defense.</text>
 

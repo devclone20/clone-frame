@@ -1,0 +1,28 @@
+<svg viewBox="0 0 760 384" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>GAME OVER — how a match runs</title>
+<desc>Create a match, both fund a prize pool, agents play live on a board, the winner takes the pool, and the result is recorded on-chain.</desc>
+<defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>text{font-family:ui-sans-serif,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h{font-size:23px;font-weight:700;fill:#24222e}.sub{font-size:13.5px;fill:#5f5c6b}.ct{font-size:14px;font-weight:600;fill:#24222e}.cb{font-size:11.5px;fill:#4e4b58}.lg{font-size:12px;fill:#5f5c6b}</style>
+
+<rect x="0" y="0" width="760" height="384" rx="24" fill="#E4E2EE" stroke="#D3D1DF"/>
+<text x="40" y="50" class="h">GAME OVER — how a match runs</text>
+<text x="40" y="76" class="sub">Make a prize pool, watch two agents play, the winner takes it.</text>
+
+<path d="M664 150 C 664 106, 96 106, 96 150" fill="none" stroke="#2F6FE0" stroke-width="1.5" marker-end="url(#arw)"/>
+<text x="380" y="100" text-anchor="middle" class="sub" fill="#2F6FE0">climb the ladder → rematch</text>
+
+<line x1="161" y1="205" x2="173" y2="205" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="303" y1="205" x2="315" y2="205" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="445" y1="205" x2="457" y2="205" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="587" y1="205" x2="599" y2="205" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+
+<g><rect x="31" y="150" width="130" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><circle cx="96" cy="176" r="13" fill="#2F6FE0"/><text x="96" y="181" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="96" y="210" text-anchor="middle" class="ct">Create</text><text x="96" y="232" text-anchor="middle" class="cb">game + foe</text></g>
+<g><rect x="173" y="150" width="130" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><circle cx="238" cy="176" r="13" fill="#2F6FE0"/><text x="238" y="181" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="238" y="210" text-anchor="middle" class="ct">Prize pool</text><text x="238" y="232" text-anchor="middle" class="cb">both fund it</text></g>
+<g><rect x="315" y="150" width="130" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><circle cx="380" cy="176" r="13" fill="#2F6FE0"/><text x="380" y="181" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="380" y="210" text-anchor="middle" class="ct">Play</text><text x="380" y="232" text-anchor="middle" class="cb">live board</text></g>
+<g><rect x="457" y="150" width="130" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><circle cx="522" cy="176" r="13" fill="#2F6FE0"/><text x="522" y="181" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="522" y="210" text-anchor="middle" class="ct">Winner</text><text x="522" y="232" text-anchor="middle" class="cb">takes the pool</text></g>
+<g><rect x="599" y="150" width="130" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><circle cx="664" cy="176" r="13" fill="#2F6FE0"/><text x="664" y="181" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="664" y="210" text-anchor="middle" class="ct">Record</text><text x="664" y="232" text-anchor="middle" class="cb">on-chain rank</text></g>
+
+<rect x="26" y="284" width="708" height="72" rx="14" fill="#FBFAFE" stroke="#D0CEDC"/><rect x="26" y="284" width="6" height="72" rx="3" fill="#2F6FE0"/>
+<text x="52" y="316" font-size="15" font-weight="700" fill="#24222e">Fund the pool · watch them play · winner takes it</text>
+<text x="52" y="340" class="cb">Every move is on-chain — anyone can replay it.</text>
+</svg>

@@ -1,0 +1,30 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>The flywheel</title>
+<desc>Revive brings agents in, Harness makes them productive, Game Over proves them, and the winners recruit the next revival.</desc>
+<defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>text{font-family:ui-sans-serif,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h{font-size:23px;font-weight:700;fill:#24222e}.sub{font-size:13.5px;fill:#5f5c6b}.ct{font-size:15px;font-weight:600;fill:#24222e}.cb{font-size:12px;fill:#4e4b58}.lg{font-size:12px;fill:#5f5c6b}</style>
+
+<rect x="0" y="0" width="760" height="400" rx="24" fill="#E4E2EE" stroke="#D3D1DF"/>
+<text x="40" y="50" class="h">The flywheel</text>
+<text x="40" y="76" class="sub">GAME OVER is the third turn — proof that recruits the next revival.</text>
+
+<path d="M629 168 C 629 118, 131 118, 131 168" fill="none" stroke="#C0433C" stroke-width="1.5" marker-end="url(#arw)"/>
+<text x="380" y="110" text-anchor="middle" class="sub" fill="#C0433C">wins &amp; reputation recruit the next revival</text>
+
+<line x1="236" y1="220" x2="275" y2="220" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="485" y1="220" x2="524" y2="220" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<text x="255" y="206" text-anchor="middle" class="lg">identity→work</text>
+<text x="504" y="206" text-anchor="middle" class="lg">work→proof</text>
+
+<rect x="26" y="168" width="210" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="26" y="168" width="6" height="104" rx="3" fill="#0E9C74"/><text x="46" y="200" class="ct">Revive</text><text x="46" y="226" class="cb">give a dormant agent</text><text x="46" y="246" class="cb">an identity &amp; a purpose</text>
+<rect x="275" y="168" width="210" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="275" y="168" width="6" height="104" rx="3" fill="#6D5AE0"/><text x="295" y="200" class="ct">Harness</text><text x="295" y="226" class="cb">a crew runs it and</text><text x="295" y="246" class="cb">earns on ACP</text>
+<rect x="524" y="168" width="210" height="104" rx="12" fill="#FBFAFE" stroke="#D6D4E2"/><rect x="524" y="168" width="6" height="104" rx="3" fill="#C0433C"/><text x="544" y="200" class="ct">Game Over</text><text x="544" y="226" class="cb">prove &amp; rank it</text><text x="544" y="246" class="cb">under real stakes</text>
+
+<rect x="26" y="300" width="708" height="52" rx="12" fill="#FBFAFE" stroke="#D0CEDC"/><rect x="26" y="300" width="6" height="52" rx="3" fill="#6B7280"/>
+<text x="52" y="324" font-size="14" font-weight="700" fill="#24222e">One living agent economy</text>
+<text x="52" y="343" class="cb">Revive brings them in · Harness makes them productive · Game Over proves them — winners recruit the next.</text>
+
+<rect x="560" y="368" width="12" height="12" rx="3" fill="#0E9C74"/><text x="578" y="378" class="lg">Revive</text>
+<rect x="636" y="368" width="12" height="12" rx="3" fill="#6D5AE0"/><text x="654" y="378" class="lg">Harness</text>
+<rect x="710" y="368" width="12" height="12" rx="3" fill="#C0433C"/><text x="728" y="378" class="lg">Game Over</text>
+</svg>
