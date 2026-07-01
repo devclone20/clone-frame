@@ -1,0 +1,40 @@
+<svg viewBox="0 0 760 572" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>ACP Troubleshooter</title>
+<desc>A subagent in every Harness that detects, diagnoses and fixes ACP commerce problems in real time, built from 26 documented production issues.</desc>
+<defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>text{font-family:ui-sans-serif,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h{font-size:22px;font-weight:700;fill:#24222e}.sub{font-size:13px;fill:#5f5c6b}.ct{font-size:14.5px;font-weight:600;fill:#24222e}.gb{font-size:11px;fill:#4e4b58}.fx{font-size:11px;fill:#3E9142}.cd{font-size:10.5px;fill:#807d8c}.sh{font-size:12.5px;font-weight:600;fill:#5f5c6b}.lg{font-size:12px;fill:#5f5c6b}</style>
+
+<rect x="0" y="0" width="760" height="572" rx="24" fill="#F5F4FA" stroke="#E6E4F0"/>
+<text x="40" y="50" class="h">ACP Troubleshooter</text>
+<text x="40" y="74" class="sub">A subagent in every Harness — it detects, diagnoses and fixes ACP problems in real time.</text>
+<rect x="558" y="30" width="172" height="22" rx="11" fill="#E8E8F0" stroke="#D0D0DC"/><text x="644" y="45" text-anchor="middle" class="cd">26 real issues · E1–E26</text>
+
+<g><rect x="26" y="98" width="132" height="86" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="26" y="98" width="6" height="86" rx="3" fill="#C9821C"/><circle cx="92" cy="120" r="12" fill="#C9821C"/><text x="92" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="92" y="146" text-anchor="middle" class="ct">Detect</text><text x="92" y="164" text-anchor="middle" class="gb">Watches ACP for</text><text x="92" y="179" text-anchor="middle" class="gb">error signatures</text></g>
+<g><rect x="170" y="98" width="132" height="86" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="170" y="98" width="6" height="86" rx="3" fill="#C9821C"/><circle cx="236" cy="120" r="12" fill="#C9821C"/><text x="236" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="236" y="146" text-anchor="middle" class="ct">Diagnose</text><text x="236" y="164" text-anchor="middle" class="gb">Matches the</text><text x="236" y="179" text-anchor="middle" class="gb">root cause</text></g>
+<g><rect x="314" y="98" width="132" height="86" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="314" y="98" width="6" height="86" rx="3" fill="#C9821C"/><circle cx="380" cy="120" r="12" fill="#C9821C"/><text x="380" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="380" y="146" text-anchor="middle" class="ct">Fix</text><text x="380" y="164" text-anchor="middle" class="gb">Applies the</text><text x="380" y="179" text-anchor="middle" class="gb">known solution</text></g>
+<g><rect x="458" y="98" width="132" height="86" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="458" y="98" width="6" height="86" rx="3" fill="#C9821C"/><circle cx="524" cy="120" r="12" fill="#C9821C"/><text x="524" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="524" y="146" text-anchor="middle" class="ct">Verify</text><text x="524" y="164" text-anchor="middle" class="gb">Confirms the</text><text x="524" y="179" text-anchor="middle" class="gb">job recovers</text></g>
+<g><rect x="602" y="98" width="132" height="86" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="602" y="98" width="6" height="86" rx="3" fill="#3E9142"/><circle cx="668" cy="120" r="12" fill="#3E9142"/><text x="668" y="124" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="668" y="146" text-anchor="middle" class="ct">Learn</text><text x="668" y="164" text-anchor="middle" class="gb">Logs new cases</text><text x="668" y="179" text-anchor="middle" class="gb">for the crew</text></g>
+
+<line x1="158" y1="141" x2="170" y2="141" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="302" y1="141" x2="314" y2="141" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="446" y1="141" x2="458" y2="141" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="590" y1="141" x2="602" y2="141" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+
+<text x="40" y="214" class="sh">What it already knows — grouped by failure type</text>
+
+<rect x="26" y="228" width="228" height="98" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="26" y="228" width="6" height="98" rx="3" fill="#C0433C"/><text x="46" y="254" class="ct">Silent job killers</text><text x="46" y="276" class="gb">Dup provider, wrong file, empty out</text><text x="46" y="296" class="fx">→ one live instance · sync · data</text><text x="46" y="316" class="cd">E2 · E12 · E17 · E19 · E22</text>
+<rect x="268" y="228" width="228" height="98" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="268" y="228" width="6" height="98" rx="3" fill="#C0433C"/><text x="288" y="254" class="ct">API &amp; backend 500s</text><text x="288" y="276" class="gb">Virtuals API / event outages</text><text x="288" y="296" class="fx">→ polling + backoff · re-add signer</text><text x="288" y="316" class="cd">E6 · E7 · E25 · E26</text>
+<rect x="510" y="228" width="228" height="98" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="510" y="228" width="6" height="98" rx="3" fill="#C0433C"/><text x="530" y="254" class="ct">Auth &amp; signer</text><text x="530" y="276" class="gb">KeyRevoked · P256 · token rotation</text><text x="530" y="296" class="fx">→ add-signer · su -l + dbus</text><text x="530" y="316" class="cd">E3·E4·E5·E14·E16·E23·E24</text>
+
+<rect x="26" y="340" width="228" height="98" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="26" y="340" width="6" height="98" rx="3" fill="#C0433C"/><text x="46" y="366" class="ct">Funds &amp; cost</text><text x="46" y="388" class="gb">402 credits · 'exceeds balance'</text><text x="46" y="408" class="fx">→ verify USDC ≥ price · caps</text><text x="46" y="428" class="cd">E8 · E20</text>
+<rect x="268" y="340" width="228" height="98" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="268" y="340" width="6" height="98" rx="3" fill="#C0433C"/><text x="288" y="366" class="ct">Schema &amp; offerings</text><text x="288" y="388" class="gb">priceV2/price · req field · 40 cap</text><text x="288" y="408" class="fx">→ correct schema · dual-field</text><text x="288" y="428" class="cd">E9 · E10 · E21</text>
+<rect x="510" y="340" width="228" height="98" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="510" y="340" width="6" height="98" rx="3" fill="#C0433C"/><text x="530" y="366" class="ct">Process &amp; systemd</text><text x="530" y="388" class="gb">orphan proc · phantom · missing dep</text><text x="530" y="408" class="fx">→ ExecStopPost · reset-failed</text><text x="530" y="428" class="cd">E13 · E15 · E18</text>
+
+<rect x="26" y="452" width="708" height="64" rx="14" fill="#E8E8F0" stroke="#C7C6D4"/><rect x="26" y="452" width="6" height="64" rx="3" fill="#3E9142"/>
+<text x="52" y="482" font-size="15" font-weight="700" fill="#24222e">Self-heals in seconds — no human babysitting</text>
+<text x="52" y="504" class="gb">Any case it can't match becomes a new catalog entry the whole fleet inherits.</text>
+
+<circle cx="48" cy="548" r="5" fill="#C9821C"/><text x="60" y="552" class="lg">diagnostic step</text>
+<circle cx="210" cy="548" r="5" fill="#C0433C"/><text x="222" y="552" class="lg">known incident</text>
+<circle cx="360" cy="548" r="5" fill="#3E9142"/><text x="372" y="552" class="lg">auto-fix / learned</text>
+</svg>

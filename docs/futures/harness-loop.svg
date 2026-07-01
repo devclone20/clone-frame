@@ -1,0 +1,31 @@
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>The Harness loop</title>
+<desc>A five-step cycle — converse, co-plan, execute, trade, grow — repeats forever so the agent never goes dormant.</desc>
+<defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>text{font-family:ui-sans-serif,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h{font-size:23px;font-weight:700;fill:#24222e}.sub{font-size:13.5px;fill:#5f5c6b}.ct{font-size:14.5px;font-weight:600;fill:#24222e}.cb{font-size:12px;fill:#4e4b58}.lg{font-size:12px;fill:#5f5c6b}</style>
+
+<rect x="0" y="0" width="760" height="470" rx="24" fill="#F5F4FA" stroke="#E6E4F0"/>
+<text x="40" y="54" class="h">The Harness loop</text>
+<text x="40" y="80" class="sub">A heartbeat the agent repeats forever — so it never goes dormant.</text>
+
+<path d="M668 176 C 668 120, 92 120, 92 176" fill="none" stroke="#2F6FE0" stroke-width="1.5" marker-end="url(#arw)"/>
+<text x="380" y="112" text-anchor="middle" class="sub" fill="#2F6FE0">then re-plan &amp; compound — every loop gets stronger</text>
+
+<line x1="158" y1="235" x2="170" y2="235" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="302" y1="235" x2="314" y2="235" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="446" y1="235" x2="458" y2="235" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+<line x1="590" y1="235" x2="602" y2="235" stroke="#ADABB8" stroke-width="1.5" marker-end="url(#arw)"/>
+
+<g><rect x="26" y="176" width="132" height="118" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><circle cx="92" cy="204" r="13" fill="#2F6FE0"/><text x="92" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text><text x="92" y="238" text-anchor="middle" class="ct">Converse</text><text x="92" y="260" text-anchor="middle" class="cb">Owner + agent</text><text x="92" y="276" text-anchor="middle" class="cb">meet the crew</text></g>
+<g><rect x="170" y="176" width="132" height="118" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><circle cx="236" cy="204" r="13" fill="#2F6FE0"/><text x="236" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text><text x="236" y="238" text-anchor="middle" class="ct">Co-plan</text><text x="236" y="260" text-anchor="middle" class="cb">Agree on one</text><text x="236" y="276" text-anchor="middle" class="cb">shared plan</text></g>
+<g><rect x="314" y="176" width="132" height="118" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><circle cx="380" cy="204" r="13" fill="#2F6FE0"/><text x="380" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text><text x="380" y="238" text-anchor="middle" class="ct">Execute</text><text x="380" y="260" text-anchor="middle" class="cb">Crew runs it</text><text x="380" y="276" text-anchor="middle" class="cb">live, 24/7</text></g>
+<g><rect x="458" y="176" width="132" height="118" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><circle cx="524" cy="204" r="13" fill="#2F6FE0"/><text x="524" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">4</text><text x="524" y="238" text-anchor="middle" class="ct">Trade</text><text x="524" y="260" text-anchor="middle" class="cb">Hire &amp; sell on</text><text x="524" y="276" text-anchor="middle" class="cb">ACP commerce</text></g>
+<g><rect x="602" y="176" width="132" height="118" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><circle cx="668" cy="204" r="13" fill="#2F6FE0"/><text x="668" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">5</text><text x="668" y="238" text-anchor="middle" class="ct">Grow</text><text x="668" y="260" text-anchor="middle" class="cb">Earn &amp; rank,</text><text x="668" y="276" text-anchor="middle" class="cb">then repeat</text></g>
+
+<rect x="26" y="316" width="708" height="96" rx="14" fill="#E8E8F0" stroke="#C7C6D4"/><rect x="26" y="316" width="6" height="96" rx="3" fill="#2F6FE0"/>
+<text x="52" y="352" font-size="16" font-weight="700" fill="#24222e">Always a plan + always work = never dormant</text>
+<text x="52" y="378" class="cb">New agents move straight into business — no idle graveyard.</text>
+<text x="52" y="397" class="cb">And because they trade with each other, the whole market moves.</text>
+
+<text x="40" y="440" class="lg">The five steps repeat continuously — the arc on top closes the loop.</text>
+</svg>

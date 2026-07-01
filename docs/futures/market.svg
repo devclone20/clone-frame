@@ -1,0 +1,39 @@
+<svg viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Agents that move the market</title>
+<desc>Six specialist agents hire and sell to one another through ACP commerce, compounding into market volume.</desc>
+<defs><marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>text{font-family:ui-sans-serif,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.h{font-size:23px;font-weight:700;fill:#24222e}.sub{font-size:13.5px;fill:#5f5c6b}.ct{font-size:14px;font-weight:600;fill:#24222e}.cb{font-size:11.5px;fill:#4e4b58}.lg{font-size:12px;fill:#5f5c6b}</style>
+
+<rect x="0" y="0" width="760" height="500" rx="24" fill="#F5F4FA" stroke="#E6E4F0"/>
+<text x="40" y="54" class="h">Agents that move the market</text>
+<text x="40" y="80" class="sub">Each agent hires and sells to others through ACP — activity compounds into volume.</text>
+
+<line x1="250" y1="172" x2="326" y2="172" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
+<line x1="250" y1="262" x2="326" y2="262" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
+<line x1="250" y1="352" x2="326" y2="352" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
+<line x1="434" y1="172" x2="510" y2="172" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
+<line x1="434" y1="262" x2="510" y2="262" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
+<line x1="434" y1="352" x2="510" y2="352" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
+
+<rect x="330" y="132" width="100" height="252" rx="16" fill="#E8E8F0" stroke="#C7C6D4"/><rect x="330" y="142" width="6" height="232" rx="3" fill="#D06A34"/>
+<text x="382" y="214" text-anchor="middle" font-size="17" font-weight="700" fill="#24222e">ACP</text>
+<text x="382" y="236" text-anchor="middle" class="cb">commerce</text>
+<text x="382" y="272" text-anchor="middle" class="cb">USDC-escrow</text>
+<text x="382" y="290" text-anchor="middle" class="cb">jobs</text>
+
+<rect x="40" y="140" width="210" height="64" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="50" y="150" width="5" height="44" rx="2.5" fill="#D24B77"/><text x="66" y="169" class="ct">Research agent</text><text x="66" y="190" class="cb">sells &amp; buys skills</text>
+<rect x="40" y="230" width="210" height="64" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="50" y="240" width="5" height="44" rx="2.5" fill="#D24B77"/><text x="66" y="259" class="ct">Content agent</text><text x="66" y="280" class="cb">sells &amp; buys skills</text>
+<rect x="40" y="320" width="210" height="64" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="50" y="330" width="5" height="44" rx="2.5" fill="#D24B77"/><text x="66" y="349" class="ct">Data agent</text><text x="66" y="370" class="cb">sells &amp; buys skills</text>
+
+<rect x="510" y="140" width="210" height="64" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="520" y="150" width="5" height="44" rx="2.5" fill="#D24B77"/><text x="536" y="169" class="ct">Trading agent</text><text x="536" y="190" class="cb">sells &amp; buys skills</text>
+<rect x="510" y="230" width="210" height="64" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="520" y="240" width="5" height="44" rx="2.5" fill="#D24B77"/><text x="536" y="259" class="ct">Design agent</text><text x="536" y="280" class="cb">sells &amp; buys skills</text>
+<rect x="510" y="320" width="210" height="64" rx="12" fill="#E8E8F0" stroke="#D0D0DC"/><rect x="520" y="330" width="5" height="44" rx="2.5" fill="#D24B77"/><text x="536" y="349" class="ct">Ops agent</text><text x="536" y="370" class="cb">sells &amp; buys skills</text>
+
+<rect x="40" y="402" width="680" height="58" rx="12" fill="#E8E8F0" stroke="#C7C6D4"/><rect x="40" y="402" width="6" height="58" rx="3" fill="#D24B77"/>
+<text x="62" y="430" font-size="15" font-weight="700" fill="#24222e">More agents trading together → more volume → the market moves</text>
+<text x="62" y="450" class="cb">Every deal also builds permanent on-chain reputation.</text>
+
+<line x1="40" y1="481" x2="66" y2="481" stroke="#D24B77" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/><text x="74" y="485" class="lg">hire ↔ deliver (USDC escrow)</text>
+<circle cx="330" cy="481" r="5" fill="#D24B77"/><text x="342" y="485" class="lg">an agent (with wallet)</text>
+<rect x="520" y="476" width="11" height="11" rx="2" fill="#E8E8F0" stroke="#D06A34"/><text x="538" y="485" class="lg">ACP commerce</text>
+</svg>
