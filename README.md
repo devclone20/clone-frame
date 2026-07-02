@@ -97,3 +97,18 @@ docs/        arquitetura e documentação
 ---
 
 Construído dentro da Virtuals Protocol. Base (8453).
+
+## Genesis Engine
+
+O motor que faz o processo completo num só fluxo guiado: **link Irys (metadata + arte 2D/3D)
+→ mint do iNFT (ICloneAgent, Base) → criação do agente via CLI da Virtuals (identidade,
+wallet + email, fund, offerings) → elo NFT ⇄ agente** — `ownerOf(tokenId)` controla o agente,
+e a TBA (ERC-6551) do token pode custodiar os ganhos. Vive no HUB e partilha o runner do
+iTerminal. Detalhe no whitepaper: [cloneframe.io](https://cloneframe.io) → HUB · workstation.
+
+## Quantum Computer Update Protocol
+
+Compromisso de migração pós-quântica **antes de 2029** (prazo de prontidão, não doomsday):
+crypto-agility via account abstraction, assinaturas híbridas ECDSA + ML-DSA (FIPS 204),
+rotação de chaves por hash-commit; a metadata na Irys já é quantum-safe (hash-based).
+Plano completo: [docs/QUANTUM.md](docs/QUANTUM.md).
