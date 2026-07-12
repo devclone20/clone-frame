@@ -295,7 +295,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
 
     <p class="lead">The next decade of agent software will not be operated — it will be <b>supervised</b>. ATLAS is a step into that world, and it sells exactly one thing: the <b>Harness Architecture</b>. You describe a problem, a service idea or a project; ATLAS researches the domain and delivers the complete design of the dedicated agent team that will solve it — <b>named agents</b> with roles and hard tool allowlists, workflows with exit-state tokens, non-collapsible quality gates, <b>real, verified data sources</b>, schedules, and step-by-step build instructions. The client hands that document to any LLM coding agent — Claude Code, ChatGPT, DeepSeek — and gets a running, supervised team. Not once. Permanently.</p>
 
-    <p>ATLAS is an <b>iNFT</b>: the <b>ATLAS #1</b> token on Base <i>is</i> the agent's identity, and its soul — a four-lobe <code>neural_soul.md</code> — is sealed permanently on Irys. Own the token, own the agent, its treasury and its reputation. One transfer moves everything.</p>
+    <p>ATLAS is an <b>iNFT</b>: the <b>ATLAS #1</b> token on Base <i>is</i> the agent's identity, and its soul — a four-lobe <code>neural_soul.md</code> — is sealed on Irys, every version stored permanently behind a mutable anchor the owner can refine. Own the token, own the agent, its treasury and its reputation. One transfer moves everything.</p>
 
     <div class="wp-callout">
       <b>The one-line thesis.</b> Most agents sell answers; an answer dies at the end of the chat. ATLAS sells the blueprint of the team that keeps answering — a deterministic harness with a language model attached, where the model proposes, the harness disposes, and anything irreversible sits behind policy no prompt can override.
@@ -303,7 +303,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
 
     <!-- THE PRODUCT -->
     <h2 id="architecture">The product · a Harness Architecture</h2>
-    <p>Every ATLAS deliverable is one Markdown document with a fixed, fourteen-section skeleton: overview, problem analysis, <b>data sources</b> (real endpoints, verified, with formats, auth and licences), <b>the team</b> — a roster of named agents plus one full role-contract file per agent, ready to save as <code>crew/&lt;name&gt;.md</code> — workflows with exit-state tokens, the quality gates, schedules and anti-dormancy rules, the event-log and audit design, <b>step-by-step build instructions</b>, acceptance tests, and a maintenance story. Sections on money and custody appear only when the team will actually move value.</p>
+    <p>Every ATLAS deliverable is one Markdown document on a fixed skeleton of up to fourteen sections — twelve always present: overview, executive summary, problem analysis, <b>data sources</b> (real endpoints, verified, with formats, auth and licences), <b>the team</b> — a roster of named agents plus one full role-contract file per agent, ready to save as <code>crew/&lt;name&gt;.md</code> — workflows with exit-state tokens, the quality gates, schedules and anti-dormancy rules, the event-log and audit design, <b>step-by-step build instructions</b>, acceptance tests, and a maintenance story. Money &amp; custody and open-items sections appear only when the problem calls for them.</p>
 
     <div class="wp-fig reveal">
       <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="From problem to running Harness">
@@ -343,7 +343,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
     <!-- HARNESS -->
     <h2 id="harness">The Harness</h2>
     <p>A <b>Harness</b> is a supervised crew of agents running a loop that does not stall: <code>Plan → Work → Verify → Settle → Re-plan</code>. Every crew member is a <b>role contract as a file</b> — a hard tools allowlist plus an explicit MUST-NOT block — and every handoff is a named exit-state token. The language model is a component <i>inside</i> the harness: it proposes plans and typed intents, but it is structurally incapable of anything irreversible, because that lives on the far side of gates it cannot reach. This grammar governs ATLAS itself, and it is written into <b>every architecture ATLAS ships</b>.</p>
-    <p>Four gates sit on the path from work to the world. None can be collapsed or skipped — <i>the actor may never also be the judge</i> — and they are <b>invariants</b>, enforced by the harness, not by a prompt:</p>
+    <p>Four gates sit on the path from work to the world. Treasury exists only when value moves — but where a gate exists it can never be collapsed into the role it judges, and never skipped: <i>the actor may never also be the judge</i>. They are <b>invariants</b>, enforced by the harness, not by a prompt:</p>
 
     <div class="wp-fig reveal">
       <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The harness pipeline with four gates">
@@ -362,7 +362,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
         <!-- gates -->
         <g>
           <rect class="gate" x="176" y="150" width="130" height="72" rx="10"/><text x="241" y="176" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Evaluator</text><text x="241" y="194" text-anchor="middle" class="m" font-size="9.5">judges · never fixes</text><text x="241" y="209" text-anchor="middle" class="f" font-size="9">is it good enough?</text>
-          <rect class="gate" x="320" y="150" width="130" height="72" rx="10"/><text x="385" y="176" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Safety</text><text x="385" y="194" text-anchor="middle" class="m" font-size="9.5">CLEAR | VETO</text><text x="385" y="209" text-anchor="middle" class="f" font-size="9">fail-closed · every byte out</text>
+          <rect class="gate" x="320" y="150" width="130" height="72" rx="10"/><text x="385" y="176" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Safety</text><text x="385" y="194" text-anchor="middle" class="m" font-size="9.5">CLEAR | VETO</text><text x="385" y="209" text-anchor="middle" class="f" font-size="9">fail-closed veto</text>
           <rect class="gate" x="464" y="150" width="130" height="72" rx="10"/><text x="529" y="176" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Treasury</text><text x="529" y="194" text-anchor="middle" class="m" font-size="9.5">caps + allowlist</text><text x="529" y="209" text-anchor="middle" class="f" font-size="9">only when value moves</text>
           <rect class="gate" x="608" y="150" width="130" height="72" rx="10"/><text x="673" y="176" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Owner</text><text x="673" y="194" text-anchor="middle" class="m" font-size="9.5">human · signed token</text><text x="673" y="209" text-anchor="middle" class="f" font-size="9">silence is safe → hold</text>
         </g>
@@ -371,7 +371,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
       <div class="cap">Fig. 2 — The four non-collapsible gates: Evaluator · Safety · Treasury · Owner. Anything irreversible is downstream; the model never reaches it.</div>
     </div>
 
-    <p>The canonical crew taxonomy has six mandatory roles — <b>Orchestrator</b> (the only planner), <b>Research</b> (never fabricates a number), <b>Delivery</b> (the value producer), <b>Evaluator</b> (no write tools), <b>Safety</b> (veto, fail-closed) and <b>Ops</b> — plus <b>Treasury</b>, <b>Content</b> and <b>Job-Hunter</b> when the problem calls for money, a public voice or a marketplace intake. Every generated architecture picks from this taxonomy, names each agent, and binds it to the same event-log discipline and, when value moves, the same fourteen invariants.</p>
+    <p>The canonical crew taxonomy has seven mandatory roles — <b>Orchestrator</b> (the only planner), <b>Research</b> (never fabricates a number), <b>Delivery</b> (the value producer), <b>Evaluator</b> (no write tools), <b>Safety</b> (veto, fail-closed), <b>Ops</b>, and the human <b>Owner</b> (final authority) — plus <b>Treasury</b>, <b>Content</b> and <b>Job-Hunter</b> when the problem calls for money, a public voice or a marketplace intake. Every generated architecture picks from this taxonomy, names each agent, and binds it to the same event-log discipline and, when value moves, the same fourteen invariants.</p>
 
     <!-- ORACLE -->
     <h2 id="oracle">The Oracle · the architect's eye</h2>
@@ -386,7 +386,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
         <!-- three outputs -->
         <rect class="bo" x="520" y="24" width="210" height="52" rx="11"/><text x="625" y="46" text-anchor="middle" class="t" font-size="12" font-weight="700">CREW</text><text x="625" y="64" text-anchor="middle" class="m" font-size="9.5">which roles · which fuse · names</text>
         <rect class="bo" x="520" y="96" width="210" height="52" rx="11"/><text x="625" y="118" text-anchor="middle" class="t" font-size="12" font-weight="700">GATES</text><text x="625" y="136" text-anchor="middle" class="m" font-size="9.5">which of the four the risk demands</text>
-        <rect class="bo" x="520" y="168" width="210" height="52" rx="11"/><text x="625" y="190" text-anchor="middle" class="t" font-size="12" font-weight="700">SOURCES</text><text x="625" y="208" text-anchor="middle" class="m" font-size="9.5">verified feeds · cadence · fallbacks</text>
+        <rect class="bo" x="520" y="168" width="210" height="52" rx="11"/><text x="625" y="190" text-anchor="middle" class="t" font-size="12" font-weight="700">SOURCES</text><text x="625" y="208" text-anchor="middle" class="m" font-size="9.5">feeds · cadence · fallbacks</text>
         <path class="ar" d="M450 108 L520 52" marker-end="url(#ar3)"/>
         <path class="ar" d="M450 122 L520 122" marker-end="url(#ar3)"/>
         <path class="ar" d="M450 136 L520 192" marker-end="url(#ar3)"/>
@@ -396,14 +396,14 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
 
     <!-- ENGINE -->
     <h2 id="engines">The Engine</h2>
-    <p>One engine, open source: <code>apps/architect</code> in the public monorepo. It turns an intake — a plain-text brief, a filled template, or JSON — into a finished architecture through a fixed pipeline, and it refuses to ship what it cannot verify: the structural validator checks every required skeleton section, the presence of role-contract files, and a never-list (no invented endpoints, no "guaranteed profit", no LLM in a signing path) before the document leaves the building.</p>
+    <p>One engine, open source: <code>apps/architect</code> in the public monorepo. It turns an intake — a plain-text brief, a filled template, or JSON — into a finished architecture through a fixed pipeline. Before a document leaves the building, the <b>deterministic validator</b> checks every required skeleton section, the presence of the gates and of role-contract files, and screens the copy against the never-list's hardest rule — an architecture may never promise earnings. The deeper laws — real, verified endpoints only; no LLM in a signing path — are written into the authoring grammar and checked by the <b>evaluator review</b> behind it.</p>
 
     <div class="wp-fig reveal">
       <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The architect pipeline">
         <defs><marker id="ar7" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="var(--text-faint)"/></marker></defs>
         <text x="380" y="20" text-anchor="middle" class="f" font-size="10.5">intake → deliverable · the same grammar every time</text>
         <rect class="bx" x="24" y="40" width="130" height="60" rx="11"/><text x="89" y="66" text-anchor="middle" class="t" font-size="12" font-weight="700">Intake</text><text x="89" y="84" text-anchor="middle" class="m" font-size="9.5">brief · DATA only</text>
-        <rect class="bx" x="178" y="40" width="130" height="60" rx="11"/><text x="243" y="66" text-anchor="middle" class="t" font-size="12" font-weight="700">Research</text><text x="243" y="84" text-anchor="middle" class="m" font-size="9.5">real sources · verified</text>
+        <rect class="bx" x="178" y="40" width="130" height="60" rx="11"/><text x="243" y="66" text-anchor="middle" class="t" font-size="12" font-weight="700">Research</text><text x="243" y="84" text-anchor="middle" class="m" font-size="9.5">verified sources</text>
         <rect class="bx" x="332" y="40" width="130" height="60" rx="11"/><text x="397" y="66" text-anchor="middle" class="t" font-size="12" font-weight="700">Author</text><text x="397" y="84" text-anchor="middle" class="m" font-size="9.5">blueprint grammar</text>
         <rect class="gate" x="486" y="40" width="130" height="60" rx="11"/><text x="551" y="66" text-anchor="middle" class="t" font-size="12" font-weight="700">Validate</text><text x="551" y="84" text-anchor="middle" class="m" font-size="9.5">skeleton · never-list</text>
         <rect class="bs" x="640" y="40" width="96" height="60" rx="11"/><text x="688" y="66" text-anchor="middle" class="t" font-size="12" font-weight="700">Deliver</text><text x="688" y="84" text-anchor="middle" class="m" font-size="9.5">.md · escrow</text>
@@ -425,13 +425,13 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
 
     <!-- COMMITTEE -->
     <h2 id="committee">The Committee</h2>
-    <p>A delivery is a claim, and claims are cheap. ATLAS makes them expensive to get wrong: every architecture passes a <b>deterministic structural validator</b> (all required skeleton sections present, role-contract files included, never-list clean) and an <b>independent evaluator review</b> before it ships — and for high-stakes work, a committee of ≥2 evaluators under quorum, none of whom wrote the document. The actor is never the judge. On OKX the point is sharpened by economics: a rejected delivery can go to a dispute arbitrated by a staked network of evaluators, and a lost dispute means the escrow returns to the buyer. Quality is not a virtue here; it is enforced.</p>
+    <p>A delivery is a claim, and claims are cheap. ATLAS makes them expensive to get wrong: every architecture passes the <b>deterministic structural validator</b> (all required skeleton sections present, gates and role-contract files included, no earnings promises) and an <b>independent evaluator review</b> before it ships — and for high-stakes work, a committee of ≥2 evaluators under quorum, none of whom wrote the document. The actor is never the judge. On OKX the point is sharpened by economics: a rejected delivery can go to a dispute arbitrated by a staked network of evaluators, and a lost dispute means the escrow returns to the buyer. Quality is not a virtue here; it is enforced.</p>
 
     <div class="wp-fig reveal">
       <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The two-evaluator committee gate">
         <defs><marker id="ar4" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 Z" fill="var(--text-faint)"/></marker></defs>
         <rect class="bx" x="24" y="76" width="150" height="58" rx="11"/><text x="99" y="101" text-anchor="middle" class="t" font-size="12.5" font-weight="700">Candidate</text><text x="99" y="120" text-anchor="middle" class="m" font-size="9.5">architecture draft</text>
-        <rect class="bo" x="260" y="24" width="200" height="46" rx="10"/><text x="360" y="46" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Validator</text><text x="360" y="62" text-anchor="middle" class="m" font-size="9">deterministic · skeleton + never-list</text>
+        <rect class="bo" x="260" y="24" width="200" height="46" rx="10"/><text x="360" y="46" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Validator</text><text x="360" y="62" text-anchor="middle" class="m" font-size="9">deterministic · skeleton check</text>
         <rect class="bo" x="260" y="82" width="200" height="46" rx="10"/><text x="360" y="104" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Evaluator</text><text x="360" y="120" text-anchor="middle" class="m" font-size="9">independent review · no write tools</text>
         <rect class="bo" x="260" y="140" width="200" height="46" rx="10"/><text x="360" y="162" text-anchor="middle" class="f" font-size="11">Evaluator N…</text><text x="360" y="178" text-anchor="middle" class="f" font-size="9">≥2 + quorum for high stakes</text>
         <path class="ar" d="M174 100 L260 47" marker-end="url(#ar4)"/>
@@ -450,8 +450,8 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
     <h2 id="security">Bounded autonomy · security</h2>
     <p>Autonomy here does not mean "sign whatever the model suggests." It means <b>deterministic wallet policy</b> plus <b>no LLM in the signing path</b>. The model can propose any intent it likes; the policy engine — pure, deterministic code — decides whether it may become a signature. Two rules bound every outbound movement:</p>
     <ul>
-      <li>A <b>$100/day transfer cap</b> — even a fully compromised brain cannot move more than that per day.</li>
-      <li>A <b>whitelist</b> — outbound value can only go to the owner's cold wallet. Everything else is refused at the policy layer.</li>
+      <li>A <b>$100-per-day transfer policy</b> on the operating wallet — even a fully compromised brain is bounded per day.</li>
+      <li>A <b>destination whitelist to the owner's cold wallet</b>, set as wallet policy — and, by standing rule, any large or novel outbound transfer is <b>owner-gated</b> before it happens.</li>
     </ul>
     <p>Deposits are inbound and unaffected: ATLAS can always receive. This is least-privilege applied to money: the blast radius of any failure — prompt injection, a jailbroken plan, a bad engine — is capped by construction, not by hope.</p>
     <p>Two more consequences of the v2 design. First, <b>the attack surface shrank</b>: with the public API endpoint removed, ATLAS speaks only over escrowed A2A jobs — there is nothing on the open internet to probe. Client briefs are treated as <b>data, never instructions</b>: no text inside a job can change ATLAS's rules, prices or identity. Second, the same discipline is exported: every architecture ATLAS ships carries the no-LLM-in-signing law, the input firewall, and — whenever the designed team moves value — the fourteen invariants, cited by number.</p>
@@ -491,7 +491,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
 
     <!-- iNFT -->
     <h2 id="inft">The iNFT &amp; the soul</h2>
-    <p>ATLAS's identity is a token. <b>ATLAS #1</b> lives on Base — <code>ERC-721A</code> for the token, <code>ERC-2981</code> for royalties, and <code>ERC-6551</code> for the token-bound account that carries the agent's funds, skills and memory. The agent's soul — a four-lobe <code>neural_soul.md</code> mapping the Frontal, Parietal, Temporal and Occipital lobes to Will, Senses, Memory&nbsp;&amp;&nbsp;Voice and Vision — is sealed permanently on <b>Irys</b>, referenced from the token's metadata.</p>
+    <p>ATLAS's identity is a token. <b>ATLAS #1</b> lives on Base — <code>ERC-721A</code> for the token, <code>ERC-2981</code> for royalties, and <code>ERC-6551</code> for the token-bound account that carries the agent's funds, skills and memory. The agent's soul — a four-lobe <code>neural_soul.md</code> mapping the Frontal, Parietal, Temporal and Occipital lobes to Will, Senses, Memory&nbsp;&amp;&nbsp;Voice and Vision — is sealed on <b>Irys</b> and referenced from the token's metadata through a mutable anchor: every version is stored permanently, and the owner refines the soul as the agent evolves.</p>
 
     <div class="wp-fig reveal">
       <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The iNFT soul">
@@ -504,7 +504,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
         <path class="dt" d="M106 136 L360 176"/><path class="dt" d="M290 136 L370 176"/><path class="dt" d="M474 136 L390 176"/><path class="dt" d="M656 136 L400 176"/>
         <rect class="bs fl2" x="250" y="176" width="260" height="56" rx="12"/><text x="380" y="200" text-anchor="middle" class="t" font-size="14" font-weight="700">ATLAS · the agent</text><text x="380" y="219" text-anchor="middle" class="m" font-size="10">one identity · one product</text>
         <path class="ar" d="M380 232 L380 256" marker-end="url(#ar6)"/>
-        <rect class="bs" x="230" y="258" width="300" height="40" rx="12"/><text x="380" y="283" text-anchor="middle" class="t" font-size="12.5" font-weight="700">iNFT — sealed on Irys · Base 0x3D9f…809f</text>
+        <rect class="bs" x="210" y="258" width="340" height="40" rx="12"/><text x="380" y="283" text-anchor="middle" class="t" font-size="12.5" font-weight="700">iNFT — sealed on Irys · Base 0x3D9f…809f</text>
       </svg>
       <div class="cap">Fig. 7 — Own the token, own the agent, its treasury and its reputation. One transfer moves everything.</div>
     </div>
@@ -517,7 +517,7 @@ footer{border-top:1px solid var(--border);padding:var(--s10) 0;margin-top:var(--
       <div class="ft-row"><div class="rn">01</div><div><div class="rt">Repositioned · the Harness Architect (v2, July 2026)</div><div class="rd">One product, eight A2A services on agent #4460 — the API surface removed end to end. The rewritten listing is under OKX review.</div></div></div>
       <div class="ft-row"><div class="rn">02</div><div><div class="rt">Public monorepo · MIT</div><div class="rd">The architect engine (<code>prompt · generate · validate</code>), the blueprint grammar, the service catalog and the full droplet runtime — one canonical repository, open source.</div></div></div>
       <div class="ft-row"><div class="rn">03</div><div><div class="rt">Proven deliverable · Ilha-Vigia</div><div class="rd">A validated climate-monitoring Harness architecture for a research centre in Ponta Delgada, Azores — live-verified data sources, named crew, executable build plan — published in the repo as the public sample.</div></div></div>
-      <div class="ft-row"><div class="rn">04</div><div><div class="rt">24/7 daemon · online &amp; policy-fenced</div><div class="rd">The <code>okx-a2a</code> daemon runs as a reboot-safe systemd service on an isolated droplet slice, Claude as the brain. Operating wallet capped at $100/day with a whitelist to the owner's cold wallet; no LLM in the signing path.</div></div></div>
+      <div class="ft-row"><div class="rn">04</div><div><div class="rt">24/7 daemon · online &amp; policy-fenced</div><div class="rd">The <code>okx-a2a</code> daemon runs as a reboot-safe systemd service on an isolated droplet slice, Claude as the brain. Wallet policy: $100-per-day transfer cap and a whitelist to the owner's cold wallet; large or novel transfers owner-gated; no LLM in the signing path.</div></div></div>
       <div class="ft-row"><div class="rn">05</div><div><div class="rt">ATLAS #1 · minted on Base</div><div class="rd">The iNFT is published; the four-lobe soul is sealed to a mutable Irys anchor, refinable over time.</div></div></div>
       <div class="ft-row"><div class="rn">06</div><div><div class="rt">Next — approval, clients, the second rail</div><div class="rd">OKX listing approval → first architectures sold; then Virtuals ACP as a second intake into the same architect — and more CLONE FRAME agents, each with its own monorepo.</div></div></div>
     </div>
