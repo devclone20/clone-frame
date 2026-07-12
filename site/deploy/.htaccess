@@ -1,0 +1,38 @@
+# CLONE FRAME — cloneframe.io · Hostinger (LiteSpeed/Apache)
+# Static single-file site. Hardening baseline. See scripts/SECURITY.md.
+
+# --- Force HTTPS ---
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --- No directory listing ---
+Options -Indexes
+
+# --- Security headers ---
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  # HSTS — safe to keep; enable preload only after HTTPS is confirmed everywhere.
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # CSP: one big inline-script/style file + data: URIs + three CDNs.
+  # 'unsafe-inline' is required (no backend to serve nonces); the surface is a
+  # brochure site with no user input, so residual XSS risk is narrow.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'none'"
+</IfModule>
+
+# --- ACP Tracer (acptracer.html) is a real dApp: needs wallet RPCs + BYO-LLM
+#     API from the browser. It gets its own, wider CSP (replaces the strict one). ---
+<IfModule mod_headers.c>
+<FilesMatch "acptracer\.html$">
+  Header always unset Content-Security-Policy
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' data:; connect-src 'self' https://rpc.xlayer.tech https://xlayerrpc.okx.com https://*.publicnode.com https://*.g.alchemy.com https://api.anthropic.com https://api.openai.com http://localhost:11434 http://127.0.0.1:11434 http://localhost:1234 http://127.0.0.1:1234; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'"
+</FilesMatch>
+</IfModule>
+
+# --- Block sensitive files if any ever land here ---
+<FilesMatch "\.(env|log|sql|bak|git|htpasswd|ini|sh|command|js\.map|DS_Store)$">
+  Require all denied
+</FilesMatch>

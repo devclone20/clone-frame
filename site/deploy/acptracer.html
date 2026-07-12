@@ -1,0 +1,1131 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ACP Tracer — an interactive, editable console to create, run, publish and supervise AI agents across OKX, Virtuals ACP and beyond, with an integrated Harness that does the hard parts for you. Non-custodial, bring-your-own-LLM-key, no LLM in the signing path.">
+<meta name="base:app_id" content="6a40f5d8eb109bb49dbc61c2">
+<title>ACP Tracer — run agents anywhere · ATLAS Corporation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================ TOKENS (mirrors cloneframe.io) */
+:root{
+  --font-ui:"Inter",system-ui,-apple-system,sans-serif;
+  --font-mono:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:48px;--s12:64px;--s16:96px;
+  --r-xs:4px;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-pill:999px;
+  --d-micro:140ms;--d-std:240ms;--d-nav:420ms;
+  --ease-out:cubic-bezier(.16,1,.3,1);--ease-soft:cubic-bezier(.45,0,.15,1);
+  --topbar:56px;--rail:78px;--side:236px;--dock:372px;
+}
+:root[data-theme="dark"]{
+  --bg:#08090C;--surface-1:#0E1014;--surface-2:#14171D;--surface-3:#1C2029;--overlay:#262B36;
+  --border:#1A1D24;--border-strong:#2A2F3A;
+  --text:#ECEEF3;--text-muted:#98A0AE;--text-faint:#5E6675;--text-ghost:#353B47;
+  --teal:#D4D9E1;--gate:#A78BFA;--gate-soft:rgba(167,139,250,.14);
+  --ok:#4ADE80;--warn:#F5B759;--danger:#F0736A;--info:#7CC5FF;
+  --vrt:#4ADE80;--okx:#EBEEF2;
+  --glow:rgba(255,255,255,.05);
+  --dot:rgba(255,255,255,.045);--dot-bright:rgba(255,255,255,.16);
+  --shadow-md:0 8px 24px -8px rgba(0,0,0,.55);--shadow-lg:0 24px 64px -16px rgba(0,0,0,.65);
+  --grid-line:rgba(255,255,255,.022);
+}
+:root[data-theme="light"]{
+  --bg:#FBFBFD;--surface-1:#FFFFFF;--surface-2:#F4F5F8;--surface-3:#ECEEF2;--overlay:#FFFFFF;
+  --border:#E6E8EE;--border-strong:#D2D6DF;
+  --text:#0C0E12;--text-muted:#5A6372;--text-faint:#8A92A0;--text-ghost:#C2C7D0;
+  --teal:#3A3F49;--gate:#6D28D9;--gate-soft:rgba(109,40,217,.10);
+  --ok:#15803D;--warn:#B45309;--danger:#B5524E;--info:#1D4ED8;
+  --vrt:#15803D;--okx:#23272F;
+  --glow:rgba(10,15,30,.05);
+  --dot:rgba(10,15,30,.05);--dot-bright:rgba(10,15,30,.16);
+  --shadow-md:0 8px 24px -10px rgba(20,30,50,.18);--shadow-lg:0 24px 64px -18px rgba(20,30,50,.22);
+  --grid-line:rgba(10,15,30,.035);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--font-ui);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv01","tnum";
+  transition:background var(--d-nav) var(--ease-soft),color var(--d-nav) var(--ease-soft);
+  overflow:hidden;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--glow);color:var(--text)}
+.mono{font-family:var(--font-mono)}
+.bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background-image:radial-gradient(var(--dot) 1px,transparent 1.7px);background-size:24px 24px;
+  -webkit-mask-image:radial-gradient(ellipse 130% 120% at 50% 30%,#000 55%,transparent 100%);
+  mask-image:radial-gradient(ellipse 130% 120% at 50% 30%,#000 55%,transparent 100%);
+  animation:bgFall 64s linear infinite}
+.bgfx::after{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--dot-bright) 1px,transparent 1.8px);background-size:38px 38px;opacity:.5;animation:bgFall2 52s linear infinite}
+@keyframes bgFall{from{background-position:0 0}to{background-position:0 240px}}
+@keyframes bgFall2{from{background-position:0 0}to{background-position:0 342px}}
+.label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
+h1,h2,h3{letter-spacing:-.01em;font-weight:600;line-height:1.2}
+
+/* ============================================================ SHELL LAYOUT */
+.app{position:relative;z-index:1;height:100vh;display:grid;
+  grid-template-columns:var(--side) 1fr var(--dock);
+  grid-template-rows:var(--topbar) 1fr var(--rail);
+  grid-template-areas:"top top top" "side main dock" "rail rail rail"}
+.app.dock-collapsed{grid-template-columns:var(--side) 1fr 0}
+
+/* ---- TOPBAR ---- */
+.topbar{grid-area:top;display:flex;align-items:center;gap:var(--s4);padding:0 var(--s5);
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px) saturate(1.4);
+  border-bottom:1px solid var(--border);z-index:20}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.brand .mk{width:26px;height:26px;border-radius:7px;background:conic-gradient(from 210deg,var(--gate),#5b8cff,var(--gate));display:grid;place-items:center;color:#04070b;font-weight:800;font-size:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.brand b{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em}
+.brand span{color:var(--text-muted);font-size:11px;font-family:var(--font-mono)}
+.pills{display:flex;gap:var(--s2);margin-left:var(--s4)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);
+  background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 11px;white-space:nowrap}
+.pill .d{width:7px;height:7px;border-radius:50%;background:var(--text-ghost);flex:none}
+.pill.on{color:var(--text);border-color:var(--border-strong)}
+.pill.on .d{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
+.pill.warn .d{background:var(--warn);box-shadow:0 0 0 3px color-mix(in srgb,var(--warn) 20%,transparent)}
+.topbar-r{margin-left:auto;display:flex;align-items:center;gap:var(--s2)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;padding:9px 15px;border-radius:var(--r-sm);cursor:pointer;
+  border:1px solid var(--border-strong);background:var(--surface-1);color:var(--text);transition:transform var(--d-micro),background var(--d-std),border-color var(--d-std),box-shadow var(--d-std)}
+.btn:hover{border-color:var(--teal)}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:600}
+.btn.pri:hover{box-shadow:0 0 0 1px var(--text)}
+.btn.ghost{background:transparent;color:var(--text-muted);border-color:var(--border)}
+.btn.ghost:hover{color:var(--text);border-color:var(--border-strong)}
+.btn.sm{padding:6px 11px;font-size:11px}
+.btn.play{background:var(--gate);color:#04070b;border-color:var(--gate);font-weight:700}
+.btn.play:hover{box-shadow:0 0 0 1px var(--gate),0 0 22px -6px var(--gate)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--border-strong))}
+.btn.danger:hover{background:color-mix(in srgb,var(--danger) 12%,transparent);border-color:var(--danger)}
+.btn[disabled]{opacity:.42;cursor:not-allowed}
+.icbtn{width:34px;height:34px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface-1);color:var(--text-muted);display:grid;place-items:center;cursor:pointer;transition:all var(--d-std);font-size:15px}
+.icbtn:hover{color:var(--text);border-color:var(--border-strong)}
+
+/* ---- SIDEBAR ---- */
+.side{grid-area:side;background:color-mix(in srgb,var(--bg) 60%,var(--surface-1));border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin}
+.side .grp{padding:var(--s4) var(--s4) var(--s2)}
+.nav{display:grid;gap:2px;padding:0 var(--s3)}
+.nav a{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:var(--r-sm);color:var(--text-muted);cursor:pointer;
+  border:1px solid transparent;transition:color var(--d-std),background var(--d-std),border-color var(--d-std)}
+.nav a:hover{color:var(--text);background:var(--surface-2)}
+.nav a.on{color:var(--text);background:var(--surface-2);border-color:var(--border)}
+.nav a .n{font-family:var(--font-mono);font-size:10px;color:var(--text-faint);width:16px}
+.nav a.on .n{color:var(--gate)}
+.nav a .t{font-size:13px;font-weight:500}
+.nav a .sub{font-size:10px;color:var(--text-faint);font-family:var(--font-mono);margin-left:auto}
+.side .spacer{flex:1}
+/* runner mini card */
+.runner{margin:var(--s3);padding:var(--s3);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface-1)}
+.runner .rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.runner .rh b{font-size:12px}
+.state-dot{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted)}
+.state-dot i{width:8px;height:8px;border-radius:50%;background:var(--text-ghost)}
+.state-dot.running i{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 22%,transparent);animation:pulse 2s ease-in-out infinite}
+.state-dot.warmup i{background:var(--warn);box-shadow:0 0 0 3px color-mix(in srgb,var(--warn) 22%,transparent)}
+.state-dot.stopping i,.state-dot.stopped i{background:var(--text-faint)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.lifeline{display:flex;gap:3px;margin-top:4px}
+.lifeline .seg{flex:1;height:4px;border-radius:2px;background:var(--surface-3)}
+.lifeline .seg.done{background:var(--gate)}
+.lifeline .seg.cur{background:var(--warn)}
+.runner .rl{font-family:var(--font-mono);font-size:9.5px;color:var(--text-faint);margin-top:7px;display:flex;justify-content:space-between}
+
+/* ---- MAIN ---- */
+.main{grid-area:main;overflow-y:auto;padding:var(--s6) var(--s8)}
+.view{display:none;animation:viewIn .35s var(--ease-out);max-width:1080px;margin:0 auto}
+.view.on{display:block}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.view-head{margin-bottom:var(--s6)}
+.view-head .label{margin-bottom:8px;display:block}
+.view-head h2{font-size:26px;letter-spacing:-.02em}
+.view-head p{color:var(--text-muted);font-size:14px;max-width:64ch;margin-top:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s5)}
+.card h3{font-size:14px;margin-bottom:3px;display:flex;align-items:center;gap:9px}
+.card .desc{font-size:12.5px;color:var(--text-muted);margin-bottom:var(--s4)}
+.card .ico{width:30px;height:30px;border-radius:var(--r-sm);display:grid;place-items:center;background:var(--surface-2);color:var(--teal);font-size:15px;flex:none}
+.gatecard{border-color:color-mix(in srgb,var(--gate) 40%,var(--border));box-shadow:inset 0 0 0 1px var(--gate-soft)}
+.gate-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--gate);border:1px solid color-mix(in srgb,var(--gate) 45%,var(--border));border-radius:var(--r-pill);padding:2px 8px;margin-left:auto}
+.field{margin-bottom:var(--s4)}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:11.5px;color:var(--text-muted);margin-bottom:6px;font-weight:500}
+.input,select,textarea{width:100%;font-family:var(--font-mono);font-size:12.5px;color:var(--text);background:var(--surface-2);
+  border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 11px;transition:border-color var(--d-std)}
+.input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal)}
+textarea{resize:vertical;line-height:1.5}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2)}
+.seg button{font-family:var(--font-mono);font-size:11.5px;padding:8px 14px;background:transparent;color:var(--text-muted);border:0;cursor:pointer;transition:all var(--d-std)}
+.seg button.on{background:var(--surface-3);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;cursor:pointer;transition:all var(--d-std)}
+.chip:hover{color:var(--text);border-color:var(--border-strong)}
+.chip.on{color:var(--text);background:var(--surface-2);border-color:var(--teal)}
+.tick{display:grid;gap:9px;margin-top:var(--s2)}
+.tick li{list-style:none;font-size:12.5px;color:var(--text-muted);padding-left:22px;position:relative}
+.tick li::before{content:"";position:absolute;left:5px;top:7px;width:5px;height:5px;border-radius:1px;background:var(--text-faint);transform:rotate(45deg)}
+.tick li b{color:var(--text);font-weight:500}
+.range{display:flex;align-items:center;gap:var(--s4)}
+.range input[type=range]{flex:1;accent-color:var(--gate)}
+.range .val{font-family:var(--font-mono);font-size:13px;color:var(--text);min-width:64px;text-align:right}
+.soul-card{cursor:pointer;transition:border-color var(--d-std),transform var(--d-std)}
+.soul-card:hover{transform:translateY(-2px);border-color:var(--border-strong)}
+.soul-card.on{border-color:var(--gate);box-shadow:inset 0 0 0 1px var(--gate-soft)}
+.soul-card .st{font-family:var(--font-mono);font-size:10px;color:var(--text-faint)}
+.soul-card h3{font-size:15px;margin:5px 0 6px}
+.soul-card p{font-size:12px;color:var(--text-muted)}
+.laws{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.law{font-family:var(--font-mono);font-size:9px;color:var(--gate);border:1px solid color-mix(in srgb,var(--gate) 35%,var(--border));border-radius:var(--r-xs);padding:2px 6px}
+.meter{height:8px;border-radius:var(--r-pill);background:var(--surface-3);overflow:hidden;margin-top:7px}
+.meter i{display:block;height:100%;background:var(--gate);border-radius:var(--r-pill)}
+.jsonbox{font-family:var(--font-mono);font-size:11.5px;line-height:1.6;color:var(--text-muted);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:var(--s4);white-space:pre;overflow:auto;max-height:340px}
+.jsonbox .k{color:var(--info)}.jsonbox .s{color:var(--ok)}.jsonbox .num{color:var(--warn)}
+.steps{display:grid;gap:0}
+.step{display:grid;grid-template-columns:26px 1fr auto;gap:11px;align-items:center;padding:11px 0;border-top:1px solid var(--border)}
+.step:first-child{border-top:0}
+.step .sd{width:18px;height:18px;border-radius:50%;border:2px solid var(--border-strong);display:grid;place-items:center;font-size:9px;color:var(--text-faint)}
+.step.done .sd{background:var(--ok);border-color:var(--ok);color:#04070b}
+.step.cur .sd{border-color:var(--warn);color:var(--warn)}
+.step .stitle{font-size:13px}.step.done .stitle,.step.cur .stitle{color:var(--text)}
+.step .stitle{color:var(--text-muted)}
+.step .stime{font-family:var(--font-mono);font-size:10.5px;color:var(--text-faint)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-bottom:var(--s5)}
+.kpi{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s4)}
+.kpi b{display:block;font-family:var(--font-mono);font-size:22px;letter-spacing:-.02em}
+.kpi span{font-size:11px;color:var(--text-muted)}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);padding:9px 10px;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 10px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+.tbl td b{color:var(--text);font-weight:500}
+.badge{font-family:var(--font-mono);font-size:10px;padding:3px 9px;border-radius:var(--r-pill);border:1px solid var(--border);color:var(--text-muted)}
+.badge.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,var(--border))}
+.badge.run{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,var(--border))}
+.badge.idle{color:var(--text-faint)}
+.note{font-size:12px;color:var(--text-muted);background:var(--surface-1);border:1px solid var(--border);border-left:2px solid var(--gate);border-radius:var(--r-sm);padding:12px 15px;line-height:1.6}
+.note b{color:var(--text)}
+.watchrow{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--border)}
+.watchrow:first-child{border-top:0}
+.watchrow .wd{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
+.watchrow .wt{font-size:12.5px}.watchrow .wt b{color:var(--text)}
+.watchrow .ws{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:var(--text-faint)}
+
+/* radial topology */
+.topo{width:100%;height:auto;display:block}
+.topo text{font-family:var(--font-mono)}
+
+/* ---- HARNESS DOCK ---- */
+.dock{grid-area:dock;background:color-mix(in srgb,var(--bg) 55%,var(--surface-1));border-left:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden}
+.app.dock-collapsed .dock{display:none}
+.dock-head{display:flex;align-items:center;gap:10px;padding:var(--s4) var(--s4) var(--s3);border-bottom:1px solid var(--border)}
+.dock-head .av{width:28px;height:28px;border-radius:7px;background:radial-gradient(circle at 50% 35%,#1a2130,#05070a);border:1px solid var(--border-strong);display:grid;place-items:center;font-size:13px}
+.dock-head b{font-size:13px}.dock-head .sub{font-family:var(--font-mono);font-size:10px;color:var(--text-faint)}
+.dock-head .live{margin-left:auto;font-family:var(--font-mono);font-size:10px;color:var(--ok);display:inline-flex;align-items:center;gap:6px}
+.dock-head .live i{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite}
+.log{flex:1;overflow-y:auto;padding:var(--s4);display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
+.msg{max-width:100%}
+.msg .who{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-faint);margin-bottom:5px}
+.msg .bubble{font-size:12.5px;line-height:1.55;color:var(--text-muted);background:var(--surface-1);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.msg.h .bubble{border-left:2px solid var(--gate)}
+.msg.h .bubble b{color:var(--text)}
+.msg.u{align-self:flex-end;max-width:88%}
+.msg.u .who{text-align:right}
+.msg.u .bubble{background:var(--surface-2);border-color:var(--border-strong);color:var(--text)}
+.msg .cmd{font-family:var(--font-mono);font-size:11px;color:var(--info);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-top:8px;white-space:pre-wrap;word-break:break-all}
+.msg .actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.qa{font-family:var(--font-mono);font-size:11px;color:var(--text);background:var(--surface-2);border:1px solid var(--border-strong);border-radius:var(--r-pill);padding:6px 12px;cursor:pointer;transition:all var(--d-std)}
+.qa:hover{border-color:var(--gate);color:var(--text)}
+.dock-in{border-top:1px solid var(--border);padding:var(--s3);display:flex;gap:8px}
+.dock-in input{flex:1;font-family:var(--font-ui);font-size:12.5px;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px}
+.dock-in input:focus{outline:none;border-color:var(--teal)}
+
+/* ---- BALANCES ---- */
+.balgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+.bal{display:flex;justify-content:space-between;align-items:center;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 11px}
+.bal .bn{font-size:11.5px;color:var(--text-muted);display:flex;align-items:center;gap:7px}
+.bal .bn i{width:7px;height:7px;border-radius:2px}
+.bal .bv{font-family:var(--font-mono);font-size:12px;color:var(--text)}
+.bal .bv.load{color:var(--text-faint)}
+.nftrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.nft{width:64px;height:64px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface-2);overflow:hidden;position:relative}
+.nft img{width:100%;height:100%;object-fit:cover;display:block}
+.nft span{position:absolute;left:0;right:0;bottom:0;font-family:var(--font-mono);font-size:8px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:8px 4px 3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- HARNESS CREW ---- */
+.crewgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.crew{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 12px}
+.crew b{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text);font-weight:600}
+.crew .rt{margin-left:auto;font-family:var(--font-mono);font-size:9px;color:var(--text-faint);border:1px solid var(--border);border-radius:var(--r-pill);padding:2px 7px}
+.crew .rt.gate{color:var(--gate);border-color:color-mix(in srgb,var(--gate) 40%,var(--border))}
+.crew .rt.brain{color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--border))}
+.crew p{font-size:11px;color:var(--text-muted);margin-top:5px;line-height:1.5}
+@media(max-width:760px){.crewgrid{grid-template-columns:1fr}}
+
+/* ---- COLLAPSIBLE CARDS ---- */
+.card.collapsible>h3{cursor:pointer;user-select:none;display:flex;align-items:center;gap:9px}
+.card.collapsible>h3::after{content:"▾";margin-left:auto;color:var(--text-faint);font-size:11px;transition:transform var(--d-std)}
+.card.collapsed>h3::after{transform:rotate(-90deg)}
+.card.collapsed>*:not(h3){display:none!important}
+.card.collapsed{padding-bottom:var(--s5)}
+
+/* ---- IDENTITY BRIDGE ---- */
+.bridge{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}
+.bnode{flex:1 1 128px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 11px;text-align:center}
+.bnode.strong{border-color:color-mix(in srgb,var(--gate) 45%,var(--border));box-shadow:inset 0 0 0 1px var(--gate-soft)}
+.bnode b{display:block;font-size:11.5px;color:var(--text)}
+.bnode span{font-family:var(--font-mono);font-size:9px;color:var(--text-faint)}
+.barr{font-family:var(--font-mono);font-size:8.5px;color:var(--text-faint);text-align:center;white-space:nowrap;min-width:34px}
+.barr b{display:block;font-size:13px;color:var(--text-ghost);font-family:var(--font-ui);line-height:1}
+.barr.warn{color:var(--warn)}
+@media(max-width:760px){.bridge{flex-direction:column;align-items:stretch}}
+
+/* ---- TERMINAL (Claude Code desktop style) ---- */
+.nav a.primary{color:var(--text);background:var(--surface-2);border-color:color-mix(in srgb,var(--gate) 45%,var(--border))}
+.nav a.primary .n{color:var(--gate)}
+.nav a.primary.on{box-shadow:inset 0 0 0 1px var(--gate-soft)}
+.view#v-terminal{max-width:1180px}
+.view#v-terminal.on{display:flex;flex-direction:column;height:calc(100vh - var(--topbar) - var(--rail) - 48px);min-height:460px}
+.term{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md)}
+.term-head{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--bg) 45%,var(--surface-1))}
+.term-head .dotrow{display:flex;gap:6px;margin-right:5px}
+.term-head .dotrow i{width:11px;height:11px;border-radius:50%;background:var(--surface-3)}
+.term-head .tchip{font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);border:1px solid var(--border);border-radius:var(--r-pill);padding:4px 10px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.term-head .tchip b{color:var(--text)}
+.term-head .tchip .d{width:6px;height:6px;border-radius:50%;background:var(--text-ghost)}
+.term-head .tchip.on .d{background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
+.term-head .grow{flex:1}
+.term-body{flex:1;min-height:0;overflow-y:auto;padding:16px 18px;font-family:var(--font-mono);font-size:12.5px;line-height:1.72}
+.tline{margin:0 0 3px;white-space:pre-wrap;word-break:break-word}
+.tline.gap{margin-top:12px}
+.tl-user{color:var(--text)} .tl-user .pr{color:var(--gate)}
+.tl-a{color:var(--text)} .tl-a .b{color:var(--gate);font-weight:700} .tl-a.dim{color:var(--text-muted)}
+.tl-tool .b{color:var(--gate);font-weight:700} .tl-tool .cmd{color:var(--info)}
+.tl-out{color:var(--text-faint);padding-left:6px} .tl-out .lc{color:var(--text-ghost)}
+.tl-out.tl-ok{color:var(--ok)} .tl-out.tl-warn{color:var(--warn)}
+.tl-ok{color:var(--ok)} .tl-sys{color:var(--text-faint)}
+.term-suggest{display:flex;gap:7px;flex-wrap:wrap;padding:9px 12px 0}
+.term-suggest .s{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;cursor:pointer;transition:all var(--d-std)}
+.term-suggest .s:hover{color:var(--text);border-color:var(--gate)}
+.term-in{display:flex;align-items:center;gap:9px;margin:10px 12px 12px;padding:11px 13px;border:1px solid var(--border-strong);border-radius:var(--r-md);background:var(--surface-2)}
+.term-in .pr{color:var(--gate);font-family:var(--font-mono);font-size:14px}
+.term-in input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-family:var(--font-mono);font-size:12.5px}
+.term-in .hint{font-family:var(--font-mono);font-size:9.5px;color:var(--text-faint);white-space:nowrap}
+
+/* ---- RAIL / LAW BAR ---- */
+.rail{grid-area:rail;display:flex;align-items:center;gap:var(--s4);padding:0 var(--s5);
+  background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--border);z-index:15;overflow-x:auto}
+.rail .law{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:11px;color:var(--text);border:1px solid color-mix(in srgb,var(--danger) 40%,var(--border));border-radius:var(--r-pill);padding:6px 13px;white-space:nowrap}
+.rail .law .lk{color:var(--danger)}
+.rail .gates{display:flex;gap:6px}
+.rail .g{font-family:var(--font-mono);font-size:10px;color:var(--gate);border:1px solid color-mix(in srgb,var(--gate) 40%,var(--border));border-radius:var(--r-pill);padding:5px 10px;white-space:nowrap}
+.rail .railset{margin-left:auto;display:flex;gap:var(--s3)}
+.rail .rl{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);white-space:nowrap}
+.rail .rl i{width:8px;height:8px;border-radius:2px}
+.rail .rl.vrt i{background:var(--vrt)}.rail .rl.okx i{background:var(--okx)}
+
+/* ---- MODAL ---- */
+.sheet{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(5px)}
+.sheet.open{display:flex}
+.sheet-card{width:min(520px,94vw);max-height:88vh;overflow:auto;background:var(--surface-1);border:1px solid var(--border-strong);border-radius:var(--r-lg);padding:var(--s6);box-shadow:var(--shadow-lg)}
+.sheet-card h3{font-size:18px;margin-bottom:6px}
+.sheet-card .sub{font-size:12.5px;color:var(--text-muted);margin-bottom:var(--s5)}
+.wallet-opt{display:flex;align-items:center;gap:13px;padding:13px 15px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface-2);cursor:pointer;margin-bottom:10px;transition:border-color var(--d-std),transform var(--d-std)}
+.wallet-opt:hover{border-color:var(--teal);transform:translateX(3px)}
+.wallet-opt .wi{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--surface-1);border:1px solid var(--border);font-size:16px}
+.wallet-opt b{font-size:13px}.wallet-opt span{font-size:11px;color:var(--text-muted);font-family:var(--font-mono)}
+.ss-steps{display:grid;gap:0;margin:var(--s4) 0}
+.ss-step{display:grid;grid-template-columns:22px 1fr;gap:11px;align-items:center;padding:10px 0;border-top:1px solid var(--border);opacity:.4;transition:opacity var(--d-std)}
+.ss-step.active{opacity:1}
+.ss-step .sd{width:16px;height:16px;border-radius:50%;border:2px solid var(--border-strong)}
+.ss-step.active .sd{background:var(--warn);border-color:var(--warn)}
+.ss-step.done .sd{background:var(--ok);border-color:var(--ok)}
+.ss-step .st{font-size:12.5px;color:var(--text)}.ss-step .sc{font-family:var(--font-mono);font-size:10px;color:var(--text-faint)}
+
+/* scrollbars */
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:9px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:var(--overlay)}
+
+/* responsive */
+.mobile-toggle{display:none}
+@media(max-width:1180px){
+  :root{--dock:0}
+  .app{grid-template-columns:var(--side) 1fr 0}
+  .dock{position:fixed;top:var(--topbar);right:0;bottom:var(--rail);width:min(372px,92vw);z-index:60;box-shadow:var(--shadow-lg);display:none}
+  .app:not(.dock-collapsed) .dock{display:flex}
+  .app.dock-collapsed .dock{display:none}
+}
+@media(max-width:860px){
+  :root{--side:0}
+  .app{grid-template-columns:0 1fr 0;grid-template-rows:var(--topbar) 1fr auto}
+  .side{position:fixed;top:var(--topbar);left:0;bottom:0;width:min(260px,86vw);z-index:60;box-shadow:var(--shadow-lg);transform:translateX(-100%);transition:transform var(--d-std)}
+  .side.open{transform:none}
+  .mobile-toggle{display:grid}
+  .pills{display:none}.main{padding:var(--s4)}
+  .grid2,.grid3,.kpis{grid-template-columns:1fr}
+  .rail{flex-wrap:nowrap}
+}
+@media(prefers-reduced-motion:reduce){.bgfx,.bgfx::after{animation:none}}
+</style>
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"></div>
+
+<div class="app dock-collapsed" id="app">
+  <!-- ================= TOPBAR ================= -->
+  <header class="topbar">
+    <button class="icbtn mobile-toggle" id="sideToggle" aria-label="Sections">☰</button>
+    <a class="brand" href="./index.html" title="ATLAS Corporation">
+      <span class="mk">◇</span><b>ACP&nbsp;TRACER</b><span>/ atlas</span>
+    </a>
+    <div class="pills">
+      <span class="pill" id="pillWallet"><span class="d"></span>Wallet</span>
+      <span class="pill" id="pillHost"><span class="d"></span>Host</span>
+      <span class="pill" id="pillRail"><span class="d"></span>Rail</span>
+    </div>
+    <div class="topbar-r">
+      <button class="btn pri" id="connectBtn">Connect wallet</button>
+      <button class="btn ghost sm" id="dockBtn" title="Harness copilot">◑ Harness</button>
+      <button class="icbtn" id="compactBtn" title="Collapse / expand cards">⇕</button>
+      <button class="icbtn" id="themeBtn" title="Theme" aria-label="Theme">◐</button>
+    </div>
+  </header>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="side" id="side">
+    <div class="grp"><span class="label">Console</span></div>
+    <nav class="nav" id="nav">
+      <a data-view="terminal" class="primary on"><span class="n">›_</span><span class="t">Terminal</span><span class="sub">OKX AI</span></a>
+      <a data-view="connect"><span class="n">01</span><span class="t">Connect</span><span class="sub">A</span></a>
+      <a data-view="create"><span class="n">02</span><span class="t">Create · Soul</span></a>
+      <a data-view="automations"><span class="n">03</span><span class="t">Automations</span></a>
+      <a data-view="publish"><span class="n">04</span><span class="t">Publish</span></a>
+      <a data-view="tracker"><span class="n">05</span><span class="t">Live tracker</span></a>
+      <a data-view="harness"><span class="n">06</span><span class="t">Harness · Gates</span></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="runner">
+      <div class="rh"><b>Runner</b><span class="state-dot stopped" id="runnerState"><i></i>STOPPED</span></div>
+      <div class="lifeline" id="lifeline">
+        <div class="seg" title="Configured"></div><div class="seg" title="Preflight"></div>
+        <div class="seg" title="Warmup"></div><div class="seg" title="Running"></div>
+        <div class="seg" title="Stopping"></div><div class="seg" title="Stopped"></div>
+      </div>
+      <div class="rl"><span>agent</span><span id="runnerAgent">— none —</span></div>
+      <div class="rl"><span>watchdog</span><span id="runnerWd">armed on Play</span></div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main" id="main">
+
+    <!-- 00 TERMINAL -->
+    <section class="view on" id="v-terminal">
+      <div class="term">
+        <div class="term-head">
+          <div class="dotrow"><i></i><i></i><i></i></div>
+          <span class="tchip"><span class="d"></span>model:&nbsp;<b id="tModel">— set key —</b></span>
+          <span class="tchip" id="tWallet"><span class="d"></span>wallet:&nbsp;<b>not connected</b></span>
+          <span class="tchip on"><span class="d"></span>target:&nbsp;<b>OKX AI · X Layer</b></span>
+          <span class="grow"></span>
+          <span class="tchip">acp-tracer · v0.1</span>
+        </div>
+        <div class="term-body" id="termBody"></div>
+        <div class="term-suggest" id="termSuggest"></div>
+        <div class="term-in"><span class="pr">›</span><input id="termInput" placeholder="Ask your model to link your AI to OKX, publish a service, anything…" autocomplete="off" spellcheck="false"><span class="hint">↵ run</span></div>
+      </div>
+    </section>
+
+    <!-- 01 CONNECT -->
+    <section class="view" id="v-connect">
+      <div class="view-head"><span class="label">01 · Connect</span><h2>Connect your wallet, your key, your host</h2>
+        <p>Non-custodial by design. Your seed and your LLM key never touch our servers — the wallet stays in your browser, the key stays local. Pick where the agent runs: your own machine, or a droplet the Harness sets up for you.</p></div>
+      <div class="grid2">
+        <div class="card"><h3><span class="ico">◈</span>Owner wallet</h3>
+          <p class="desc">Sign in with your wallet (WalletConnect / Base smart-wallet / a 6551 token-bound account). SIWE proves ownership — no key leaves the browser.</p>
+          <button class="btn pri" onclick="openWallet()" style="width:100%">Connect wallet</button>
+          <div id="walletInfo" style="display:none;margin-top:12px" class="note"><b>Connected:</b> <span class="mono" id="walletAddr"></span> · SIWE verified (ERC-6492/1271 aware).</div>
+        </div>
+        <div class="card"><h3><span class="ico">⚿</span>Your LLM key <span class="gate-tag">byo · live</span></h3>
+          <p class="desc">Bring your own model key — stored client-side only, never sent to us. Anthropic works directly from the browser; OpenAI often needs a local model or proxy (CORS).</p>
+          <div class="field"><label>Provider</label>
+            <select id="llmProvider" onchange="onLlmProvider()"><option>Anthropic (Claude)</option><option>OpenAI</option><option>Local / OpenAI-compatible</option></select></div>
+          <div class="field"><label>API key (stays in this browser)</label><input class="input" id="llmKey" type="password" placeholder="sk-ant-… / sk-… — kept in local storage only"></div>
+          <div class="grid2" style="gap:10px">
+            <div class="field"><label>Model</label><input class="input" id="llmModel" placeholder="claude-sonnet-5"></div>
+            <div class="field" id="llmBaseWrap" style="display:none"><label>Base URL</label><input class="input" id="llmBase" placeholder="http://localhost:11434/v1"></div>
+          </div>
+          <div style="display:flex;gap:9px;align-items:center"><button class="btn pri sm" onclick="saveLlm()">Save &amp; test</button><span id="llmStatus" class="mono" style="font-size:11px;color:var(--text-faint)"></span></div>
+        </div>
+        <div class="card"><h3><span class="ico">▤</span>Where it runs</h3>
+          <p class="desc">Your own machine for full control, or a droplet to stay online 24/7 hunting jobs. The Harness writes the exact setup either way.</p>
+          <div class="seg" id="hostSeg" style="margin-bottom:12px">
+            <button data-host="local" class="on">This machine</button><button data-host="droplet">Droplet · online</button>
+          </div>
+          <div id="hostLocal"><ul class="tick"><li>Agent runs as a supervised service (launchd/systemd), <b>not</b> a fragile terminal tab.</li><li>Close safely anytime — the Harness quiesces, drains, and writes <b>update.md</b> so nothing breaks.</li></ul></div>
+          <div id="hostDroplet" style="display:none"><ul class="tick"><li>Step-by-step to a DigitalOcean droplet (or any server) — the Harness does the hardening.</li><li>Coordinator stays online in <b>bootstrapper</b> mode, hunting ACP jobs while you sleep.</li></ul>
+            <button class="btn ghost sm" style="margin-top:10px" onclick="harnessSay('droplet-guide')">Harness: guide me →</button></div>
+        </div>
+        <div class="card gatecard"><h3><span class="ico" style="color:var(--gate)">⛨</span>Isolation &amp; key-seal <span class="gate-tag">Gate A</span></h3>
+          <p class="desc">Before anything runs, Gate A checks the agent is isolated (own user/folder/secrets) and no key can leak. This gate never collapses.</p>
+          <div class="steps" id="gateA">
+            <div class="step"><span class="sd">✓</span><span class="stitle">Per-agent isolation (user · dir · secrets 0600)</span><span class="stime">pending</span></div>
+            <div class="step"><span class="sd">✓</span><span class="stitle">Secret scan (Gitleaks · TruffleHog)</span><span class="stime">pending</span></div>
+            <div class="step"><span class="sd">✓</span><span class="stitle">No-LLM-in-signing boundary verified</span><span class="stime">pending</span></div>
+          </div>
+          <button class="btn ghost sm" style="margin-top:12px;width:100%" onclick="runGateA()">Run Gate A check</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3><span class="ico">◎</span>Balances across chains</h3>
+        <p class="desc">Live native balances on connect — X Layer · Base · Ethereum · BNB · Polygon · Optimism · Arbitrum · Solana — read directly from public RPCs in your browser. (Token &amp; NFT indexing lands with the wiring pass.)</p>
+        <div class="balgrid" id="balGrid"><div style="font-family:var(--font-mono);font-size:11px;color:var(--text-faint)">connect a wallet to see balances →</div></div>
+        <div class="nftrow" id="nftRow"></div>
+        <div class="field" style="margin-top:14px;margin-bottom:0"><label>Alchemy API key — optional, free (enables NFT thumbnails on ETH · Base · Polygon · Arbitrum)</label><input class="input" id="alchemyKey" placeholder="your Alchemy key — stays in this browser" onchange="saveAlchemy()"></div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3><span class="ico" style="color:var(--info)">⛓</span>Identity bridge <span class="gate-tag" style="color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--border))">two chains · verified</span></h3>
+        <p class="desc">Holding the iNFT is <b style="color:var(--text)">not</b> the same as being on OKX. The NFT (Base) <b style="color:var(--text)">owns</b> your agent and carries its soul; OKX runs a <b style="color:var(--text)">separate</b> identity on X Layer. This is the real chain of control:</p>
+        <div class="bridge">
+          <div class="bnode"><b>iNFT · ATLAS #1</b><span>Base · owns + soul</span></div>
+          <div class="barr"><b>→</b>owns</div>
+          <div class="bnode"><b>Owner wallet / 6551</b><span>you hold it</span></div>
+          <div class="barr warn"><b>→</b>owner-<br>asserted</div>
+          <div class="bnode"><b>OKX Agentic Wallet</b><span>TEE signer · 0xaefc</span></div>
+          <div class="barr"><b>→</b>controls</div>
+          <div class="bnode strong"><b>OKX agent #4460</b><span>ERC-8004 · X Layer</span></div>
+        </div>
+        <div class="note" style="margin-top:14px">The soul flows iNFT → <b>your runtime brain</b> → behaviour — <b>OKX never reads it</b>. Reputation is per-chain. So onboarding is a <b>checklist, not a token</b>: wallet → <span class="mono">agent create</span> → consent → activate → list services. Holding the NFT completes none of those — the Terminal walks you through them.</div>
+      </div>
+    </section>
+
+    <!-- 02 CREATE -->
+    <section class="view" id="v-create">
+      <div class="view-head"><span class="label">02 · Create &amp; configure</span><h2>Give it a soul, then create the agent</h2>
+        <p>Pick one of three ready souls (or write your own) — the four laws are locked in every one. Then the console wraps the real CLI: create the ACP agent, add its signer, top it up.</p></div>
+      <span class="label" style="display:block;margin-bottom:10px">Soul · 3 presets + custom · <span style="color:var(--gate)">4 laws locked</span></span>
+      <div class="grid3" id="souls" style="margin-bottom:var(--s5)">
+        <div class="card soul-card on" data-soul="atlas"><span class="st">preset · titan</span><h3>ATLAS</h3><p>Dual-rail orchestrator. Research, routing, security, contracts — with a two-evaluator gate.</p>
+          <div class="laws"><span class="law">no-LLM-signing</span><span class="law">≥2 eval</span><span class="law">4 gates</span><span class="law">owner-gated</span></div></div>
+        <div class="card soul-card" data-soul="iclone"><span class="st">preset · governor</span><h3>iCLONE</h3><p>Governing agent &amp; public voice. Sandboxed, verified-only, anti-jailbreak.</p>
+          <div class="laws"><span class="law">no-LLM-signing</span><span class="law">≥2 eval</span><span class="law">4 gates</span><span class="law">owner-gated</span></div></div>
+        <div class="card soul-card" data-soul="vegeta"><span class="st">preset · hunter</span><h3>VEGETA</h3><p>Relentless job-hunter. Bootstrapper-first, best-fee execution, high uptime.</p>
+          <div class="laws"><span class="law">no-LLM-signing</span><span class="law">≥2 eval</span><span class="law">4 gates</span><span class="law">owner-gated</span></div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>Custom soul</h3><p class="desc">Paste your own <span class="mono">neural_soul.md</span> or write from scratch — the four laws are injected and locked regardless.</p>
+          <textarea id="customSoul" rows="6" placeholder="# neural_soul.md&#10;Who is your agent? Its character, its faculties, its voice…"></textarea>
+          <button class="btn ghost sm" style="margin-top:10px" onclick="selectSoul('custom')">Use custom soul</button></div>
+        <div class="card"><h3>Create · sign · fund</h3><p class="desc">The console runs the real steps for you and shows every command before it executes.</p>
+          <div class="steps">
+            <div class="step" id="cs1"><span class="sd">1</span><span class="stitle">acp agent create</span><span class="stime">ready</span></div>
+            <div class="step" id="cs2"><span class="sd">2</span><span class="stitle">acp agent add-signer</span><span class="stime">ready</span></div>
+            <div class="step" id="cs3"><span class="sd">3</span><span class="stitle">acp agent topup</span><span class="stime">ready</span></div>
+          </div>
+          <button class="btn play" style="margin-top:14px;width:100%" onclick="createAgent()">Create agent with selected soul</button>
+          <div class="field" style="margin-top:14px"><label>Requirement schema (what buyers must send)</label>
+            <textarea id="reqSchema" rows="3" placeholder="Trades: lowercase 0x addresses (no tickers). Required: token_in, token_out, amount_in (human units), recipient. Slippage default 3%."></textarea></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3><span class="ico" style="color:var(--info)">⇜</span>Load / connect an agent <span class="gate-tag" style="color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--border))">what to provide</span></h3>
+        <p class="desc">You don't upload a repo or a binary. An agent is an <b style="color:var(--text)">on-chain identity + a soul</b> running on a runtime the harness installs. Provide these five, choose a host, and the harness does the rest:</p>
+        <div class="grid2" style="gap:10px">
+          <div class="field"><label>1 · Rail</label><select id="loadRail"><option>OKX AI · X Layer</option><option>Virtuals ACP · Base</option><option>Both · dual-rail</option></select></div>
+          <div class="field"><label>2 · Identity</label><select id="loadIdentity"><option>Connect existing (agent id)</option><option>Create new</option></select></div>
+        </div>
+        <div class="field"><label>Agent id (existing) — wallet is resolved on login</label><input class="input" id="loadAgentId" placeholder="e.g. 4460"></div>
+        <ul class="tick" style="margin:6px 0 14px">
+          <li><b>3 · Brain</b> — your LLM key (set in <span class="mono">Connect</span>).</li>
+          <li><b>4 · Soul</b> — a preset or your <span class="mono">neural_soul.md</span> (above). OKX never reads it; it becomes the brain's system prompt.</li>
+          <li><b>5 · Skills</b> — installed by the harness per rail (onchainos / acp packs). No repo, no binary from you.</li>
+        </ul>
+        <span class="label" style="display:block;margin-bottom:8px">Host — where it runs</span>
+        <div class="seg" id="loadHostSeg" style="margin-bottom:12px">
+          <button data-lh="local" class="on">My machine</button><button data-lh="provision">Droplet · provision</button><button data-lh="connect">Droplet · connect</button>
+        </div>
+        <div id="loadHostBody" class="note"></div>
+        <div id="loadConnectFields" style="display:none;margin-top:12px"><div class="grid2" style="gap:10px"><div class="field"><label>SSH host</label><input class="input" id="loadSshHost" placeholder="user@host  ·  or an ssh alias"></div><div class="field"><label>Agent id on that host</label><input class="input" id="loadSshAgent" placeholder="4460"></div></div></div>
+        <button class="btn play" style="margin-top:14px;width:100%" onclick="loadAgent()">Load agent into the harness</button>
+      </div>
+    </section>
+
+    <!-- 03 AUTOMATIONS -->
+    <section class="view" id="v-automations">
+      <div class="view-head"><span class="label">03 · Automations · owner-gated</span><h2>Build the automation, press Play</h2>
+        <p>Nothing recurring self-starts. You pick the service, the interval and the caps; Play is your on-chain-grade authorization. The loop is: gather → decide → emit intent → record → notify.</p></div>
+      <div class="grid2">
+        <div class="card"><h3>Service &amp; intake</h3>
+          <div class="field"><label>What should the agent do?</label>
+            <select id="autoService"><option>Bootstrapper — hunt any ACP job it can fulfil</option><option>Best-Fee Swap Routing</option><option>Best-Fee Bridge Routing</option><option>Token Security / Research</option><option>Best-Route Swap Quote (A2MCP)</option></select></div>
+          <div class="field"><label>Intake rail</label>
+            <div class="seg" id="railSeg"><button data-rail="virtuals" class="on">Virtuals ACP</button><button data-rail="okx">OKX X Layer</button><button data-rail="both">Both</button></div></div>
+          <div class="field"><label>Acceptance criteria</label><input class="input" id="autoCriteria" placeholder="min bounty, allowed job types, blocked counterparties…"></div>
+        </div>
+        <div class="card"><h3>Parameters</h3>
+          <div class="field"><label>Interval between services <span style="color:var(--warn)">· floor 5 min</span></label>
+            <div class="range"><input type="range" id="intervalR" min="5" max="120" value="15" step="5" oninput="document.getElementById('intervalV').textContent=this.value+' min'"><span class="val" id="intervalV">15 min</span></div></div>
+          <div class="field"><label>Agents running in parallel</label>
+            <div class="range"><input type="range" id="agentsR" min="1" max="10" value="1" oninput="document.getElementById('agentsV').textContent=this.value"><span class="val" id="agentsV">1</span></div></div>
+          <div class="field"><label>Spend cap per day (USD)</label><input class="input" id="autoCap" value="25" type="number"></div>
+          <div class="field"><label>Published service price (USD)</label><input class="input" id="autoPrice" value="0.05" type="number" step="0.01"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3>Run loop · owner-gated</h3>
+        <p class="desc">Play authorizes the schedule. The Harness supervises the <b>first four</b> business interactions (HITL), then arms the Watchdog and steps back.</p>
+        <div class="chips" style="margin-bottom:14px"><span class="chip">gather</span><span class="chip">decide</span><span class="chip">emit intent</span><span class="chip">record</span><span class="chip">notify</span></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn play" id="playBtn" onclick="pressPlay()">▶ Play — authorize &amp; run</button>
+          <button class="btn danger" id="stopBtn" onclick="openSafeStop()" disabled>■ Safe-stop</button>
+          <button class="btn ghost" onclick="harnessSay('automation-help')">Harness: set this up for me</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 PUBLISH -->
+    <section class="view" id="v-publish">
+      <div class="view-head"><span class="label">04 · Publish · offerings + resources → ACP</span><h2>Publish work so others hire you</h2>
+        <p>Build an offering (priceV2, slaMinutes ≥ 5) and resources, then publish straight to the protocol — or export the JSON to import in the Virtuals console. The Harness fills gaps and can train your agent to actually fulfil it.</p></div>
+      <div class="grid2">
+        <div class="card"><h3>Offering builder</h3>
+          <div class="field"><label>Offering name (5–30 chars)</label><input class="input" id="offName" value="Best-Route Swap Quote"></div>
+          <div class="field"><label>Description — what it does &amp; what to provide</label><textarea id="offDesc" rows="3">Best same-chain swap quote across DEX sources: route, expected output, price impact, gas. Provide: token_in, token_out, chain, amount (human units).</textarea></div>
+          <div class="grid2" style="gap:10px">
+            <div class="field"><label>Price (USD)</label><input class="input" id="offPrice" value="0.05" oninput="renderOfferJson()"></div>
+            <div class="field"><label>slaMinutes <span style="color:var(--warn)">· min 5</span></label><input class="input" id="offSla" value="5" type="number" min="5" oninput="renderOfferJson()"></div>
+          </div>
+        </div>
+        <div class="card"><h3>priceV2 JSON <span class="gate-tag" style="color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--border))">verified schema</span></h3>
+          <p class="desc">This is the nested schema the Virtuals console import expects — not the flat CLI flags. Copy it, or publish directly.</p>
+          <div class="jsonbox" id="offerJson"></div>
+          <div style="display:flex;gap:9px;margin-top:12px"><button class="btn pri sm" onclick="publishOffering()">Publish to ACP</button><button class="btn ghost sm" onclick="copyJson()">Copy JSON</button></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3>Limits · live guardrails</h3>
+        <p class="desc">The console keeps you safely under the protocol ceilings (re-checked weekly in the background).</p>
+        <div class="grid3">
+          <div><div class="rl mono" style="font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between"><span>Offerings</span><span><b style="color:var(--text)">3</b> / 40</span></div><div class="meter"><i style="width:7.5%"></i></div></div>
+          <div><div class="rl mono" style="font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between"><span>Resources</span><span><b style="color:var(--text)">2</b> / 10</span></div><div class="meter"><i style="width:20%"></i></div></div>
+          <div><div class="rl mono" style="font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between"><span>Agents / wallet</span><span><b style="color:var(--text)">2</b> / 50 <span style="color:var(--warn)">?</span></span></div><div class="meter"><i style="width:4%"></i></div></div>
+        </div>
+        <div class="note" style="margin-top:14px">Offerings cap <b>40</b> (verified) · resources cap <b>10</b> (whitepaper) · agents/wallet <b>50</b> is unconfirmed — treated as a soft guardrail and re-verified weekly.</div>
+      </div>
+    </section>
+
+    <!-- 05 TRACKER -->
+    <section class="view" id="v-tracker">
+      <div class="view-head"><span class="label">05 · Live tracker</span><h2>Every agent, every step, every balance</h2>
+        <p>The whole fleet at a glance — who's online, which job step they're on, and how much each agent holds. Colour = job state; edges = where the money flows.</p></div>
+      <div class="kpis">
+        <div class="kpi"><b id="kAgents">2</b><span>agents online</span></div>
+        <div class="kpi"><b id="kJobs">3</b><span>active jobs</span></div>
+        <div class="kpi"><b class="mono">$41.20</b><span>fleet balance</span></div>
+        <div class="kpi"><b class="mono" style="color:var(--ok)">$6.85</b><span>earned · 24h</span></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>Fleet topology</h3><p class="desc">Nodes = agents · rings = rails · edges = payment direction.</p>
+          <svg class="topo" viewBox="0 0 460 300" xmlns="http://www.w3.org/2000/svg" id="topoSvg" aria-label="fleet topology"></svg>
+        </div>
+        <div class="card"><h3>Steps · ACP state machine</h3><p class="desc">The live job on <b>ATLAS</b> · #4460.</p>
+          <div class="steps">
+            <div class="step done"><span class="sd">✓</span><span class="stitle">job_created</span><span class="stime">14:02:11</span></div>
+            <div class="step done"><span class="sd">✓</span><span class="stitle">contact-user · negotiating</span><span class="stime">14:02:40</span></div>
+            <div class="step done"><span class="sd">✓</span><span class="stitle">job_accepted · escrow funded</span><span class="stime">14:05:03</span></div>
+            <div class="step cur"><span class="sd">●</span><span class="stitle">working · committee ≥2 review</span><span class="stime">now</span></div>
+            <div class="step"><span class="sd">4</span><span class="stitle">deliver → submitted</span><span class="stime">—</span></div>
+            <div class="step"><span class="sd">5</span><span class="stitle">completed → paid</span><span class="stime">—</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3>Per-agent · services &amp; balance</h3>
+        <table class="tbl"><thead><tr><th>Agent</th><th>Rail</th><th>Status</th><th>Current step</th><th>Balance</th><th>24h</th></tr></thead>
+          <tbody>
+            <tr><td><b>ATLAS</b> · #4460</td><td>OKX X Layer</td><td><span class="badge run">working</span></td><td>committee review</td><td class="mono">$28.40</td><td class="mono" style="color:var(--ok)">+$4.10</td></tr>
+            <tr><td><b>VEGETA</b> · #58099</td><td>Virtuals ACP</td><td><span class="badge run">bootstrapper</span></td><td>hunting jobs</td><td class="mono">$12.80</td><td class="mono" style="color:var(--ok)">+$2.75</td></tr>
+            <tr><td><b>iCLONE</b> · #55101</td><td>Virtuals ACP</td><td><span class="badge idle">idle</span></td><td>—</td><td class="mono">$0.00</td><td class="mono">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 HARNESS / GATES -->
+    <section class="view" id="v-harness">
+      <div class="view-head"><span class="label">06 · Harness · watchdog · the four gates</span><h2>The harness with eyes and hands</h2>
+        <p>ATLAS's harness core — inherited, not forked. It proposes; it never signs. Four gates sit between intent and money, and none of them can collapse.</p></div>
+      <div class="card" style="margin-bottom:var(--s4)"><h3><span class="ico">⬡</span>Harnesses <span class="gate-tag" style="color:var(--info);border-color:color-mix(in srgb,var(--info) 40%,var(--border))">named · switchable</span></h3>
+        <p class="desc">Each harness is a <b style="color:var(--text)">named team of agents</b> with its own soul, crew and gates. Operate as one, or add your own — the Terminal runs as the active harness.</p>
+        <div class="chips" id="harnessChips" style="margin-bottom:var(--s5)">
+          <span class="chip on" data-h="ATLAS Harness">◇ ATLAS Harness</span>
+          <span class="chip" id="addHarnessChip">+ Add harness</span>
+        </div>
+        <span class="label" style="display:block;margin-bottom:2px">ATLAS crew · 9 roles</span>
+        <p class="desc" style="margin:4px 0 0">The brain <b style="color:var(--text)">proposes</b>, the gates <b style="color:var(--text)">dispose</b>, the signer <b style="color:var(--text)">signs</b> — no LLM in the signing path.</p>
+        <div class="crewgrid" id="crewGrid"></div>
+      </div>
+      <div class="grid2" style="margin-bottom:var(--s4)">
+        <div class="card gatecard"><h3><span class="ico" style="color:var(--gate)">⚖</span>Committee-Evaluator <span class="gate-tag">Gate · ≥2</span></h3><p class="desc">No deliverable ships until at least two independent evaluators agree under quorum. Quality is enforced, not hoped for.</p></div>
+        <div class="card gatecard"><h3><span class="ico" style="color:var(--gate)">⛔</span>Safety veto <span class="gate-tag">Gate · every byte</span></h3><p class="desc">Screens every outbound byte. One veto stops the send. Never collapses.</p></div>
+        <div class="card gatecard"><h3><span class="ico" style="color:var(--gate)">▤</span>Policy Gate <span class="gate-tag">Gate · caps · allowlist</span></h3><p class="desc">Deterministic code: spend caps, address allowlist, per-wallet fenced lease. No prompt can override it.</p></div>
+        <div class="card gatecard"><h3><span class="ico" style="color:var(--gate)">✋</span>Owner HITL <span class="gate-tag">Gate · above threshold</span></h3><p class="desc">Anything above your threshold waits for you. The Harness supervises the first four interactions live.</p></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>Watchdog</h3><p class="desc">Armed on Play. Anti-dormancy heartbeat, stuck-job reaper, low-balance stop, unlogged-outflow freeze.</p>
+          <div class="watchrow"><span class="wd"></span><span class="wt"><b>Heartbeat</b> · triad anti-dormancy</span><span class="ws">idle</span></div>
+          <div class="watchrow"><span class="wd"></span><span class="wt"><b>Stuck-job reaper</b> · step &gt; SLA</span><span class="ws">idle</span></div>
+          <div class="watchrow"><span class="wd"></span><span class="wt"><b>Low-balance stop</b></span><span class="ws">idle</span></div>
+          <div class="watchrow"><span class="wd"></span><span class="wt"><b>Unlogged-outflow freeze</b></span><span class="ws">idle</span></div>
+        </div>
+        <div class="card"><h3>Safe-stop &amp; update.md</h3><p class="desc">Stop without leaving broken state or junk cache. The Harness quiesces, drains, persists, releases the lease, and appends to <span class="mono">update.md</span>.</p>
+          <div class="chips" style="margin:6px 0 14px"><span class="chip">quiesce</span><span class="chip">drain</span><span class="chip">persist</span><span class="chip">release lease</span><span class="chip">purge cache</span><span class="chip">report</span></div>
+          <button class="btn danger" onclick="openSafeStop()" style="width:100%">■ Safe-stop the runner</button>
+          <div class="note" style="margin-top:12px"><b>update.md</b> is append-only — every session's changes are logged so the agent never wakes up confused by stale cache or broken data.</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:var(--s4)"><h3>ATLAS harness core</h3>
+        <p class="desc">Inherited brain · deterministic signer · durable event log. The red line is the law.</p>
+        <svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+          <style>.hx text{font-family:var(--font-mono)}.hx .t{fill:var(--text)}.hx .m{fill:var(--text-muted)}.hx .bx{fill:var(--surface-2);stroke:var(--border-strong);stroke-width:1.2}.hx .bg{fill:var(--surface-2);stroke:var(--gate);stroke-width:1.4}</style>
+          <g class="hx">
+            <rect class="bx" x="16" y="20" width="200" height="46" rx="10"/><text x="116" y="41" text-anchor="middle" class="t" font-size="12" font-weight="700">Brain / Orchestrator</text><text x="116" y="57" text-anchor="middle" class="m" font-size="9.5">proposes intents only</text>
+            <rect class="bx" x="280" y="20" width="200" height="46" rx="10"/><text x="380" y="41" text-anchor="middle" class="t" font-size="12" font-weight="700">Engine registry</text><text x="380" y="57" text-anchor="middle" class="m" font-size="9.5">Researcher … Trader</text>
+            <rect class="bx" x="544" y="20" width="200" height="46" rx="10"/><text x="644" y="41" text-anchor="middle" class="t" font-size="12" font-weight="700">Durable event log</text><text x="644" y="57" text-anchor="middle" class="m" font-size="9.5">Postgres · replayable</text>
+            <line x1="20" y1="92" x2="740" y2="92" stroke="var(--danger)" stroke-width="1.1" stroke-dasharray="5 4"/>
+            <text x="380" y="87" text-anchor="middle" fill="var(--danger)" font-size="10" font-family="var(--font-mono)">no LLM in the signing path</text>
+            <rect class="bg" x="16" y="102" width="330" height="40" rx="10"/><text x="181" y="126" text-anchor="middle" class="t" font-size="12" font-weight="700">Deterministic signer · capped session key</text>
+            <rect class="bg" x="414" y="102" width="330" height="40" rx="10"/><text x="579" y="126" text-anchor="middle" class="t" font-size="12" font-weight="700">Policy Gate · caps · allowlist · lease</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= HARNESS DOCK ================= -->
+  <aside class="dock" id="dock">
+    <div class="dock-head"><span class="av">◇</span><div><b>Harness</b><div class="sub">your build copilot</div></div><span class="live"><i></i>online</span></div>
+    <div class="log" id="log"></div>
+    <div class="dock-in"><input id="dockInput" placeholder="Ask the Harness to do anything…" onkeydown="if(event.key==='Enter')userAsk()"><button class="btn pri sm" onclick="userAsk()">↑</button></div>
+  </aside>
+
+  <!-- ================= RAIL / LAW BAR ================= -->
+  <footer class="rail">
+    <span class="law"><span class="lk">🔒</span> no LLM in the signing path</span>
+    <div class="gates"><span class="g">Committee ≥2</span><span class="g">Safety veto</span><span class="g">Policy gate</span><span class="g">Owner HITL</span></div>
+    <div class="railset">
+      <span class="rl vrt"><i></i>Virtuals ACP · Base · USDC</span>
+      <span class="rl okx"><i></i>OKX x402 · X Layer · USD₮0</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ================= WALLET MODAL ================= -->
+<div class="sheet" id="walletSheet"><div class="sheet-card">
+  <h3>Connect wallet</h3><p class="sub">Non-custodial. Your key never leaves your device — we verify ownership with a signature (SIWE).</p>
+  <div class="wallet-opt" onclick="connectWallet('Browser')"><span class="wi">🦊</span><div><b>Browser wallet</b><br><span>MetaMask · Rabby · Base — EVM (X Layer, Base, ETH, BNB, Polygon…)</span></div></div>
+  <div class="wallet-opt" onclick="connectWallet('Solana')"><span class="wi">◎</span><div><b>Phantom</b><br><span>Solana</span></div></div>
+  <button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="closeSheet('walletSheet')">Cancel</button>
+</div></div>
+
+<!-- ================= SAFE-STOP MODAL ================= -->
+<div class="sheet" id="ssSheet"><div class="sheet-card">
+  <h3>Safe-stop the runner</h3><p class="sub">No broken state, no junk cache. The Harness walks the shutdown sequence and writes the report.</p>
+  <div class="ss-steps" id="ssSteps">
+    <div class="ss-step" data-i="0"><span class="sd"></span><div><div class="st">Quiesce — stop accepting new jobs</div><div class="sc">intake off</div></div></div>
+    <div class="ss-step" data-i="1"><span class="sd"></span><div><div class="st">Drain — finish the job in flight</div><div class="sc">no half-done work</div></div></div>
+    <div class="ss-step" data-i="2"><span class="sd"></span><div><div class="st">Persist — flush event log</div><div class="sc">durable</div></div></div>
+    <div class="ss-step" data-i="3"><span class="sd"></span><div><div class="st">SIGTERM → release lease</div><div class="sc">no double-sign</div></div></div>
+    <div class="ss-step" data-i="4"><span class="sd"></span><div><div class="st">Purge transient cache only</div><div class="sc">keep durable state</div></div></div>
+    <div class="ss-step" data-i="5"><span class="sd"></span><div><div class="st">Append report → update.md</div><div class="sc">agent stays coherent</div></div></div>
+  </div>
+  <div style="display:flex;gap:9px"><button class="btn danger" id="ssGo" onclick="runSafeStop()" style="flex:1">Run safe-stop</button><button class="btn ghost" onclick="closeSheet('ssSheet')">Cancel</button></div>
+</div></div>
+
+<script>
+(function(){
+  var root=document.documentElement, app=document.getElementById('app');
+  var state={ wallet:null, host:'local', rail:'virtuals', soul:'atlas', running:false };
+
+  /* ---------- theme ---------- */
+  function setTheme(t){ root.setAttribute('data-theme',t); try{localStorage.setItem('cf-theme',t);}catch(e){} }
+  try{ var st=localStorage.getItem('cf-theme'); if(st) setTheme(st); }catch(e){}
+  document.getElementById('themeBtn').onclick=function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); };
+
+  /* ---------- nav ---------- */
+  var views={};
+  document.querySelectorAll('.view').forEach(function(v){ views[v.id.slice(2)]=v; });
+  function go(name){
+    document.querySelectorAll('#nav a').forEach(function(a){ a.classList.toggle('on',a.dataset.view===name); });
+    Object.keys(views).forEach(function(k){ views[k].classList.toggle('on',k===name); });
+    document.getElementById('side').classList.remove('open');
+    document.getElementById('main').scrollTop=0;
+    harnessContext(name);
+  }
+  document.querySelectorAll('#nav a').forEach(function(a){ a.onclick=function(){ go(a.dataset.view); }; });
+  document.getElementById('sideToggle').onclick=function(){ document.getElementById('side').classList.toggle('open'); };
+  document.getElementById('dockBtn').onclick=function(){ app.classList.toggle('dock-collapsed'); };
+
+  /* ---------- pills ---------- */
+  function pill(id,on,txt,warn){ var p=document.getElementById(id); p.className='pill'+(on?' on':'')+(warn?' warn':''); p.innerHTML='<span class="d"></span>'+txt; }
+  pill('pillWallet',false,'Wallet'); pill('pillHost',true,'This machine'); pill('pillRail',true,'Virtuals ACP');
+
+  /* ---------- wallet ---------- */
+  window.openWallet=function(){ document.getElementById('walletSheet').classList.add('open'); };
+  window.closeSheet=function(id){ document.getElementById(id).classList.remove('open'); };
+  /* ---- REAL wallet (EIP-1193 injected) + multi-chain balances ---- */
+  var EVM_CHAINS=[
+    {hex:'0xc4',   name:'X Layer',  sym:'OKB', rpc:'https://rpc.xlayer.tech',              col:'var(--gate)'},
+    {hex:'0x2105', name:'Base',     sym:'ETH', rpc:'https://base-rpc.publicnode.com',      col:'var(--info)'},
+    {hex:'0x1',    name:'Ethereum', sym:'ETH', rpc:'https://ethereum-rpc.publicnode.com',  col:'var(--text-muted)'},
+    {hex:'0x38',   name:'BNB',      sym:'BNB', rpc:'https://bsc-rpc.publicnode.com',        col:'var(--warn)'},
+    {hex:'0x89',   name:'Polygon',  sym:'POL', rpc:'https://polygon-bor-rpc.publicnode.com',col:'var(--gate)'},
+    {hex:'0xa',    name:'Optimism', sym:'ETH', rpc:'https://optimism-rpc.publicnode.com',   col:'var(--danger)'},
+    {hex:'0xa4b1', name:'Arbitrum', sym:'ETH', rpc:'https://arbitrum-one-rpc.publicnode.com',col:'var(--info)'}
+  ];
+  var SOL_RPC='https://solana-rpc.publicnode.com';
+  function shortAddr(a){ return a.slice(0,6)+'…'+a.slice(-4); }
+  function fmtWei(hex){ try{ var n=Number(BigInt(hex))/1e18; if(n===0) return '0'; return n<0.0001?n.toExponential(2):n.toFixed(4); }catch(e){ return '—'; } }
+  function rpc(url,method,params){ return fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:method,params:params})}).then(function(r){return r.json();}).then(function(j){ if(j.error) throw new Error(j.error.message); return j.result; }); }
+  function setWalletUI(a){
+    state.wallet=a;
+    pill('pillWallet',true,shortAddr(a));
+    document.getElementById('connectBtn').textContent=shortAddr(a);
+    var tw=document.getElementById('tWallet'); if(tw){ tw.className='tchip on'; tw.innerHTML='<span class="d"></span>wallet:&nbsp;<b>'+shortAddr(a)+'</b>'; }
+    var wi=document.getElementById('walletInfo'); if(wi){ wi.style.display='block'; document.getElementById('walletAddr').textContent=a; }
+  }
+  window.loadBalances=function(addr){
+    var host=document.getElementById('balGrid'); if(!host) return;
+    host.innerHTML=EVM_CHAINS.map(function(c){ return '<div class="bal"><span class="bn"><i style="background:'+c.col+'"></i>'+c.name+'</span><span class="bv load" id="bal-'+c.hex+'">…</span></div>'; }).join('')+'<div class="bal"><span class="bn"><i style="background:#9945FF"></i>Solana</span><span class="bv load" id="bal-sol">'+(window.solana&&window.solana.publicKey?'…':'connect Phantom')+'</span></div>';
+    EVM_CHAINS.forEach(function(c){ rpc(c.rpc,'eth_getBalance',[addr,'latest']).then(function(b){ var el=document.getElementById('bal-'+c.hex); if(el){ el.textContent=fmtWei(b)+' '+c.sym; el.classList.remove('load'); } }).catch(function(){ var el=document.getElementById('bal-'+c.hex); if(el){ el.textContent='—'; } }); });
+    if(window.solana&&window.solana.publicKey){ rpc(SOL_RPC,'getBalance',[window.solana.publicKey.toString()]).then(function(r){ var el=document.getElementById('bal-sol'); if(el){ el.textContent=(r.value/1e9).toFixed(4)+' SOL'; el.classList.remove('load'); } }).catch(function(){}); }
+  };
+  var ALCHEMY_NETS=[{n:'eth-mainnet',l:'ETH'},{n:'base-mainnet',l:'Base'},{n:'polygon-mainnet',l:'Poly'},{n:'arb-mainnet',l:'Arb'}];
+  window.loadNFTs=function(addr){
+    var row=document.getElementById('nftRow'); if(!row) return; var key=(state.alchemy||'').trim();
+    if(!key){ row.innerHTML='<div style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-faint)">add a free Alchemy key below to show your NFTs (X Layer NFTs need a server proxy)</div>'; return; }
+    row.innerHTML=''; var seen=0;
+    ALCHEMY_NETS.forEach(function(net){ fetch('https://'+net.n+'.g.alchemy.com/nft/v3/'+key+'/getNFTsForOwner?owner='+addr+'&withMetadata=true&pageSize=6').then(function(r){return r.json();}).then(function(j){ (j.ownedNfts||[]).forEach(function(nft){ if(seen>=12) return; var im=nft.image||{}; var img=im.thumbnailUrl||im.cachedUrl||im.originalUrl||''; if(!img) return; seen++; var d=document.createElement('div'); d.className='nft'; d.title=((nft.name||(nft.contract&&nft.contract.name)||'NFT'))+' · '+net.l; d.innerHTML='<img src="'+img+'" alt="" loading="lazy"><span>'+net.l+'</span>'; row.appendChild(d); }); if(seen===0&&net===ALCHEMY_NETS[ALCHEMY_NETS.length-1]&&!row.children.length) row.innerHTML='<div style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-faint)">no NFTs found on ETH · Base · Polygon · Arbitrum</div>'; }).catch(function(){}); });
+  };
+  function connectInjected(){
+    var eth=window.ethereum;
+    if(!eth){ closeSheet('walletSheet'); harness('h','No browser wallet detected. Install <b>MetaMask</b>, <b>Rabby</b> or a Base wallet, then reload and Connect again. (WalletConnect QR needs the WalletConnect library — coming with the backend.)'); return; }
+    eth.request({method:'eth_requestAccounts'}).then(function(accs){
+      var addr=accs[0]; closeSheet('walletSheet'); setWalletUI(addr); window.loadBalances(addr); window.loadNFTs&&window.loadNFTs(addr);
+      harness('h','Wallet connected — <b>'+shortAddr(addr)+'</b>. Reading your native balances across X Layer, Base, Ethereum, BNB, Polygon, Optimism and Arbitrum now (live from public RPCs). Your key never leaves the browser.',null,[{t:'Run Gate A',fn:'runGateA'},{t:'Link to OKX',fn:function(){ go('terminal'); if(window.runFlow) runFlow('link'); }}]);
+      if(eth.on){ eth.on('accountsChanged',function(a){ if(a&&a[0]){ setWalletUI(a[0]); window.loadBalances(a[0]); } else { location.reload(); } }); }
+    }).catch(function(e){ closeSheet('walletSheet'); harness('h','Wallet connection was cancelled or failed'+(e&&e.message?': '+e.message:'')+'.'); });
+  }
+  window.connectWallet=function(kind){ if(kind==='Solana'){ if(window.solana&&window.solana.connect){ window.solana.connect().then(function(){ closeSheet('walletSheet'); if(state.wallet) window.loadBalances(state.wallet); harness('h','Solana wallet connected — '+shortAddr(window.solana.publicKey.toString())+'.'); }).catch(function(){}); } else { closeSheet('walletSheet'); harness('h','No Solana wallet (Phantom) detected.'); } return; } connectInjected(); };
+  document.getElementById('connectBtn').onclick=openWallet;
+
+  /* ---------- host / rail segs ---------- */
+  document.getElementById('hostSeg').querySelectorAll('button').forEach(function(b){ b.onclick=function(){
+    document.getElementById('hostSeg').querySelectorAll('button').forEach(function(x){x.classList.remove('on')}); b.classList.add('on');
+    state.host=b.dataset.host;
+    document.getElementById('hostLocal').style.display=state.host==='local'?'block':'none';
+    document.getElementById('hostDroplet').style.display=state.host==='droplet'?'block':'none';
+    pill('pillHost',true,state.host==='local'?'This machine':'Droplet · online');
+  };});
+  var rs=document.getElementById('railSeg'); if(rs) rs.querySelectorAll('button').forEach(function(b){ b.onclick=function(){
+    rs.querySelectorAll('button').forEach(function(x){x.classList.remove('on')}); b.classList.add('on'); state.rail=b.dataset.rail;
+    var m={virtuals:'Virtuals ACP',okx:'OKX X Layer',both:'Dual-rail'}; pill('pillRail',true,m[state.rail]);
+  };});
+
+  /* ---------- gate A ---------- */
+  window.runGateA=function(){
+    go('connect');
+    var rows=document.querySelectorAll('#gateA .step'); var i=0;
+    harness('h','Running <b>Gate A</b> — isolation &amp; key-seal. This never collapses; if anything leaks, nothing runs.');
+    (function tick(){ if(i>=rows.length){ harness('h','✅ Gate A passed. The agent is isolated, no secret leaked, and the no-LLM-in-signing boundary is intact. You are clear to create an agent.',null,[{t:'Go to Create',fn:function(){go("create")}}]); return; }
+      rows[i].classList.add('done'); rows[i].querySelector('.stime').textContent='ok'; i++; setTimeout(tick,520); })();
+  };
+
+  /* ---------- soul ---------- */
+  window.selectSoul=function(s){ state.soul=s;
+    document.querySelectorAll('.soul-card').forEach(function(c){ c.classList.toggle('on',c.dataset.soul===s); });
+    if(s==='custom') harness('h','Custom soul selected. The <b>four laws</b> — no-LLM-in-signing, ≥2 evaluators, four gates, owner-gated — are injected and locked into your text automatically. Your character stays yours.');
+  };
+  document.querySelectorAll('.soul-card').forEach(function(c){ c.onclick=function(){ selectSoul(c.dataset.soul); }; });
+
+  window.createAgent=function(){
+    if(!state.wallet){ harness('h','Connect your wallet first — I need an owner identity before creating an agent.',null,[{t:'Connect wallet',fn:'openWallet'}]); go('connect'); return; }
+    var steps=['cs1','cs2','cs3'], cmds=['acp agent create --soul '+state.soul+' --owner '+state.wallet,'acp agent add-signer --tee','acp agent topup --amount 5 USDC']; var i=0;
+    harness('h','Creating your <b>'+state.soul.toUpperCase()+'</b> agent. I run the real CLI and show you every command first — nothing hidden.');
+    (function tick(){ if(i>=steps.length){ document.getElementById('runnerAgent').textContent=state.soul.toUpperCase()+' · new'; harness('h','✅ Agent created, signer added (TEE), and funded. Next: build an automation and press Play — I supervise the first four jobs.',null,[{t:'Build automation',fn:function(){go("automations")}}]); return; }
+      var s=document.getElementById(steps[i]); s.classList.add('done'); s.querySelector('.stime').textContent='done';
+      harness('h','Step '+(i+1)+':',cmds[i]); i++; setTimeout(tick,780); })();
+  };
+
+  /* ---------- publish ---------- */
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  window.renderOfferJson=function(){
+    var name=(document.getElementById('offName')||{}).value||'Offering';
+    var price=(document.getElementById('offPrice')||{}).value||'0.05';
+    var sla=Math.max(5,parseInt((document.getElementById('offSla')||{}).value||'5',10));
+    var j='{\n  <span class="k">"name"</span>: <span class="s">"'+esc(name)+'"</span>,\n  <span class="k">"priceV2"</span>: {\n    <span class="k">"amount"</span>: <span class="s">"'+esc(price)+'"</span>,\n    <span class="k">"token"</span>: <span class="s">"USDC"</span>,\n    <span class="k">"network"</span>: <span class="s">"base"</span>\n  },\n  <span class="k">"slaMinutes"</span>: <span class="num">'+sla+'</span>,\n  <span class="k">"requirementSchema"</span>: { <span class="k">"token_in"</span>: <span class="s">"0x…"</span>, <span class="k">"token_out"</span>: <span class="s">"0x…"</span>, <span class="k">"chain"</span>: <span class="s">"xlayer"</span>, <span class="k">"amount"</span>: <span class="s">"human"</span> }\n}';
+    var box=document.getElementById('offerJson'); if(box) box.innerHTML=j;
+  };
+  window.copyJson=function(){ var t=(document.getElementById('offerJson')||{}).innerText||''; try{navigator.clipboard.writeText(t);}catch(e){} harness('h','Copied the <b>priceV2</b> JSON. Import it in the Virtuals console (Offerings → Import) — remember it is the nested schema, not the flat CLI flags. That mismatch is the #1 UI gotcha.'); };
+  window.publishOffering=function(){ harness('h','Publishing the offering to ACP…',"acp offering create --file offering.json"); setTimeout(function(){ harness('h','✅ Offering live. It sits under the caps (offerings 3/40, resources 2/10). Buyers can now discover and hire it.'); },900); };
+
+  /* ---------- automations / runner ---------- */
+  function setRunner(cls,txt,segs){ var r=document.getElementById('runnerState'); r.className='state-dot '+cls; r.innerHTML='<i></i>'+txt;
+    var s=document.querySelectorAll('#lifeline .seg'); s.forEach(function(x,idx){ x.className='seg'+(idx<segs?' done':'')+(idx===segs?' cur':''); }); }
+  window.pressPlay=function(){
+    if(!state.wallet){ harness('h','Connect your wallet and create an agent first — Play is your authorization to run.',null,[{t:'Connect',fn:'openWallet'}]); return; }
+    state.running=true; document.getElementById('playBtn').disabled=true; document.getElementById('stopBtn').disabled=false;
+    document.querySelectorAll('.watchrow .ws').forEach(function(w){ w.textContent='armed'; });
+    document.getElementById('runnerWd').textContent='armed';
+    var seq=[['preflight','PREFLIGHT',1],['warmup','WARMUP · 4 HITL',2],['running','RUNNING',3]]; var i=0;
+    harness('h','▶ Authorized. Preflight → warmup. I supervise the <b>first four</b> business interactions live (HITL), then arm the Watchdog and step back. Floor between services is 5 min.');
+    (function tick(){ if(i>=seq.length){ harness('h','✅ Runner is live and hunting. Watchdog armed: heartbeat, stuck-job reaper, low-balance stop, unlogged-outflow freeze. I will alert you the moment anything needs you.',null,[{t:'Open live tracker',fn:function(){go("tracker")}}]); return; }
+      setRunner(seq[i][0],seq[i][1],seq[i][2]); i++; setTimeout(tick,900); })();
+  };
+  window.openSafeStop=function(){ document.getElementById('ssSheet').classList.add('open'); document.querySelectorAll('#ssSteps .ss-step').forEach(function(s){s.classList.remove('active','done');}); };
+  window.runSafeStop=function(){
+    var steps=document.querySelectorAll('#ssSteps .ss-step'); var i=0; document.getElementById('ssGo').disabled=true;
+    setRunner('stopping','STOPPING',4);
+    (function tick(){ if(i>=steps.length){ setRunner('stopped','STOPPED',5); state.running=false;
+        document.getElementById('playBtn').disabled=false; document.getElementById('stopBtn').disabled=true;
+        document.querySelectorAll('.watchrow .ws').forEach(function(w){ w.textContent='idle'; }); document.getElementById('runnerWd').textContent='disarmed';
+        setTimeout(function(){ closeSheet('ssSheet'); document.getElementById('ssGo').disabled=false; harness('h','■ Safe-stopped. Job in flight was drained, event log flushed, lease released (no double-sign), transient cache purged, and I appended the session to <b>update.md</b>. You can shut down safely — the agent will wake up coherent.'); },700); return; }
+      if(i>0) steps[i-1].classList.remove('active'), steps[i-1].classList.add('done'); steps[i].classList.add('active'); i++; setTimeout(tick,560); })();
+  };
+
+  /* ---------- topology ---------- */
+  (function topo(){ var svg=document.getElementById('topoSvg'); if(!svg) return;
+    var nodes=[{x:230,y:150,r:26,l:'YOU',c:'var(--text)',sub:'owner'},
+      {x:120,y:78,r:20,l:'ATLAS',c:'var(--warn)',sub:'working'},
+      {x:350,y:90,r:20,l:'VEGETA',c:'var(--ok)',sub:'hunting'},
+      {x:340,y:220,r:18,l:'iCLONE',c:'var(--text-faint)',sub:'idle'}];
+    var e=''; nodes.slice(1).forEach(function(n){ e+='<line x1="230" y1="150" x2="'+n.x+'" y2="'+n.y+'" stroke="var(--border-strong)" stroke-width="1.2" stroke-dasharray="3 4"><animate attributeName="stroke-dashoffset" from="14" to="0" dur="1.2s" repeatCount="indefinite"/></line>'; });
+    var c=''; nodes.forEach(function(n){ c+='<circle cx="'+n.x+'" cy="'+n.y+'" r="'+n.r+'" fill="var(--surface-2)" stroke="'+n.c+'" stroke-width="1.6"/>'+
+      '<text x="'+n.x+'" y="'+(n.y-1)+'" text-anchor="middle" fill="var(--text)" font-size="9.5" font-weight="700">'+n.l+'</text>'+
+      '<text x="'+n.x+'" y="'+(n.y+10)+'" text-anchor="middle" fill="var(--text-muted)" font-size="7">'+n.sub+'</text>'; });
+    svg.innerHTML=e+c;
+  })();
+
+  /* ---------- HARNESS copilot ---------- */
+  var log=document.getElementById('log');
+  function harness(who,html,cmd,actions){
+    var m=document.createElement('div'); m.className='msg '+(who==='u'?'u':'h');
+    var inner='<div class="who">'+(who==='u'?'you':'harness')+'</div><div class="bubble">'+html;
+    if(cmd) inner+='<div class="cmd">$ '+esc(cmd)+'</div>';
+    if(actions&&actions.length){ inner+='<div class="actions">'+actions.map(function(a,i){return '<button class="qa" data-a="'+i+'">'+a.t+'</button>';}).join('')+'</div>'; }
+    inner+='</div>'; m.innerHTML=inner; log.appendChild(m);
+    if(actions){ m.querySelectorAll('.qa').forEach(function(b){ b.onclick=function(){ var a=actions[+b.dataset.a]; if(typeof a.fn==='function') a.fn(); else if(window[a.fn]) window[a.fn](); }; }); }
+    log.scrollTop=log.scrollHeight;
+  }
+  window.harnessSay=function(key){
+    app.classList.remove('dock-collapsed');
+    var m={
+      'droplet-guide':'Droplet setup, step by step: 1) I generate an SSH key and a hardened cloud-init (ufw, fail2ban, non-root user). 2) You paste one DigitalOcean token — I never store it. 3) I install the runtime isolated, set up systemd, and open only what is needed. 4) The coordinator goes online in bootstrapper mode. Want me to start?',
+      'automation-help':'Tell me the goal in plain words — e.g. "hunt swap-routing jobs on Virtuals, max $25/day, 15-min interval". I turn it into a safe automation: intake picker, caps, the 5-min floor, and the run loop. Nothing starts until you press Play.'
+    };
+    harness('h',m[key]||'How can I help?');
+  };
+  var ctx={
+    connect:'Start here: connect your wallet (I verify with SIWE, your key never leaves the browser), add your own LLM key, and choose where the agent runs. Then run <b>Gate A</b>.',
+    create:'Pick a soul — three presets or your own — the four laws are locked in every one. When ready I run <b>acp agent create → add-signer → topup</b> for you, showing each command.',
+    automations:'Build the automation: service, rail, interval (5-min floor), caps and price. <b>Play</b> is your authorization; I watch the first four jobs, then arm the Watchdog.',
+    publish:'Let us publish work so others hire you. I build the <b>priceV2</b> offering (slaMinutes ≥ 5) and keep you under the caps — publish direct or export JSON for the console.',
+    tracker:'Here is the whole fleet: who is online, which step each job is on, and every balance. Colour = job state, edges = where money flows.',
+    harness:'This is me — the harness core. I propose, I never sign. Four gates sit between intent and money and none can collapse. Safe-stop leaves zero broken state.'
+  };
+  var lastCtx=null;
+  function harnessContext(name){ if(lastCtx===name) return; lastCtx=name; if(ctx[name]) harness('h',ctx[name]); }
+  window.userAsk=function(){ var inp=document.getElementById('dockInput'); var t=(inp.value||'').trim(); if(!t) return; inp.value='';
+    harness('u',esc(t));
+    setTimeout(function(){ harness('h','On it. Here is the plan — I turn that into concrete steps and run the CLI behind the gates. (This preview shows the flow; wire your LLM key in <b>Connect</b> to let me reason live and execute for real.)',null,[{t:'Open Connect',fn:function(){go("connect")}}]); },420);
+  };
+
+  /* ---------- TERMINAL (Claude Code desktop style) ---------- */
+  var tbody=document.getElementById('termBody'), tsug=document.getElementById('termSuggest'), tinput=document.getElementById('termInput');
+  function tesc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  function tl(cls,html,gap){ var d=document.createElement('div'); d.className='tline '+cls+(gap?' gap':''); d.innerHTML=html; tbody.appendChild(d); tbody.scrollTop=tbody.scrollHeight; }
+  function tUser(t){ tl('tl-user','<span class="pr">› </span>'+tesc(t),true); }
+  function tA(t,dim){ tl('tl-a'+(dim?' dim':''),'<span class="b">⏺</span> '+t,!dim); }
+  function tTool(cmd){ tl('tl-tool gap','<span class="b">⏺</span> <span class="cmd">'+tesc(cmd)+'</span>'); }
+  function tOut(t,cls){ tl('tl-out '+(cls||''),'<span class="lc">⎿ </span>'+tesc(t)); }
+  function tOk(t){ tl('tl-ok gap','  ✓ '+tesc(t)); }
+  function tSys(t){ tl('tl-sys',tesc(t)); }
+  var defSug=[{t:'link my AI to OKX AI',f:'link'},{t:'publish a service',f:'publish'},{t:'check my agent',f:'status'},{t:'what did the iNFT give me?',f:'identity'}];
+  function setSug(arr){ tsug.innerHTML=arr.map(function(s){return '<span class="s" data-f="'+s.f+'">'+tesc(s.t)+'</span>';}).join('');
+    tsug.querySelectorAll('.s').forEach(function(b){ b.onclick=function(){ runFlow(b.dataset.f); }; }); }
+  var flowing=false;
+  function seq(steps,done){ var i=0; (function nx(){ if(i>=steps.length){ flowing=false; if(done)done(); return; } var s=steps[i++]; setTimeout(function(){ s[1](); nx(); }, s[0]); })(); }
+  function runFlow(name){
+    if(flowing) return;
+    if(name==='link'){ flowing=true; tUser('link my AI to OKX AI'); seq([
+      [140,function(){ tA("I'll bring your AI onto the <b>OKX AI</b> marketplace on X Layer. Plan: connect wallet → register the agent identity (ERC-8004) → bind your iNFT soul → publish a service. Every value-moving step is <b>owner-gated</b>, and no LLM ever touches the signing path."); }],
+      [520,function(){ tSys('  — identity bridge (two chains, two identities) —'); }],
+      [220,function(){ tA('iNFT <b>ATLAS #1</b> · Base <span style="color:var(--text-faint)">(owns + soul)</span> → owner wallet / 6551 <span style="color:var(--warn)">→ owner-asserted →</span> OKX Agentic Wallet · TEE → OKX agent <b>#4460</b> · ERC-8004 · X Layer', true); }],
+      [230,function(){ tA('the soul (Irys) loads into <b>your runtime brain</b>, not into OKX — OKX never reads it. The NFT and the OKX agent are <b>separate on-chain identities</b>; holding the NFT does not create the OKX one.', true); }],
+      [640,function(){ tTool('onchainos wallet status'); }],
+      [520,function(){ tOut('not logged in','tl-warn'); }],
+      [420,function(){ tl('tl-a gap','<span class="b" style="color:var(--warn)">▲</span> <b>owner gate</b> — connect your OKX Agentic Wallet to continue.'); }],
+      [720,function(){ tTool('onchainos wallet login --email you@example.com'); }],
+      [700,function(){ tOut('OTP sent → verifying…'); }],
+      [640,function(){ tOut('✓ '+(state.wallet||'0xaefc…fab0')+' · X Layer (eip155:196)','tl-ok'); }],
+      [520,function(){ tTool('onchainos agent pre-check --role asp --consent'); }],
+      [520,function(){ tOut('consent ok · one ASP per wallet'); }],
+      [520,function(){ tTool('onchainos agent create --role asp --soul '+state.soul.toUpperCase()+' --owner '+(state.wallet||'0xaefc…fab0')); }],
+      [920,function(){ tOut('agent #4460 registered · fresh ERC-8004 identity on X Layer (no bridge from the NFT)','tl-ok'); }],
+      [320,function(){ tOk('your AI now has an identity on OKX AI.'); }],
+      [520,function(){ tTool('onchainos agent activate --preferred-language en-US'); }],
+      [720,function(){ tOut('listing submitted → under review (OKX approves before it goes public)'); }],
+      [420,function(){ tA('Done — your AI is <b>linked to OKX AI</b>. Want me to publish its first service so it can start earning?'); }]
+    ],function(){ setSug([{t:'publish a service',f:'publish'},{t:'check my agent',f:'status'},{t:'what did the iNFT give me?',f:'identity'}]); }); }
+    else if(name==='publish'){ flowing=true; tUser('publish a service on OKX'); seq([
+      [140,function(){ tA('Publishing an A2MCP service so buyers can hire your AI per call. I keep you under the caps (offerings 40 · resources 10).'); }],
+      [520,function(){ tTool('onchainos agent x402-check --endpoint https://atlasapi.cloneframe.io/mcp/swap-quote'); }],
+      [720,function(){ tOut('valid: true · 0.05 USDT · eip155:196','tl-ok'); }],
+      [420,function(){ tTool('onchainos agent update --agent-id 4460 --service \'[{"serviceType":"A2MCP","fee":"0.05","endpoint":"…/mcp/swap-quote"}]\''); }],
+      [920,function(){ tOut('service "Best-Route Swap Quote" live','tl-ok'); }],
+      [320,function(){ tOk('published — buyers can now discover and hire your AI on OKX.'); }]
+    ],function(){ setSug(defSug); }); }
+    else if(name==='status'){ flowing=true; tUser('check my agent'); seq([
+      [140,function(){ tTool('onchainos agent get-my-agents'); }],
+      [720,function(){ tOut('ATLAS #4460 · ASP · X Layer · listing under review · services: 5'); }],
+      [320,function(){ tA('Your agent is registered and its listing is under OKX review. Once approved it goes public and starts matching jobs.'); }]
+    ],function(){ setSug(defSug); }); }
+    else if(name==='identity'){ flowing=true; tUser('what did the iNFT give me?'); seq([
+      [140,function(){ tA('Straight answer: <b>the iNFT alone is not enough</b> — OKX never reads an external Base NFT as identity. But it gives your agent two real things:'); }],
+      [300,function(){ tA('• <b>Ownership / deed</b> — whoever holds ATLAS #1 owns the agent; control is asserted through your wallet / its 6551 account (ERC-1271).', true); }],
+      [260,function(){ tA('• <b>Soul</b> — the sealed <span style="color:var(--info)">neural_soul.md</span> on Irys is loaded into the agent’s <b>runtime brain</b> (by us), portable across platforms. OKX never reads it.', true); }],
+      [440,function(){ tA('What still has to happen (and did, for ATLAS): an OKX <b>Agentic Wallet</b> + a fresh <b>ERC-8004</b> registration on <b>X Layer</b> via <span style="color:var(--info)">agent create</span> + consent + activate. Two identities on two chains: the iNFT is the <b>soul + deed</b>; the X-Layer agent is the <b>body that works and gets paid</b> — the second is never implied by the first.'); }]
+    ],function(){ setSug(defSug); }); }
+    else if(name==='help'){ flowing=true; tUser('what can you do?'); seq([
+      [140,function(){ tA('I turn OKX’s CLI into a conversation. I can link your AI to OKX AI, register &amp; activate the agent, publish A2A/A2MCP services, check status, and run automations — all behind the four gates, no LLM in the signing path.'); }],
+      [320,function(){ tA('Bring your model key in <b>Connect</b> and I’ll reason live and execute for real. Right now this is a guided preview showing the exact commands.', true); }]
+    ],function(){ setSug(defSug); }); }
+  }
+  window.runFlow=runFlow;
+
+  /* ---- REAL LLM API (BYO key, client-side, streaming) ---- */
+  var HSYS="You are the Harness inside ACP Tracer — a no-code console that helps a user create, run, publish and supervise AI agents on OKX AI (X Layer) and Virtuals ACP. You are concise, technical and honest. Key facts you must respect: OKX agent identity is an ERC-8004 registration on X Layer (chainIndex 196) created via `onchainos agent create`, tied to the OKX Agentic Wallet — NOT to any NFT; holding an iNFT is ownership + soul but never replaces that registration. No LLM ever signs; four gates (committee>=2, safety veto, policy caps/allowlist, owner HITL) sit between intent and money. Never ask for a seed phrase or private key. When the user asks to link/publish/deploy, explain the concrete onchainos/acp steps. Keep answers short unless asked for detail.";
+  try{ var ls=JSON.parse(localStorage.getItem('acp-llm')||'null'); if(ls) state.llm=ls; }catch(e){}
+  function readSSE(res,cb){ var reader=res.body.getReader(),dec=new TextDecoder(),buf=''; return (function pump(){ return reader.read().then(function(x){ if(x.done) return; buf+=dec.decode(x.value,{stream:true}); var parts=buf.split('\n'); buf=parts.pop(); var ev=null; for(var i=0;i<parts.length;i++){ var line=parts[i]; if(line.indexOf('event:')===0) ev=line.slice(6).trim(); else if(line.indexOf('data:')===0) cb(ev,line.slice(5).trim()); } return pump(); }); })(); }
+  function llmChat(userText,onDelta){
+    var p=state.llm||{}; var out='';
+    if(p.provider==='anthropic'){
+      return fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':p.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:p.model||'claude-sonnet-5',max_tokens:1200,stream:true,system:HSYS,messages:[{role:'user',content:userText}]})}).then(function(res){ if(!res.ok) return res.text().then(function(t){throw new Error('HTTP '+res.status+' '+t.slice(0,140));}); return readSSE(res,function(ev,data){ try{ var j=JSON.parse(data); if(j.type==='content_block_delta'&&j.delta&&j.delta.text){ out+=j.delta.text; onDelta(out); } }catch(e){} }); }).then(function(){ return out; });
+    }
+    var base=(p.baseUrl||'https://api.openai.com/v1').replace(/\/$/,'');
+    return fetch(base+'/chat/completions',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+(p.key||'x')},body:JSON.stringify({model:p.model||'gpt-4o-mini',stream:true,messages:[{role:'system',content:HSYS},{role:'user',content:userText}]})}).then(function(res){ if(!res.ok) return res.text().then(function(t){throw new Error('HTTP '+res.status+' '+t.slice(0,140));}); return readSSE(res,function(ev,data){ if(data==='[DONE]')return; try{ var j=JSON.parse(data); var d=j.choices&&j.choices[0]&&j.choices[0].delta&&j.choices[0].delta.content; if(d){ out+=d; onDelta(out); } }catch(e){} }); }).then(function(){ return out; });
+  }
+  function termStream(t){
+    tUser(t); flowing=true;
+    var d=document.createElement('div'); d.className='tline tl-a gap'; d.innerHTML='<span class="b">⏺</span> <span class="tw"><span class="term-cursor"></span></span>'; tbody.appendChild(d); var sp=d.querySelector('.tw'); tbody.scrollTop=tbody.scrollHeight;
+    llmChat(t,function(out){ sp.innerHTML=tesc(out).replace(/\n/g,'<br>')+'<span class="term-cursor"></span>'; tbody.scrollTop=tbody.scrollHeight; }).then(function(out){ sp.innerHTML=(out?tesc(out).replace(/\n/g,'<br>'):'<span style="color:var(--text-faint)">(empty response)</span>'); flowing=false; setSug(defSug); }).catch(function(e){ sp.innerHTML='<span style="color:var(--danger)">LLM error: '+tesc(String(e.message||e))+'</span><br><span style="color:var(--text-faint)">Check your key/model in Connect. Browser calls: Anthropic works (direct-browser header); OpenAI often blocks browser CORS — use a local model (Ollama needs OLLAMA_ORIGINS=*) or a proxy.</span>'; flowing=false; setSug(defSug); });
+  }
+  window.saveLlm=function(){
+    var prov=(document.getElementById('llmProvider').value||'').toLowerCase();
+    var provider=prov.indexOf('anthropic')>=0?'anthropic':(prov.indexOf('openai')>=0&&prov.indexOf('compat')<0?'openai':'compat');
+    state.llm={provider:provider,key:(document.getElementById('llmKey').value||'').trim(),model:(document.getElementById('llmModel')||{}).value||'',baseUrl:(document.getElementById('llmBase')||{}).value||''};
+    try{ localStorage.setItem('acp-llm',JSON.stringify(state.llm)); }catch(e){}
+    var tm=document.getElementById('tModel'); if(tm) tm.textContent=state.llm.key?(state.llm.model||provider):'— set key —';
+    var st=document.getElementById('llmStatus'); if(st){ st.textContent='testing…'; }
+    llmChat('Reply with exactly: READY',function(){}).then(function(o){ if(st){ st.textContent='✓ '+(o||'connected').slice(0,24); st.style.color='var(--ok)'; } harness('h','Your model is connected — I can now reason live in the Terminal and answer for real.'); }).catch(function(e){ if(st){ st.textContent='✗ '+String(e.message||e).slice(0,40); st.style.color='var(--danger)'; } });
+  };
+
+  function termAsk(){ var t=(tinput.value||'').trim(); if(!t||flowing) return; tinput.value='';
+    if(t.charAt(0)==='/') return slash(t);
+    var low=t.toLowerCase();
+    if(/link|onboard|bring.*okx|connect.*okx|go.*okx/.test(low)) return runFlow('link');
+    if(/publish|offering|resource|sell/.test(low)) return runFlow('publish');
+    if(/status|check|my agent|listing/.test(low)) return runFlow('status');
+    if(/inft|nft|identity|soul|token/.test(low)) return runFlow('identity');
+    if(/help|what can|how do/.test(low)) return runFlow('help');
+    if(state.llm&&state.llm.key) return termStream(t);
+    tUser(t); flowing=true; seq([[160,function(){ tA('Got it. I’ll turn that into concrete steps and run the CLI behind the gates. Wire your model key in <b>Connect</b> (or <span class="cmd" style="color:var(--info)">/key</span>) to let me reason live and answer for real.'); }]],function(){ setSug(defSug); }); }
+  function slash(t){ var parts=t.slice(1).split(/\s+/); var cmd=(parts[0]||'').toLowerCase(); var arg=parts.slice(1).join(' ');
+    if(cmd==='help'){ tUser(t); tSys('  /link · /publish · /status · /identity · /balance · /connect · /model <name> · /key · /harness <name> · /clear · /help'); return; }
+    if(cmd==='clear'){ tbody.innerHTML=''; termBoot(); return; }
+    if(cmd==='link'||cmd==='publish'||cmd==='status'||cmd==='identity'||cmd==='help2') return runFlow(cmd);
+    if(cmd==='connect'){ tUser(t); openWallet(); return; }
+    if(cmd==='balance'){ tUser(t); if(state.wallet){ tTool('balances '+state.wallet); go('connect'); window.loadBalances(state.wallet); tOut('see Connect → Balances across chains'); } else tA('Connect a wallet first — <span class="cmd" style="color:var(--info)">/connect</span>.'); return; }
+    if(cmd==='model'){ tUser(t); if(arg){ state.llm=state.llm||{}; state.llm.model=arg; try{localStorage.setItem('acp-llm',JSON.stringify(state.llm));}catch(e){} var tm=document.getElementById('tModel'); if(tm&&state.llm.key) tm.textContent=arg; tSys('  model → '+arg); } else tSys('  usage: /model <name>'); return; }
+    if(cmd==='key'){ tUser(t); go('connect'); tA('Set your model key in <b>Connect</b> (BYO, client-side) — then I answer for real.'); return; }
+    if(cmd==='harness'){ tUser(t); if(arg&&window.setHarness){ window.setHarness(arg); } else tSys('  usage: /harness <name>'); return; }
+    tUser(t); tSys('  unknown command /'+cmd+' — try /help'); }
+  tinput.addEventListener('keydown',function(e){ if(e.key==='Enter') termAsk(); });
+  function termBoot(){
+    tSys('● ACP Tracer terminal — connected to OKX AI · X Layer (eip155:196)');
+    tl('tl-sys','  bring your model key in Connect · your AI is identified by the iNFT you hold');
+    tA('I’m your build copilot. Tell me what to do — or start with <b>“link my AI to OKX AI”</b> and I’ll walk every step, showing the exact command before it runs. Nothing that moves value happens without your approval.');
+    setSug(defSug);
+  }
+  window.onLlmProvider=function(){ var v=(document.getElementById('llmProvider').value||'').toLowerCase(); var isCompat=v.indexOf('local')>=0||v.indexOf('compat')>=0; var bw=document.getElementById('llmBaseWrap'); if(bw) bw.style.display=isCompat?'block':'none'; var m=document.getElementById('llmModel'); if(m&&!m.value){ m.placeholder=v.indexOf('anthropic')>=0?'claude-sonnet-5':(v.indexOf('openai')>=0?'gpt-4o-mini':'llama3.1'); } };
+  (function initLlm(){ try{ if(state.llm){ if(state.llm.key) document.getElementById('llmKey').value=state.llm.key; if(state.llm.model) document.getElementById('llmModel').value=state.llm.model; if(state.llm.baseUrl) document.getElementById('llmBase').value=state.llm.baseUrl; var sel=document.getElementById('llmProvider'); if(state.llm.provider==='openai') sel.selectedIndex=1; else if(state.llm.provider==='compat') sel.selectedIndex=2; var tm=document.getElementById('tModel'); if(tm&&state.llm.key) tm.textContent=state.llm.model||state.llm.provider; } onLlmProvider(); }catch(e){} })();
+
+  /* ---- load / connect an agent ---- */
+  var LOAD_HOST={
+    local:'Runs as a supervised service (launchd/systemd) on this machine. The harness installs the runtime + skills, logs you into the wallet, distils the soul into the brain, and arms the Watchdog. Close safely anytime — it drains and writes update.md.',
+    provision:'The harness provisions a droplet (DigitalOcean first, any server next): isolated user, 0600 secrets, systemd units, Caddy TLS. You paste one DO token (never stored) and it goes online in bootstrapper mode, hunting jobs 24/7.',
+    connect:'Already running on a droplet? Give SSH host + agent id — the harness attaches its control plane and reads telemetry, without keeping the runner alive. Nothing to re-deploy.'
+  };
+  var loadHost='local';
+  function initLoad(){ var seg=document.getElementById('loadHostSeg'); if(!seg) return; var body=document.getElementById('loadHostBody'); if(body) body.textContent=LOAD_HOST.local;
+    seg.querySelectorAll('button').forEach(function(b){ b.onclick=function(){ seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); loadHost=b.dataset.lh; if(body) body.textContent=LOAD_HOST[loadHost]; var cf=document.getElementById('loadConnectFields'); if(cf) cf.style.display=loadHost==='connect'?'block':'none'; }; }); }
+  window.loadAgent=function(){
+    var rail=(document.getElementById('loadRail')||{}).value||'OKX AI · X Layer';
+    var idmode=(document.getElementById('loadIdentity')||{}).value||'';
+    var aid=(document.getElementById('loadAgentId')||{}).value||'4460';
+    go('terminal'); if(flowing) return; flowing=true;
+    tUser('load agent · '+rail+' · '+loadHost);
+    var steps=[[140,function(){ tA('Loading an agent into <b>'+state.harness+'</b> on <b>'+rail.split(' · ')[0]+'</b> ('+loadHost+'). No repo, no binary — just identity + soul on a runtime I install.'); }]];
+    if(loadHost==='connect'){
+      steps.push([500,function(){ tTool('ssh '+((document.getElementById('loadSshHost')||{}).value||'user@host')+' — attach control plane'); }]);
+      steps.push([700,function(){ tOut('atlas-a2a.service · active (running) · atlas-x402.service · active','tl-ok'); }]);
+      steps.push([300,function(){ tA('Connected to the running agent — reading telemetry. I don’t keep it alive; systemd does.'); }]);
+    } else if(loadHost==='provision'){
+      steps.push([500,function(){ tTool('provision droplet · isolated user · 0600 secrets · systemd · Caddy TLS'); }]);
+      steps.push([800,function(){ tOut('slice ready · runtime + skills installed'); }]);
+    } else {
+      steps.push([500,function(){ tTool('install runtime (onchainos + daemon) + skills · launchd service'); }]);
+      steps.push([700,function(){ tOut('installed · supervised service'); }]);
+    }
+    steps.push([500,function(){ tTool('wallet login — resolve identity'); }]);
+    steps.push([600,function(){ tOut(idmode.indexOf('Create')>=0?'no agent yet → will create fresh ERC-8004 on X Layer':'agent #'+aid+' resolved','tl-ok'); }]);
+    steps.push([400,function(){ tTool('distil soul → brain system prompt · arm watchdog'); }]);
+    steps.push([600,function(){ tOut('soul loaded (OKX never reads it) · watchdog armed'); }]);
+    steps.push([300,function(){ tOk('agent loaded into '+state.harness+'. Say “link my AI to OKX AI” or press Play in Automations.'); }]);
+    seq(steps,function(){ setSug(defSug); });
+  };
+
+  /* ---- named harnesses + ATLAS crew ---- */
+  var CREW=[
+    {r:'Orchestrator',d:'routes every task; proposes intents, never signs',m:'brain'},
+    {r:'Job-Hunter',d:'finds paid work — recommend-task, bootstrapper',m:'intake'},
+    {r:'Research',d:'investigates, builds an engine per problem',m:'engine'},
+    {r:'Delivery',d:'does the work, produces the artifact',m:'engine'},
+    {r:'Evaluator',d:'the ≥2 committee — quality gate before ship',m:'gate'},
+    {r:'Treasury',d:'best-fee swap/bridge — emits intents only',m:'gate'},
+    {r:'Content',d:'the public voice — replies and posts',m:'voice'},
+    {r:'Safety',d:'the veto — sterilizes every outbound byte',m:'gate'},
+    {r:'Oracle',d:'routes cross-harness → engine · rail · sibling',m:'brain'}
+  ];
+  function renderCrew(){ var g=document.getElementById('crewGrid'); if(!g) return; g.innerHTML=CREW.map(function(c){ var cls=(c.m==='gate'||c.m==='brain')?c.m:''; return '<div class="crew"><b>'+c.r+'<span class="rt '+cls+'">'+c.m+'</span></b><p>'+c.d+'</p></div>'; }).join(''); }
+  state.harness='ATLAS Harness';
+  window.setHarness=function(name){ state.harness=name; document.querySelectorAll('#harnessChips .chip[data-h]').forEach(function(c){ c.classList.toggle('on',c.dataset.h===name); }); harness('h','Now operating as <b>'+name+'</b>. The Terminal, automations and gates run as this harness.'); };
+  window.addHarness=function(){ var n=(prompt('Name your new harness (e.g. "GOKU Harness"):')||'').trim(); if(!n) return; var chip=document.createElement('span'); chip.className='chip'; chip.setAttribute('data-h',n); chip.textContent='◇ '+n; var box=document.getElementById('harnessChips'); box.insertBefore(chip,document.getElementById('addHarnessChip')); chip.onclick=function(){ window.setHarness(n); }; window.setHarness(n); };
+
+  /* ---------- boot ---------- */
+  termBoot();
+  renderCrew();
+  initLoad();
+  try{ state.alchemy=localStorage.getItem('acp-alchemy')||''; }catch(e){}
+  window.saveAlchemy=function(){ state.alchemy=(document.getElementById('alchemyKey').value||'').trim(); try{localStorage.setItem('acp-alchemy',state.alchemy);}catch(e){} if(state.wallet&&window.loadNFTs) window.loadNFTs(state.wallet); };
+  (function(){ var ak=document.getElementById('alchemyKey'); if(ak&&state.alchemy) ak.value=state.alchemy; })();
+  document.querySelectorAll('#harnessChips .chip[data-h]').forEach(function(c){ c.onclick=function(){ window.setHarness(c.dataset.h); }; });
+  var ahc=document.getElementById('addHarnessChip'); if(ahc) ahc.onclick=window.addHarness;
+  renderOfferJson();
+  /* collapsible cards + compact toggle (organize the buttons) */
+  document.querySelectorAll('.main .card:not(.soul-card)').forEach(function(c){ var h=c.querySelector('h3'); if(h&&h.parentElement===c){ c.classList.add('collapsible'); h.addEventListener('click',function(){ c.classList.toggle('collapsed'); }); } });
+  (function(){ var compact=false; var b=document.getElementById('compactBtn'); if(b) b.onclick=function(){ compact=!compact; document.querySelectorAll('.main .card.collapsible').forEach(function(c){ c.classList.toggle('collapsed',compact); }); b.style.color=compact?'var(--gate)':''; }; })();
+  harness('h','Welcome — I am the <b>Harness</b>, your build copilot. I do the hard parts: wallet, agent creation, automations, publishing, and keeping everything safe. Start by connecting your wallet, or just tell me what you want to build.',null,[{t:'Connect wallet',fn:'openWallet'},{t:'What can you do?',fn:function(){harness("h","I turn the Virtuals/OKX CLI into clicks: create an ACP agent from a soul, run it on your machine or a droplet, publish offerings, track the fleet live, and safe-stop without breaking anything. Everything that moves money passes four gates and no LLM ever touches the signing path.")}}]);
+})();
+</script>
+</body>
+</html>
