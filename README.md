@@ -112,3 +112,17 @@ Compromisso de migração pós-quântica **antes de 2029** (prazo de prontidão,
 crypto-agility via account abstraction, assinaturas híbridas ECDSA + ML-DSA (FIPS 204),
 rotação de chaves por hash-commit; a metadata na Irys já é quantum-safe (hash-based).
 Plano completo: [docs/QUANTUM.md](docs/QUANTUM.md).
+
+## Linked repositories
+
+The CLONE FRAME family is linked here as git submodules under
+[`modules/`](modules) — live pointers to each repo at a pinned commit, nothing copied:
+
+| Module | Access | What it is |
+|---|---|---|
+| [`modules/cloneframe_app_executable`](modules/cloneframe_app_executable) | private | The CLONE FRAME HUB desktop app (`index.html` + Node bridge). |
+| [`modules/iIrysframe`](modules/iIrysframe) | public | iIrys Frame — permanent NFT layer vault on Irys × Base. |
+| [`modules/ilayerframe`](modules/ilayerframe) | public | iLayerFrame — client-side image-layer studio for NFT art. |
+| [`modules/roadmap.rd`](modules/roadmap.rd) | private | Roadmap / planning notes. |
+
+Get them locally with `git clone --recurse-submodules` or `git submodule update --init`.

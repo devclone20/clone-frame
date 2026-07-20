@@ -1,0 +1,12 @@
+[submodule "modules/cloneframe_app_executable"]
+	path = modules/cloneframe_app_executable
+	url = https://github.com/devclone20/cloneframe_app_executable.git
+[submodule "modules/iIrysframe"]
+	path = modules/iIrysframe
+	url = https://github.com/devclone20/iIrysframe.git
+[submodule "modules/ilayerframe"]
+	path = modules/ilayerframe
+	url = https://github.com/devclone20/ilayerframe.git
+[submodule "modules/roadmap.rd"]
+	path = modules/roadmap.rd
+	url = https://github.com/devclone20/roadmap.rd.git
