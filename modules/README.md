@@ -6,7 +6,6 @@ The CLONE FRAME family, linked as git submodules (live pointers — nothing copi
 |---|---|---|
 | [`cloneframe_app_executable`](cloneframe_app_executable) | private | The CLONE FRAME HUB desktop app (single-file `index.html` + Node bridge). |
 | [`iIrysframe`](iIrysframe) | public | iIrys Frame — permanent NFT layer vault on Irys × Base. |
-| [`ilayerframe`](ilayerframe) | public | iLayerFrame — client-side image-layer studio for NFT art. |
 | [`roadmap.rd`](roadmap.rd) | private | Roadmap / planning notes. |
 
 Fetch locally: `git clone --recurse-submodules …` or `git submodule update --init`.

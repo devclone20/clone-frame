@@ -14,10 +14,9 @@ O ecossistema tem dois níveis: **Frames** (produtos) e, dentro do CLONE FRAME, 
 
 - **CLONE FRAME HUB** — a workstation: **app local, open-source (MIT), de duplo-clique** — um `index.html` que desenha a interface inteira + um daemon local ("HUB Bridge") em `127.0.0.1`. Terminal iT, browser privado embutido, CODE a conduzir o modelo do próprio utilizador (BYOK — sem assistente embutido), cluster local MATRIX, leituras de carteira sem chaves. Repo: [devclone20/cloneframe_app_executable](https://github.com/devclone20/cloneframe_app_executable).
 - **Plaza Place** — o marketplace (iNFT collections + skills). **Planeado — coming soon**; abre com as três chaves on-chain (100k $ICLONE · OG PASS · iNFT da casa).
-- **LAYER FRAME** — ferramenta aberta: estúdio de **camadas de imagem** para arte de NFT (split + AI auto-layer, Floor/Glow, slots iQR + Description, export). É **aqui** que se geram as camadas da arte — substitui o antigo "gerador de imagem / SILUETAS". Repo: [devclone20/ilayerframe](https://github.com/devclone20/ilayerframe).
-- **iIrys FRAME** — ferramenta aberta: recebe as camadas do LAYER FRAME, define a alma (`neural_soul.md`) + metadata e **sela tudo na Irys** (gera o `tokenURI`). Repo: [devclone20/iIrysframe](https://github.com/devclone20/iIrysframe).
+- **iIrys FRAME** — ferramenta aberta: autoria a **arte** (camadas de traits generativas com raridade) e a **alma** (`neural_soul.md`) + metadata, e **sela tudo na Irys** (gera o `tokenURI`). Repo: [devclone20/iIrysframe](https://github.com/devclone20/iIrysframe).
 
-**Tudo é open-source e grátis** — LAYER FRAME, iIrys FRAME e o próprio HUB (MIT, no GitHub). Nada corre na cloud a menos que o utilizador aponte para lá, e todos os caminhos de IA são **BYOK** — cada utilizador liga a sua própria chave de LLM, ou um modelo totalmente local.
+**Tudo é open-source e grátis** — o próprio HUB (MIT, no GitHub) e a iIrys FRAME. Nada corre na cloud a menos que o utilizador aponte para lá, e todos os caminhos de IA são **BYOK** — cada utilizador liga a sua própria chave de LLM, ou um modelo totalmente local.
 
 Base partilhada em todas as superfícies: menu retrátil, Wallet (Login/Online/Sign out), Settings.
 
@@ -41,9 +40,6 @@ Do login ao publish — criar → selar → cunhar → publicar.
 
 ![HUB](docs/diagrams/04-hub.svg)
 
-**LAYER FRAME** — pipeline de layering da imagem.
-
-![LAYER FRAME](docs/diagrams/05-layer-frame.svg)
 
 **iIrys FRAME** — alma + metadata + selar na Irys.
 
@@ -122,7 +118,6 @@ The CLONE FRAME family is linked here as git submodules under
 |---|---|---|
 | [`modules/cloneframe_app_executable`](modules/cloneframe_app_executable) | public · MIT | The CLONE FRAME HUB desktop app (`index.html` + Node bridge). |
 | [`modules/iIrysframe`](modules/iIrysframe) | public | iIrys Frame — permanent NFT layer vault on Irys × Base. |
-| [`modules/ilayerframe`](modules/ilayerframe) | public | iLayerFrame — client-side image-layer studio for NFT art. |
 | [`modules/roadmap.rd`](modules/roadmap.rd) | private | Roadmap / planning notes. |
 
 Get them locally with `git clone --recurse-submodules` or `git submodule update --init`.

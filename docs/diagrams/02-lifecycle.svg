@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 680 746" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" role="img">
 <title>CLONE FRAME — ciclo de vida do iNFT</title>
-<desc>Fluxo: utilizador com wallet, LAYER e iIrys FRAME, selar na Irys, listar e cunhar no Plaza, aprovar e cunhar on-chain na Base com o ICloneAgent, obter o iNFT em self-custody e publicar no CLONE FRAME e na OpenSea.</desc>
+<desc>Fluxo: utilizador com wallet, autoria da arte e da alma na iIrys FRAME, selar na Irys (tokenURI), aprovar na própria wallet, cunhar on-chain na Base com o ICloneAgent, obter o iNFT em self-custody e depois listar na OpenSea e operar a partir da app CLONE FRAME HUB, na máquina do dono.</desc>
 <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#57606e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 <rect x="0.5" y="0.5" width="679" height="745" rx="14" fill="#0b0e14" stroke="#1b2230"/>
 <circle cx="44" cy="29" r="4" fill="#2bb88a"/>
 <text x="56" y="33" fill="#eaf0f7" font-size="14" font-weight="600">CLONE FRAME — lifecycle</text>
-<rect x="56" y="44" width="11" height="11" rx="3" fill="#112e27" stroke="#1f7d5e"/><text x="73" y="53" fill="#8b95a7" font-size="12">Hosted</text>
-<rect x="140" y="44" width="11" height="11" rx="3" fill="#1e1b37" stroke="#6a5fd0"/><text x="157" y="53" fill="#8b95a7" font-size="12">Open tools</text>
+<rect x="56" y="44" width="11" height="11" rx="3" fill="#112e27" stroke="#1f7d5e"/><text x="73" y="53" fill="#8b95a7" font-size="12">The app</text>
+<rect x="140" y="44" width="11" height="11" rx="3" fill="#1e1b37" stroke="#6a5fd0"/><text x="157" y="53" fill="#8b95a7" font-size="12">Open tool</text>
 <rect x="252" y="44" width="11" height="11" rx="3" fill="#321f18" stroke="#c06a40"/><text x="269" y="53" fill="#8b95a7" font-size="12">On-chain</text>
 <rect x="350" y="44" width="11" height="11" rx="3" fill="#161b24" stroke="#38414f"/><text x="367" y="53" fill="#8b95a7" font-size="12">Data</text>
 <rect x="210" y="66" width="260" height="56" rx="10" fill="#161b24" stroke="#38414f"/>
 <text x="340" y="88" text-anchor="middle" dominant-baseline="central" fill="#d3dae4" font-size="14" font-weight="600">User · wallet</text>
-<text x="340" y="106" text-anchor="middle" dominant-baseline="central" fill="#8a94a6" font-size="12">SIWE / Privy</text>
+<text x="340" y="106" text-anchor="middle" dominant-baseline="central" fill="#8a94a6" font-size="12">self-custody · keys stay yours</text>
 <rect x="210" y="166" width="260" height="56" rx="10" fill="#1e1b37" stroke="#6a5fd0"/>
-<text x="340" y="188" text-anchor="middle" dominant-baseline="central" fill="#cfc8ff" font-size="14" font-weight="600">LAYER + iIrys FRAME</text>
-<text x="340" y="206" text-anchor="middle" dominant-baseline="central" fill="#9890c8" font-size="12">layer art · soul · meta</text>
+<text x="340" y="188" text-anchor="middle" dominant-baseline="central" fill="#cfc8ff" font-size="14" font-weight="600">iIrys FRAME</text>
+<text x="340" y="206" text-anchor="middle" dominant-baseline="central" fill="#9890c8" font-size="12">art · soul · metadata</text>
 <rect x="210" y="266" width="260" height="56" rx="10" fill="#161b24" stroke="#38414f"/>
 <text x="340" y="288" text-anchor="middle" dominant-baseline="central" fill="#d3dae4" font-size="14" font-weight="600">Irys L1 datachain</text>
 <text x="340" y="306" text-anchor="middle" dominant-baseline="central" fill="#8a94a6" font-size="12">permanent · tokenURI</text>
-<rect x="210" y="366" width="260" height="56" rx="10" fill="#112e27" stroke="#1f7d5e"/>
-<text x="340" y="388" text-anchor="middle" dominant-baseline="central" fill="#b8ecd8" font-size="14" font-weight="600">Plaza Place</text>
-<text x="340" y="406" text-anchor="middle" dominant-baseline="central" fill="#6fb89f" font-size="12">list + mint</text>
+<rect x="210" y="366" width="260" height="56" rx="10" fill="#161b24" stroke="#38414f"/>
+<text x="340" y="388" text-anchor="middle" dominant-baseline="central" fill="#d3dae4" font-size="14" font-weight="600">Your wallet</text>
+<text x="340" y="406" text-anchor="middle" dominant-baseline="central" fill="#8a94a6" font-size="12">approve — no seed phrase, ever</text>
 <rect x="210" y="466" width="260" height="56" rx="10" fill="#321f18" stroke="#c06a40"/>
 <text x="340" y="488" text-anchor="middle" dominant-baseline="central" fill="#f0cbb8" font-size="14" font-weight="600">Base · ICloneAgent</text>
 <text x="340" y="506" text-anchor="middle" dominant-baseline="central" fill="#c2937a" font-size="12">approve + mint on-chain</text>
@@ -28,8 +28,8 @@
 <text x="340" y="588" text-anchor="middle" dominant-baseline="central" fill="#f0cbb8" font-size="14" font-weight="600">iNFT</text>
 <text x="340" y="606" text-anchor="middle" dominant-baseline="central" fill="#c2937a" font-size="12">NFT + AI agent · self-custody</text>
 <rect x="110" y="670" width="210" height="56" rx="10" fill="#112e27" stroke="#1f7d5e"/>
-<text x="215" y="692" text-anchor="middle" dominant-baseline="central" fill="#b8ecd8" font-size="14" font-weight="600">CLONE FRAME</text>
-<text x="215" y="710" text-anchor="middle" dominant-baseline="central" fill="#6fb89f" font-size="12">Plaza marketplace</text>
+<text x="215" y="692" text-anchor="middle" dominant-baseline="central" fill="#b8ecd8" font-size="14" font-weight="600">CLONE FRAME HUB</text>
+<text x="215" y="710" text-anchor="middle" dominant-baseline="central" fill="#6fb89f" font-size="12">operate — on your machine</text>
 <rect x="360" y="670" width="210" height="56" rx="10" fill="#161b24" stroke="#38414f"/>
 <text x="465" y="692" text-anchor="middle" dominant-baseline="central" fill="#d3dae4" font-size="14" font-weight="600">OpenSea</text>
 <text x="465" y="710" text-anchor="middle" dominant-baseline="central" fill="#8a94a6" font-size="12">external market</text>
@@ -38,7 +38,7 @@
 <line x1="340" y1="322" x2="340" y2="358" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/><text x="350" y="344" fill="#8b95a7" font-size="12">tokenURI</text>
 <line x1="340" y1="422" x2="340" y2="458" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/><text x="350" y="444" fill="#8b95a7" font-size="12">mint</text>
 <line x1="340" y1="522" x2="340" y2="558" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/>
-<line x1="340" y1="622" x2="340" y2="652" stroke="#57606e" stroke-width="1.5"/><text x="350" y="642" fill="#8b95a7" font-size="12">publish</text>
+<line x1="340" y1="622" x2="340" y2="652" stroke="#57606e" stroke-width="1.5"/><text x="350" y="642" fill="#8b95a7" font-size="12">list · operate</text>
 <line x1="215" y1="652" x2="465" y2="652" stroke="#57606e" stroke-width="1.5"/>
 <line x1="215" y1="652" x2="215" y2="664" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/>
 <line x1="465" y1="652" x2="465" y2="664" stroke="#57606e" stroke-width="1.5" marker-end="url(#ar)"/>
