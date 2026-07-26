@@ -1,8 +1,8 @@
 # CLONE FRAME
 
-> Criamos e desenvolvemos **dentro** da sociedade de agentes de IA da **Virtuals Protocol** (Base) — construímos sobre ela, não a reinventamos.
+> Plataforma independente que **integra com** a sociedade de agentes de IA da **Virtuals Protocol** (Base) — construímos sobre os carris dela, não a reinventamos.
 
-CLONE FRAME é a plataforma de interface da iCLONE: usar, cunhar, vender e operar **iNFTs** — agentes de IA com NFT integrado — e as suas **skills**.
+CLONE FRAME é a camada de interface da iCLONE: criar, cunhar, possuir e operar **iNFTs** — agentes de IA com NFT integrado — a partir de uma app que corre **na máquina do próprio utilizador**.
 
 ![CLONE FRAME — mapa do sistema](docs/diagrams/01-overview.svg)
 
@@ -12,15 +12,12 @@ O ecossistema tem dois níveis: **Frames** (produtos) e, dentro do CLONE FRAME, 
 
 ### Frames (produtos)
 
-- **CLONE FRAME** — plataforma hospedada (Hostinger). Reúne duas superfícies:
-  - **Plaza Place** — o marketplace. Duas secções:
-    - **iNFT collections** — agentes (iNFT) listados para compra / mint.
-    - **Skills** — só se vendem **skills** aqui; compras a skill e depois fazes **deploy** dela ao teu agente.
-  - **HUB** — workstation: treinar, fazer deploy e operar o teu agente iNFT.
+- **CLONE FRAME HUB** — a workstation: **app local, open-source (MIT), de duplo-clique** — um `index.html` que desenha a interface inteira + um daemon local ("HUB Bridge") em `127.0.0.1`. Terminal iT, browser privado embutido, CODE a conduzir o modelo do próprio utilizador (BYOK — sem assistente embutido), cluster local MATRIX, leituras de carteira sem chaves. Repo: [devclone20/cloneframe_app_executable](https://github.com/devclone20/cloneframe_app_executable).
+- **Plaza Place** — o marketplace (iNFT collections + skills). **Planeado — coming soon**; abre com as três chaves on-chain (100k $ICLONE · OG PASS · iNFT da casa).
 - **LAYER FRAME** — ferramenta aberta: estúdio de **camadas de imagem** para arte de NFT (split + AI auto-layer, Floor/Glow, slots iQR + Description, export). É **aqui** que se geram as camadas da arte — substitui o antigo "gerador de imagem / SILUETAS". Repo: [devclone20/ilayerframe](https://github.com/devclone20/ilayerframe).
 - **iIrys FRAME** — ferramenta aberta: recebe as camadas do LAYER FRAME, define a alma (`neural_soul.md`) + metadata e **sela tudo na Irys** (gera o `tokenURI`). Repo: [devclone20/iIrysframe](https://github.com/devclone20/iIrysframe).
 
-As ferramentas (LAYER + iIrys) são **open-source e grátis**, distribuídas no **GitHub + Venice**. Apenas o CLONE FRAME (Plaza + HUB) é hospedado, em **BYOK** — cada utilizador usa a sua própria chave de LLM.
+**Tudo é open-source e grátis** — LAYER FRAME, iIrys FRAME e o próprio HUB (MIT, no GitHub). Nada corre na cloud a menos que o utilizador aponte para lá, e todos os caminhos de IA são **BYOK** — cada utilizador liga a sua própria chave de LLM, ou um modelo totalmente local.
 
 Base partilhada em todas as superfícies: menu retrátil, Wallet (Login/Online/Sign out), Settings.
 
@@ -64,11 +61,11 @@ Do login ao publish — criar → selar → cunhar → publicar.
 ### Mint & publicação
 
 - O comprador/dev **aprova + cunha on-chain** com o contrato ICloneAgent (não há "redirect para a Virtuals aprovar").
-- Após o mint, o iNFT é **publicado** no **Plaza (CLONE FRAME)** e na **OpenSea**.
+- Após o mint, o iNFT é listado na **OpenSea** (e no **Plaza**, quando abrir) e trabalhado a partir do **HUB**, na máquina do dono.
 
 ### Infraestrutura partilhada
 
-`Base 8453` · `Irys` (datachain permanente) · `Virtuals Protocol` (ACP) · `Supabase`.
+`Base 8453` · `Irys` (datachain permanente) · `Virtuals Protocol` (ACP) · **a máquina do dono** (o HUB é local-first — um ficheiro + um daemon em loopback).
 
 ## Receita
 
@@ -83,12 +80,14 @@ Do login ao publish — criar → selar → cunhar → publicar.
 
 ## Distribuição
 
-- **Venice** — ferramentas abertas (self-hosted, uso privado/comunidade).
-- **Hostinger** — CLONE FRAME público para a comunidade.
+- **GitHub** — tudo: o HUB ([cloneframe_app_executable](https://github.com/devclone20/cloneframe_app_executable)), as ferramentas abertas e os monorepos dos agentes.
+- **Hostinger** — o site público [cloneframe.io](https://cloneframe.io) (landing + whitepaper), servido a partir de [`site/`](site).
 
 ## Estrutura do repo
 
 ```
+site/        o site cloneframe.io (canónico + deploy/ + scripts de sync)
+modules/     a família CLONE FRAME como git-submódulos (ponteiros vivos)
 frames/      widgets .widget dos frames (rascunhos de UI)
 mockups/     mockups HTML da plataforma
 docs/        arquitetura e documentação
@@ -98,13 +97,14 @@ docs/        arquitetura e documentação
 
 Construído dentro da Virtuals Protocol. Base (8453).
 
-## Genesis Engine
+## A forja de agentes — inft-i01
 
-O motor que faz o processo completo num só fluxo guiado: **link Irys (metadata + arte 2D/3D)
-→ mint do iNFT (ICloneAgent, Base) → criação do agente via CLI da Virtuals (identidade,
-wallet + email, fund, offerings) → elo NFT ⇄ agente** — `ownerOf(tokenId)` controla o agente,
-e a TBA (ERC-6551) do token pode custodiar os ganhos. Vive no HUB e partilha o runner do
-iTerminal. Detalhe no whitepaper: [cloneframe.io](https://cloneframe.io) → HUB · workstation.
+Cada agente da família é um **monorepo iNFT forjado do template
+[inft-i01](https://github.com/devclone20/inft-i01)**: um Pi coding agent como substrato,
+a neural soul do próprio agente por cima, fundido com um NFT — quem detém o token detém
+o agente, e o repositório é o corpo dele. iCLONE, VEGETA, Doctor, Akita e Forense já
+vivem neste padrão; `ownerOf(tokenId)` controla o agente e a TBA (ERC-6551) do token
+pode custodiar os ganhos. Detalhe no whitepaper: [cloneframe.io](https://cloneframe.io).
 
 ## Quantum Computer Update Protocol
 
@@ -120,7 +120,7 @@ The CLONE FRAME family is linked here as git submodules under
 
 | Module | Access | What it is |
 |---|---|---|
-| [`modules/cloneframe_app_executable`](modules/cloneframe_app_executable) | private | The CLONE FRAME HUB desktop app (`index.html` + Node bridge). |
+| [`modules/cloneframe_app_executable`](modules/cloneframe_app_executable) | public · MIT | The CLONE FRAME HUB desktop app (`index.html` + Node bridge). |
 | [`modules/iIrysframe`](modules/iIrysframe) | public | iIrys Frame — permanent NFT layer vault on Irys × Base. |
 | [`modules/ilayerframe`](modules/ilayerframe) | public | iLayerFrame — client-side image-layer studio for NFT art. |
 | [`modules/roadmap.rd`](modules/roadmap.rd) | private | Roadmap / planning notes. |

@@ -1,7 +1,6 @@
 #!/bin/sh
 # CLONE FRAME — sync canónico -> ficheiros publicados.
 #   cloneframe.html (canónico, o que editamos) -> deploy/index.html
-#   atlas.html                                 -> deploy/atlas.html
 #   (deploy/ é o que se carrega no Hostinger / cloneframe.io)
 #
 # Corre sempre que os canónicos mudam. Um daemon launchd NÃO consegue fazer
@@ -24,4 +23,3 @@ sync_one() {
 
 mkdir -p "$SITE/deploy"
 sync_one cloneframe.html index.html
-sync_one atlas.html atlas.html
