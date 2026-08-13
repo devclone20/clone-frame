@@ -15,7 +15,7 @@ flowchart TB
   INFRA["Shared infrastructure<br/>Base 8453 · Irys · Virtuals · a máquina do dono"]:::ext
   CF --> INFRA
   IF --> INFRA
-  classDef hosted fill:#0e3b2e,stroke:#34d399,color:#d1fae5;
+  classDef hosted fill:#2b1b22,stroke:#c48b96,color:#f0dfe4;
   classDef open fill:#2b2660,stroke:#8b7fe8,color:#e0dcff;
   classDef ext fill:#262626,stroke:#888888,color:#dddddd;
 ```
@@ -40,7 +40,7 @@ flowchart TB
   BASE --> INFT
   INFT -->|list| OS
   INFT -->|operate| HUB
-  classDef hosted fill:#0e3b2e,stroke:#34d399,color:#d1fae5;
+  classDef hosted fill:#2b1b22,stroke:#c48b96,color:#f0dfe4;
   classDef open fill:#2b2660,stroke:#8b7fe8,color:#e0dcff;
   classDef chain fill:#3a2218,stroke:#e08a5a,color:#fde4d3;
   classDef ext fill:#262626,stroke:#888888,color:#dddddd;
