@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 470" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" role="img" aria-label="The three CLONE FRAME products">
+  <defs>
+    <linearGradient id="accentline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff3b30" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ff3b30" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="470" rx="14" fill="#0d1117"/>
+  <rect x="1.5" y="1.5" width="1097" height="467" rx="13" fill="none" stroke="#30363d" stroke-width="3"/>
+  <rect x="0" y="462" width="1100" height="4" fill="url(#accentline)" opacity="0.9"/>
+
+  <circle cx="28" cy="26" r="6" fill="#ff5f57"/>
+  <circle cx="50" cy="26" r="6" fill="#febc2e"/>
+  <circle cx="72" cy="26" r="6" fill="#28c840"/>
+  <g fill="none" stroke="#ff3b30" stroke-linejoin="round">
+    <path d="M104 32 111 18 118 32 Z" stroke-width="2"/>
+    <path d="M108.2 29.5 111 23.9 113.8 29.5 Z" stroke-width="1.4"/>
+  </g>
+  <text x="550" y="31" text-anchor="middle" font-size="13" fill="#8b949e">three frames — one shipping, one open tool, one still to open</text>
+
+  <rect x="40" y="68" width="331" height="300" rx="12" fill="#161b22" stroke="#30363d"/>
+  <rect x="40" y="68" width="331" height="3" rx="1.5" fill="#ff3b30"/>
+  <text x="58" y="102" font-size="15" font-weight="700" fill="#ff3b30">CLONE FRAME HUB</text>
+  <text x="58" y="122" font-size="11" fill="#566070">the workstation</text>
+  <line x1="58" y1="138" x2="353" y2="138" stroke="#30363d"/>
+  <circle cx="62" cy="156" r="2.5" fill="#ff3b30"/>
+  <text x="76" y="160" font-size="12" fill="#c9d1d9">local, double-click app · MIT</text>
+  <circle cx="62" cy="180" r="2.5" fill="#ff3b30"/>
+  <text x="76" y="184" font-size="12" fill="#c9d1d9">one index.html + a local HUB</text>
+  <text x="76" y="206" font-size="12" fill="#c9d1d9">Bridge daemon on 127.0.0.1</text>
+  <circle cx="62" cy="226" r="2.5" fill="#ff3b30"/>
+  <text x="76" y="230" font-size="12" fill="#c9d1d9">iT · CODE · BROWSER · MATRIX</text>
+  <circle cx="62" cy="250" r="2.5" fill="#ff3b30"/>
+  <text x="76" y="254" font-size="12" fill="#c9d1d9">BYOK — your own model, with</text>
+  <text x="76" y="276" font-size="12" fill="#c9d1d9">no embedded assistant</text>
+  <circle cx="62" cy="296" r="2.5" fill="#ff3b30"/>
+  <text x="76" y="300" font-size="12" fill="#c9d1d9">keyless read-only wallet reads</text>
+  <rect x="58" y="318" width="190" height="30" rx="15" fill="#0d1117" stroke="#30363d"/>
+  <text x="153" y="337" text-anchor="middle" font-size="11" fill="#8b949e">open source · on GitHub</text>
+
+  <rect x="384" y="68" width="331" height="300" rx="12" fill="#161b22" stroke="#30363d"/>
+  <rect x="384" y="68" width="331" height="3" rx="1.5" fill="#f0a14a"/>
+  <text x="402" y="102" font-size="15" font-weight="700" fill="#f0a14a">Plaza Place</text>
+  <text x="402" y="122" font-size="11" fill="#566070">the marketplace</text>
+  <line x1="402" y1="138" x2="697" y2="138" stroke="#30363d"/>
+  <circle cx="406" cy="156" r="2.5" fill="#f0a14a"/>
+  <text x="420" y="160" font-size="12" fill="#c9d1d9">planned — coming soon</text>
+  <circle cx="406" cy="180" r="2.5" fill="#f0a14a"/>
+  <text x="420" y="184" font-size="12" fill="#c9d1d9">two sections: iNFT collections</text>
+  <text x="420" y="206" font-size="12" fill="#c9d1d9">and Skills</text>
+  <circle cx="406" cy="226" r="2.5" fill="#f0a14a"/>
+  <text x="420" y="230" font-size="12" fill="#c9d1d9">buy a skill, then deploy it to</text>
+  <text x="420" y="252" font-size="12" fill="#c9d1d9">your agent from the HUB</text>
+  <circle cx="406" cy="272" r="2.5" fill="#f0a14a"/>
+  <text x="420" y="276" font-size="12" fill="#c9d1d9">opens on three on-chain keys:</text>
+  <text x="420" y="300" font-size="12" fill="#8b949e">100k iCLONE · OG PASS · iNFT</text>
+  <rect x="402" y="318" width="140" height="30" rx="15" fill="#0d1117" stroke="#30363d"/>
+  <text x="472" y="337" text-anchor="middle" font-size="11" fill="#8b949e">not open yet</text>
+
+  <rect x="728" y="68" width="331" height="300" rx="12" fill="#161b22" stroke="#30363d"/>
+  <rect x="728" y="68" width="331" height="3" rx="1.5" fill="#b18bf5"/>
+  <text x="746" y="102" font-size="15" font-weight="700" fill="#b18bf5">iIrys FRAME</text>
+  <text x="746" y="122" font-size="11" fill="#566070">the open tool</text>
+  <line x1="746" y1="138" x2="1041" y2="138" stroke="#30363d"/>
+  <circle cx="750" cy="156" r="2.5" fill="#b18bf5"/>
+  <text x="764" y="160" font-size="12" fill="#c9d1d9">generative trait layers, with</text>
+  <text x="764" y="182" font-size="12" fill="#c9d1d9">rarity</text>
+  <circle cx="750" cy="202" r="2.5" fill="#b18bf5"/>
+  <text x="764" y="206" font-size="12" fill="#c9d1d9">the soul: neural_soul.md</text>
+  <circle cx="750" cy="226" r="2.5" fill="#b18bf5"/>
+  <text x="764" y="230" font-size="12" fill="#c9d1d9">seals art + metadata to Irys</text>
+  <text x="764" y="252" font-size="12" fill="#c9d1d9">and emits the tokenURI</text>
+  <circle cx="750" cy="272" r="2.5" fill="#b18bf5"/>
+  <text x="764" y="276" font-size="12" fill="#c9d1d9">its own repo, MIT</text>
+  <text x="764" y="300" font-size="12" fill="#8b949e">free — no account, no cloud</text>
+  <rect x="746" y="318" width="160" height="30" rx="15" fill="#0d1117" stroke="#30363d"/>
+  <text x="826" y="337" text-anchor="middle" font-size="11" fill="#8b949e">open source · free</text>
+
+  <text x="550" y="412" text-anchor="middle" font-size="13" fill="#8b949e">every AI path is BYOK — each user brings their own key, or a fully local model</text>
+</svg>

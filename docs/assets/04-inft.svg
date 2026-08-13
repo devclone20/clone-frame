@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" role="img" aria-label="Anatomy of an iNFT and the revenue model">
+  <defs>
+    <linearGradient id="accentline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff3b30" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ff3b30" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="500" rx="14" fill="#0d1117"/>
+  <rect x="1.5" y="1.5" width="1097" height="497" rx="13" fill="none" stroke="#30363d" stroke-width="3"/>
+  <rect x="0" y="492" width="1100" height="4" fill="url(#accentline)" opacity="0.9"/>
+
+  <circle cx="28" cy="26" r="6" fill="#ff5f57"/>
+  <circle cx="50" cy="26" r="6" fill="#febc2e"/>
+  <circle cx="72" cy="26" r="6" fill="#28c840"/>
+  <g fill="none" stroke="#ff3b30" stroke-linejoin="round">
+    <path d="M104 32 111 18 118 32 Z" stroke-width="2"/>
+    <path d="M108.2 29.5 111 23.9 113.8 29.5 Z" stroke-width="1.4"/>
+  </g>
+  <text x="550" y="31" text-anchor="middle" font-size="13" fill="#8b949e">an iNFT is an AI agent with the NFT built in — this is what the token carries</text>
+
+  <rect x="40" y="68" width="600" height="248" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="64" y="102" font-size="15" font-weight="700" fill="#ff3b30">ICloneAgent</text>
+  <text x="616" y="102" text-anchor="end" font-size="11" fill="#566070">Base 8453</text>
+  <line x1="64" y1="116" x2="616" y2="116" stroke="#30363d"/>
+
+  <rect x="58" y="128" width="564" height="48" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text x="76" y="158" font-size="12.5" font-weight="700" fill="#ff6b61">ERC-721A</text>
+  <text x="190" y="158" font-size="12" fill="#c9d1d9">the token — one agent, one id, self-custody</text>
+
+  <rect x="58" y="186" width="564" height="48" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text x="76" y="216" font-size="12.5" font-weight="700" fill="#ff6b61">ERC-2981</text>
+  <text x="190" y="216" font-size="12" fill="#c9d1d9">5% royalty, perpetual, written into the contract</text>
+
+  <rect x="58" y="244" width="564" height="48" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text x="76" y="274" font-size="12.5" font-weight="700" fill="#ff6b61">ERC-6551</text>
+  <text x="190" y="274" font-size="12" fill="#c9d1d9">token-bound account — the token holds a wallet</text>
+
+  <rect x="664" y="68" width="396" height="248" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="684" y="102" font-size="15" font-weight="700" fill="#b18bf5">tokenURI</text>
+  <text x="1040" y="102" text-anchor="end" font-size="11" fill="#566070">Irys</text>
+  <line x1="684" y1="116" x2="1040" y2="116" stroke="#30363d"/>
+  <text x="684" y="146" font-size="12" fill="#c9d1d9">art + metadata, permanent</text>
+  <text x="684" y="172" font-size="12" fill="#c9d1d9">the soul (neural_soul.md) is</text>
+  <text x="684" y="194" font-size="12" fill="#c9d1d9">injected into metadata.ai_soul</text>
+  <text x="684" y="228" font-size="11" fill="#566070" letter-spacing="1.2">RARITY TIERS</text>
+  <rect x="684" y="240" width="80" height="30" rx="15" fill="#0d1117" stroke="#30363d"/>
+  <text x="724" y="259" text-anchor="middle" font-size="11.5" fill="#8b949e">rare</text>
+  <rect x="776" y="240" width="118" height="30" rx="15" fill="#0d1117" stroke="#30363d"/>
+  <text x="835" y="259" text-anchor="middle" font-size="11.5" fill="#c9d1d9">superrare</text>
+  <rect x="906" y="240" width="92" height="30" rx="15" fill="#0d1117" stroke="#30363d"/>
+  <text x="952" y="259" text-anchor="middle" font-size="11.5" fill="#ff3b30">iclone</text>
+  <text x="684" y="296" font-size="11.5" fill="#8b949e">it lives in your wallet, not ours</text>
+
+  <rect x="40" y="336" width="331" height="76" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="58" y="368" font-size="13.5" font-weight="700" fill="#ff3b30">iNFT — 5%</text>
+  <text x="58" y="392" font-size="11.5" fill="#c9d1d9">perpetual, on every sale</text>
+
+  <rect x="384" y="336" width="331" height="76" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="402" y="368" font-size="13.5" font-weight="700" fill="#f0a14a">Skills — 1%</text>
+  <text x="402" y="392" font-size="11.5" fill="#c9d1d9">on the first sale only</text>
+
+  <rect x="728" y="336" width="331" height="76" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="746" y="368" font-size="13.5" font-weight="700" fill="#8b949e">Tools — free</text>
+  <text x="746" y="392" font-size="11.5" fill="#c9d1d9">5% applies once minted as an iNFT</text>
+
+  <text x="550" y="444" text-anchor="middle" font-size="12" fill="#8b949e">publishing a collection stakes 10 000 iCLONE — 6-month lock, 1-month cooldown</text>
+  <text x="550" y="470" text-anchor="middle" font-size="13" fill="#566070">ready-made collections sold by the platform need no staking</text>
+</svg>

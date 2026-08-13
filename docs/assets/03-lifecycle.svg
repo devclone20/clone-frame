@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 420" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" role="img" aria-label="iNFT lifecycle: create, seal, mint, list, operate">
+  <defs>
+    <linearGradient id="accentline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff3b30" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ff3b30" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="420" rx="14" fill="#0d1117"/>
+  <rect x="1.5" y="1.5" width="1097" height="417" rx="13" fill="none" stroke="#30363d" stroke-width="3"/>
+  <rect x="0" y="412" width="1100" height="4" fill="url(#accentline)" opacity="0.9"/>
+
+  <circle cx="28" cy="26" r="6" fill="#ff5f57"/>
+  <circle cx="50" cy="26" r="6" fill="#febc2e"/>
+  <circle cx="72" cy="26" r="6" fill="#28c840"/>
+  <g fill="none" stroke="#ff3b30" stroke-linejoin="round">
+    <path d="M104 32 111 18 118 32 Z" stroke-width="2"/>
+    <path d="M108.2 29.5 111 23.9 113.8 29.5 Z" stroke-width="1.4"/>
+  </g>
+  <text x="550" y="31" text-anchor="middle" font-size="13" fill="#8b949e">the life of an iNFT — create, seal, mint, list, operate</text>
+
+  <rect x="40" y="76" width="168" height="176" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="124" y="106" text-anchor="middle" font-size="11" fill="#566070">01</text>
+  <text x="124" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#b18bf5">create</text>
+  <line x1="68" y1="148" x2="180" y2="148" stroke="#30363d"/>
+  <text x="124" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">iIrys FRAME</text>
+  <text x="124" y="198" text-anchor="middle" font-size="11" fill="#8b949e">trait art + the soul</text>
+  <text x="124" y="220" text-anchor="middle" font-size="11" fill="#8b949e">neural_soul.md</text>
+
+  <path d="M216 164 L245 164" stroke="#566070" stroke-width="2.5"/>
+  <path d="M238 158 245 164 238 170" fill="none" stroke="#566070" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <rect x="253" y="76" width="168" height="176" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="337" y="106" text-anchor="middle" font-size="11" fill="#566070">02</text>
+  <text x="337" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#6ea8ff">seal</text>
+  <line x1="281" y1="148" x2="393" y2="148" stroke="#30363d"/>
+  <text x="337" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">Irys datachain</text>
+  <text x="337" y="198" text-anchor="middle" font-size="11" fill="#8b949e">permanent · hashed</text>
+  <text x="337" y="220" text-anchor="middle" font-size="11" fill="#8b949e">emits the tokenURI</text>
+
+  <path d="M429 164 L458 164" stroke="#566070" stroke-width="2.5"/>
+  <path d="M451 158 458 164 451 170" fill="none" stroke="#566070" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <rect x="466" y="76" width="168" height="176" rx="12" fill="#161b22" stroke="#30363d"/>
+  <rect x="466" y="76" width="168" height="3" rx="1.5" fill="#ff3b30"/>
+  <text x="550" y="106" text-anchor="middle" font-size="11" fill="#566070">03</text>
+  <text x="550" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#ff3b30">mint</text>
+  <line x1="494" y1="148" x2="606" y2="148" stroke="#30363d"/>
+  <text x="550" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">Base 8453</text>
+  <text x="550" y="198" text-anchor="middle" font-size="11" fill="#8b949e">ICloneAgent</text>
+  <text x="550" y="220" text-anchor="middle" font-size="11" fill="#8b949e">approve + mint</text>
+
+  <path d="M642 164 L671 164" stroke="#566070" stroke-width="2.5"/>
+  <path d="M664 158 671 164 664 170" fill="none" stroke="#566070" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <rect x="679" y="76" width="168" height="176" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="763" y="106" text-anchor="middle" font-size="11" fill="#566070">04</text>
+  <text x="763" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#f0a14a">list</text>
+  <line x1="707" y1="148" x2="819" y2="148" stroke="#30363d"/>
+  <text x="763" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">OpenSea</text>
+  <text x="763" y="198" text-anchor="middle" font-size="11" fill="#8b949e">and Plaza Place</text>
+  <text x="763" y="220" text-anchor="middle" font-size="11" fill="#8b949e">when it opens</text>
+
+  <path d="M855 164 L884 164" stroke="#566070" stroke-width="2.5"/>
+  <path d="M877 158 884 164 877 170" fill="none" stroke="#566070" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <rect x="892" y="76" width="168" height="176" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="976" y="106" text-anchor="middle" font-size="11" fill="#566070">05</text>
+  <text x="976" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#ff6b61">operate</text>
+  <line x1="920" y1="148" x2="1032" y2="148" stroke="#30363d"/>
+  <text x="976" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">CLONE FRAME HUB</text>
+  <text x="976" y="198" text-anchor="middle" font-size="11" fill="#8b949e">on your machine</text>
+  <text x="976" y="220" text-anchor="middle" font-size="11" fill="#8b949e">deploy skills to it</text>
+
+  <rect x="40" y="278" width="1020" height="56" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="64" y="312" font-size="13" fill="#ff3b30">ICloneAgent.mint(to, tokenURI)</text>
+  <text x="1040" y="312" text-anchor="end" font-size="11.5" fill="#8b949e">the buyer approves and mints on-chain — self-custody from block one</text>
+
+  <text x="550" y="368" text-anchor="middle" font-size="13" fill="#8b949e">no redirect to a third party to approve the mint — the wallet that mints, owns</text>
+</svg>
