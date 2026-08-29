@@ -46,7 +46,7 @@
   <text x="550" y="106" text-anchor="middle" font-size="11" fill="#566070">03</text>
   <text x="550" y="132" text-anchor="middle" font-size="14" font-weight="700" fill="#ff3b30">mint</text>
   <line x1="494" y1="148" x2="606" y2="148" stroke="#30363d"/>
-  <text x="550" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">Base 8453</text>
+  <text x="550" y="176" text-anchor="middle" font-size="11" fill="#c9d1d9">Robinhood → Base</text>
   <text x="550" y="198" text-anchor="middle" font-size="11" fill="#8b949e">ICloneAgent</text>
   <text x="550" y="220" text-anchor="middle" font-size="11" fill="#8b949e">approve + mint</text>
 

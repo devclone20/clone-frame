@@ -35,7 +35,8 @@ One file, several surfaces:
   App repo: [devclone20/cloneframe_app_executable](https://github.com/devclone20/cloneframe_app_executable).
 - **AI Agents** — the fleet, one page per agent, each linking to its GitHub
   monorepo. Every agent is an iNFT forged from the
-  [inft-i01](https://github.com/devclone20/inft-i01) template: a Pi coding agent
+  [inft-i01](https://github.com/devclone20/inft-i01) template: a
+  [Hermes Agent](https://github.com/NousResearch/hermes-agent) (Nous Research, MIT)
   under its own neural soul, fused with an NFT.
 
 ## History

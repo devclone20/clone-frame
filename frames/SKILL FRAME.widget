@@ -134,7 +134,7 @@
         <div class="pad"><div class="wpanel">
           <div class="wt">Wallet</div>
           <div class="wr"><span class="wk">status</span><span class="wv" id="wst" style="color:var(--mut)">not connected</span></div>
-          <div class="wr"><span class="wk">network</span><span class="wv">Base · 8453</span></div>
+          <div class="wr"><span class="wk">network</span><span class="wv">Robinhood · 4663</span></div>
           <div class="wr"><span class="wk">address</span><span class="wv" id="wad" style="color:var(--mut)">—</span></div>
           <div class="bal">
             <div class="bc"><div class="bcv" id="b-eth">—</div><div class="bck">ETH · agents</div></div>
@@ -162,7 +162,7 @@
           </div>
           <div class="sgrp">
             <div class="sgh"><i class="ti ti-wallet"></i> Wallet &amp; network</div>
-            <div class="si2"><div><div class="sil">Network</div><div class="sid">settlement chain</div></div><select class="sel"><option>Base · 8453</option><option>Base Sepolia</option></select></div>
+            <div class="si2"><div><div class="sil">Network</div><div class="sid">settlement chain</div></div><select class="sel"><option>Robinhood · 4663</option><option>Base · 8453</option><option>Base Sepolia</option></select></div>
             <div class="si2"><div><div class="sil">Default agent payment</div><div class="sid">currency for NFTs</div></div><select class="sel"><option>ETH</option><option>USDC</option></select></div>
             <div class="si2"><div><div class="sil">Auto-approve under</div><div class="sid">skip prompt for small spends</div></div><select class="sel"><option>Off</option><option>$5</option><option>$25</option><option>$100</option></select></div>
           </div>

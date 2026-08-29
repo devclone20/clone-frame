@@ -4,7 +4,8 @@
 
 <p align="center">
   <a href="https://cloneframe.io"><img src="https://img.shields.io/badge/site-cloneframe.io-ff3b30?style=flat-square" alt="site: cloneframe.io"></a>
-  <img src="https://img.shields.io/badge/chain-Base%208453-ff6b61?style=flat-square" alt="chain: Base 8453">
+  <img src="https://img.shields.io/badge/chains-Robinhood_·_Base-ff6b61?style=flat-square" alt="chains: Robinhood Chain first, then Base">
+  <img src="https://img.shields.io/badge/substrate-Hermes_Agent-9fe016?style=flat-square" alt="substrate: Hermes Agent">
   <img src="https://img.shields.io/badge/storage-Irys-b18bf5?style=flat-square" alt="storage: Irys">
   <img src="https://img.shields.io/badge/built%20within-Virtuals%20Protocol-6ea8ff?style=flat-square" alt="construído dentro da Virtuals Protocol">
   <a href="modules"><img src="https://img.shields.io/badge/submodules-3-8b949e?style=flat-square" alt="3 submódulos"></a>
@@ -16,6 +17,10 @@
 > Plataforma independente que **integra com** a sociedade de agentes de IA da **Virtuals Protocol** (Base) — construímos sobre os carris dela, não a reinventamos.
 
 CLONE FRAME é a camada de interface da iCLONE: criar, cunhar, possuir e operar **iNFTs** — agentes de IA com NFT integrado — a partir de uma app que corre **na máquina do próprio utilizador**.
+
+**The launch is multi-chain.** The collection lands first on **Robinhood Chain** (chain ID
+4663, an Arbitrum-Orbit L2 — [docs.robinhood.com/chain](https://docs.robinhood.com/chain/connecting)),
+then on **Base** (Ethereum L2, chain ID 8453), with further chains after those.
 
 ## Estrutura do repo
 
@@ -53,13 +58,13 @@ Diagramas de camadas e fluxo em **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**
 Do login ao publish — criar → selar → cunhar → listar → operar.
 
 <p align="center">
-  <img src="docs/assets/03-lifecycle.svg" width="100%" alt="Pipeline de cinco etapas: criar na iIrys FRAME, selar na Irys, cunhar o ICloneAgent na Base 8453, listar na OpenSea e operar a partir do HUB">
+  <img src="docs/assets/03-lifecycle.svg" width="100%" alt="Pipeline de cinco etapas: criar na iIrys FRAME, selar na Irys, cunhar o ICloneAgent (Robinhood Chain 4663 → Base 8453), listar na OpenSea e operar a partir do HUB">
 </p>
 
 ### iNFT
 
 - **iNFT = agente de IA + NFT integrado.** Dá identidade e posse on-chain ao agente; **self-custody** (fica na carteira do utilizador).
-- Contrato **ICloneAgent** na Base (8453): `ERC-721A` + `ERC-2981` (royalty 5%) + `ERC-6551` (token-bound account).
+- Contrato **ICloneAgent**, multi-chain — **Robinhood Chain** (4663) → **Base** (8453): `ERC-721A` + `ERC-2981` (royalty 5%) + `ERC-6551` (token-bound account).
 - `tokenURI` aponta para a **Irys** (arte + metadata permanentes); a alma é injetada em `metadata.ai_soul`.
 - Rarity tiers: `rare` · `superrare` · `iclone`.
 
@@ -74,7 +79,7 @@ Do login ao publish — criar → selar → cunhar → listar → operar.
 
 ### Infraestrutura partilhada
 
-`Base 8453` · `Irys` (datachain permanente) · `Virtuals Protocol` (ACP) · **a máquina do dono** (o HUB é local-first — um ficheiro + um daemon em loopback).
+`Robinhood Chain 4663` · `Base 8453` · `Irys` (datachain permanente) · `Virtuals Protocol` (ACP) · **a máquina do dono** (o HUB é local-first — um ficheiro + um daemon em loopback).
 
 ## Receita
 
@@ -113,7 +118,8 @@ Plano completo: [docs/QUANTUM.md](docs/QUANTUM.md).
 ## A forja de agentes — inft-i01
 
 Cada agente da família é um **monorepo iNFT forjado do template
-[inft-i01](https://github.com/devclone20/inft-i01)**: um Pi coding agent como substrato,
+[inft-i01](https://github.com/devclone20/inft-i01)**: um
+**[Hermes Agent](https://github.com/NousResearch/hermes-agent)** (Nous Research, MIT) como substrato,
 a neural soul do próprio agente por cima, fundido com um NFT — quem detém o token detém
 o agente, e o repositório é o corpo dele. iCLONE, VEGETA, Doctor, Akita e Forense já
 vivem neste padrão; `ownerOf(tokenId)` controla o agente e a TBA (ERC-6551) do token

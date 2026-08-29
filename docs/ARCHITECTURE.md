@@ -12,7 +12,7 @@ flowchart TB
     BR["HUB Bridge<br/>daemon local · 127.0.0.1 · BYOK"]:::hosted
   end
   IF["iIrys FRAME<br/>soul + art → Irys · open (GitHub)"]:::open
-  INFRA["Shared infrastructure<br/>Base 8453 · Irys · Virtuals · a máquina do dono"]:::ext
+  INFRA["Shared infrastructure<br/>Robinhood 4663 · Base 8453 · Irys · Virtuals · a máquina do dono"]:::ext
   CF --> INFRA
   IF --> INFRA
   classDef hosted fill:#2b1b22,stroke:#c48b96,color:#f0dfe4;
@@ -31,13 +31,13 @@ flowchart TB
   IF["iIrys FRAME<br/>Engine · soul · meta"]:::open
   IRYS["Irys L1 datachain<br/>permanent · tokenURI"]:::ext
   HUB["CLONE FRAME HUB<br/>operate · na máquina do dono"]:::hosted
-  BASE["Base 8453 · ICloneAgent<br/>approve + mint on-chain"]:::chain
+  CHAINS["Robinhood 4663 → Base 8453<br/>ICloneAgent · approve + mint on-chain"]:::chain
   INFT["iNFT<br/>NFT + AI agent · self-custody"]:::chain
   OS["OpenSea<br/>external market"]:::ext
   U --> IF
   IF -->|seal| IRYS
-  IRYS -->|tokenURI| BASE
-  BASE --> INFT
+  IRYS -->|tokenURI| CHAINS
+  CHAINS --> INFT
   INFT -->|list| OS
   INFT -->|operate| HUB
   classDef hosted fill:#2b1b22,stroke:#c48b96,color:#f0dfe4;
@@ -59,7 +59,7 @@ O marketplace terá duas secções:
 ## 4. iNFT — contrato
 
 - **iNFT = agente de IA + NFT integrado.** Self-custody: fica na carteira do utilizador.
-- **ICloneAgent** (Base 8453): `ERC-721A` + `ERC-2981` (royalty 5%) + `ERC-6551` (token-bound account).
+- **ICloneAgent**, multi-chain — **Robinhood Chain** (4663) → **Base** (8453): `ERC-721A` + `ERC-2981` (royalty 5%) + `ERC-6551` (token-bound account).
 - `tokenURI` → Irys (arte + metadata permanentes; a alma `neural_soul.md` é injetada em `metadata.ai_soul`).
 - **Mint:** o comprador/dev **aprova + cunha on-chain** com o contrato. Depois lista na OpenSea (e no Plaza, quando abrir) e **opera a partir do HUB**, na sua máquina.
 
@@ -67,7 +67,7 @@ O marketplace terá duas secções:
 
 | Camada | Papel |
 |--------|-------|
-| **Base (8453)** | Chain dos iNFT — mint, royalties (ERC-2981), token-bound accounts (ERC-6551). |
+| **Robinhood Chain (4663) → Base (8453)** | Chains dos iNFT (lançamento multi-chain: Robinhood Chain primeiro, depois Base) — mint, royalties (ERC-2981), token-bound accounts (ERC-6551). |
 | **Irys** | Datachain permanente — arte, metadata e `tokenURI`. |
 | **Virtuals Protocol** | Ecossistema de agentes (ACP); construímos **dentro** dele. |
 | **A máquina do dono** | O HUB é local-first — um ficheiro + um daemon em loopback; os dados vivem em pastas visíveis no disco do utilizador. |
