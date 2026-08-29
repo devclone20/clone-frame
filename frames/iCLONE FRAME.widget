@@ -264,7 +264,7 @@
       ['8','  attributes,'],
       ['9','});'],
       ['10',''],
-      ['11','<span class="cc">// 2. mint on Base — value = mint price</span>'],
+      ['11','<span class="cc">// 2. mint on Robinhood — value = mint price</span>'],
       ['12','<span class="ck">const</span> tx = <span class="ck">await</span> iCloneAgent.<span class="cf">mintAgent</span>(uri, soul, {'],
       ['13','  value: <span class="cf">parseEther</span>(price),'],
       ['14','});'],
@@ -316,11 +316,11 @@
       ['in','$ mintAgent(uri, soul) value='+price+' '+cur],
       ['ok','✓ '+name+' minted · token #000912'],
       ['wn','↳ treasury split 3×10% queued (BTC · VIRTUAL · iCLONE)'],
-      ['ok','✓ tx 0x7be4…c20 confirmed on Base']
+      ['ok','✓ tx 0x7be4…c20 confirmed on Robinhood']
     ];
     c.innerHTML=''; var i=0;
     var t=setInterval(function(){
-      if(i>=steps.length){clearInterval(t);b.disabled=false;b.innerHTML='<i class="ti ti-check"></i> minted';s.innerHTML='<i class="ti ti-circle-check" style="color:var(--gr)"></i> deployed to Base';return;}
+      if(i>=steps.length){clearInterval(t);b.disabled=false;b.innerHTML='<i class="ti ti-check"></i> minted';s.innerHTML='<i class="ti ti-circle-check" style="color:var(--gr)"></i> deployed to Robinhood';return;}
       var st=steps[i++];c.innerHTML+='<div class="'+st[0]+'">'+st[1]+'</div>';c.scrollTop=c.scrollHeight;
     },420);
   };

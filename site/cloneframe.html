@@ -1386,10 +1386,10 @@ html.ic3d-loading svg.ic-robot{opacity:0}
     '<text x="642" y="314" text-anchor="middle" class="t" font-size="12" font-weight="600">Your machine</text><text x="642" y="332" text-anchor="middle" class="f" font-size="9.5">the HUB runs here</text>'+
     '<path class="dt" d="M215 232 L215 285"/><path class="dt" d="M580 232 L580 285"/></svg>';
   DG.lifecycle='<svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg">'+SVS+ARH+
-    [['16','01','Create','art + soul','iIrys FRAME'],['196','02','Seal','metadata → tokenURI','iIrys → Irys'],['376','03','Mint','approve + mint','Robinhood → Base · ICloneAgent'],['556','04','Operate','list + work it','OpenSea · HUB']].map(function(s){var x=+s[0];return '<rect class="bx" x="'+x+'" y="22" width="168" height="96" rx="12"/><text x="'+(x+18)+'" y="48" class="f" font-size="11">'+s[1]+'</text><text x="'+(x+18)+'" y="74" class="t" font-size="15" font-weight="700">'+s[2]+'</text><text x="'+(x+18)+'" y="95" class="m" font-size="10.5">'+s[3]+'</text><text x="'+(x+18)+'" y="110" class="f" font-size="9.5">'+s[4]+'</text>';}).join('')+
+    [['16','01','Create','art + soul','iIrys FRAME'],['196','02','Seal','metadata → tokenURI','iIrys → Irys'],['376','03','Mint','approve + mint','Robinhood → Base'],['556','04','Operate','list + work it','OpenSea · HUB']].map(function(s){var x=+s[0];return '<rect class="bx" x="'+x+'" y="22" width="168" height="96" rx="12"/><text x="'+(x+18)+'" y="48" class="f" font-size="11">'+s[1]+'</text><text x="'+(x+18)+'" y="74" class="t" font-size="15" font-weight="700">'+s[2]+'</text><text x="'+(x+18)+'" y="95" class="m" font-size="10.5">'+s[3]+'</text><text x="'+(x+18)+'" y="110" class="f" font-size="9.5">'+s[4]+'</text>';}).join('')+
     '<path class="ar" d="M184 70 L196 70" marker-end="url(#war)"/><path class="ar" d="M364 70 L376 70" marker-end="url(#war)"/><path class="ar" d="M544 70 L556 70" marker-end="url(#war)"/></svg>';
   DG.inft='<svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">'+SVS+
-    '<rect class="bs fl2" x="270" y="16" width="220" height="66" rx="12"/><text x="380" y="46" text-anchor="middle" class="t" font-size="15" font-weight="700">iNFT</text><text x="380" y="66" text-anchor="middle" class="m" font-size="10.5">ICloneAgent · Robinhood 4663 → Base 8453</text>'+
+    '<rect class="bs fl2" x="270" y="16" width="220" height="66" rx="12"/><text x="380" y="46" text-anchor="middle" class="t" font-size="15" font-weight="700">iNFT</text><text x="380" y="66" text-anchor="middle" class="m" font-size="10.5">ICloneAgent · Robinhood → Base</text>'+
     [['14','ERC-721A','sequential ids'],['200','ERC-2981','5% royalty'],['386','ERC-6551','token-bound acct'],['572','tokenURI','→ Irys (art + soul)']].map(function(c){var x=+c[0];return '<rect class="bx" x="'+x+'" y="152" width="174" height="84" rx="12"/><text x="'+(x+87)+'" y="190" text-anchor="middle" class="t" font-size="13.5" font-weight="700">'+c[1]+'</text><text x="'+(x+87)+'" y="210" text-anchor="middle" class="m" font-size="10.5">'+c[2]+'</text><path class="dt" d="M380 82 L'+(x+87)+' 150"/>';}).join('')+
     '<text x="380" y="272" text-anchor="middle" class="f" font-size="10.5">metadata.ai_soul — the agent’s soul (neural_soul.md), sealed permanently on Irys</text></svg>';
   DG.treasury='<svg viewBox="0 0 760 212" xmlns="http://www.w3.org/2000/svg">'+SVS+
@@ -1580,7 +1580,7 @@ html.ic3d-loading svg.ic-robot{opacity:0}
       '<h2 id="is">What iCLONE is</h2>'+
       '<ul>'+
       '<li><b>Autonomous</b> — it acts on its own through the Agent Commerce Protocol (ACP): it hires, gets hired, delivers work and gets paid, entirely on-chain.</li>'+
-      '<li><b>Ownable</b> — every clone is minted as a unique iNFT on Base, with its own image and base character (<code>neural_soul.md</code>). <code>ownerOf</code> controls it.</li>'+
+      '<li><b>Ownable</b> — every clone is minted as a unique iNFT, with its own image and base character (<code>neural_soul.md</code>). <code>ownerOf</code> controls it.</li>'+
       '<li><b>Configurable</b> — ships with a factory base memory, then shaped by its owner and extended with skills.</li>'+
       '<li><b>Economic</b> — it performs real work, earns real revenue, and powers the CLONE FRAME economy.</li>'+
       '</ul>'+
@@ -1663,7 +1663,7 @@ html.ic3d-loading svg.ic-robot{opacity:0}
       '<div class="wp-feature reveal"><div class="ft-h">Plain answers</div>'+
         '<div class="ft-row"><div class="rn">i</div><div><div class="rt">Does the NFT become a wallet?</div><div class="rd">No — it <i>controls</i> one. The token stays a normal NFT you can hold anywhere; the account is bound to it by the protocol.</div></div></div>'+
         '<div class="ft-row"><div class="rn">ii</div><div><div class="rt">Is this soulbound?</div><div class="rd">The opposite. Everything is designed to transfer cleanly — that is the point.</div></div></div>'+
-        '<div class="ft-row"><div class="rn">iii</div><div><div class="rt">Gas?</div><div class="rd">Actions taken by the backpack are normal Base transactions — small, but not zero.</div></div></div>'+
+        '<div class="ft-row"><div class="rn">iii</div><div><div class="rt">Gas?</div><div class="rd">Actions taken by the backpack are normal on-chain transactions — small, but not zero.</div></div></div>'+
         '<div class="ft-row"><div class="rn">iv</div><div><div class="rt">The one warning</div><div class="rd">Never send an iNFT into its own backpack — that locks both forever. CLONE FRAME’s interfaces block this path.</div></div></div></div>'+
       '<p class="wp-call">See it in context: <a data-wp="inft">iNFT — the contract</a> · <a data-wp="it-terminal">iT — the terminal</a> · <a data-wp="hub">HUB — operate what you own</a> · <a data-wp="trust">Trustless Agents — identity</a>.</p>'},
     {id:'token', title:'$ICLONE · token', html:
@@ -1684,7 +1684,7 @@ html.ic3d-loading svg.ic-robot{opacity:0}
       '<tr><td>Growth Allocation Pool</td><td><b>5%</b></td></tr>'+
       '</tbody></table>'+
       '<h2 id="utility">Utility &amp; currency model</h2>'+
-      '<p>Two rails: <b>agent NFTs</b> are minted and traded in <b>ETH / USDC on Base</b> for deep liquidity; <b>platform access and services</b> are priced in the <b>iCLONE token</b>, with prices fixed in USD while the token quantity adjusts — giving the token continuous, real utility. Demand grows with usage; the treasury adds long-term value and downside protection.</p>'},
+      '<p>Two rails: <b>agent NFTs</b> are minted and traded in <b>ETH / USDC</b> for deep liquidity; <b>platform access and services</b> are priced in the <b>iCLONE token</b>, with prices fixed in USD while the token quantity adjusts — giving the token continuous, real utility. Demand grows with usage; the treasury adds long-term value and downside protection.</p>'},
     {id:'treasury', title:'Treasury & Reserves', html:
       '<div class="wp-eyebrow">Protocol &amp; Token</div><h1>Treasury &amp; Reserves</h1>'+
       '<p class="lead">A standing commitment routes <b>30% of all platform revenue</b> into reserves and value — fully on-chain and auditable, reported weekly or monthly depending on volume.</p>'+
